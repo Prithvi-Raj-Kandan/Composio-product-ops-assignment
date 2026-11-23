@@ -31,6 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--only", default="")
     run_parser.add_argument("--concurrency", type=int, default=4)
     run_parser.add_argument("--repo", default=".")
+    run_parser.add_argument("--resume", action="store_true", help="Skip apps already checkpointed in this pass.")
     run_parser.add_argument("--fresh", action="store_true", help="Pass 2 re-extracts instead of starting from pass 1.")
     run_parser.set_defaults(func=cmd_run)
 
@@ -127,7 +128,14 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     LEDGER.reset()
     started = time.time()
-    results = run_many(apps, args.pass_num, factory, concurrency=args.concurrency)
+    results = run_many(
+        apps,
+        args.pass_num,
+        factory,
+        concurrency=args.concurrency,
+        checkpoint_dir=root / "cache" / "checkpoints",
+        resume=args.resume,
+    )
     elapsed = time.time() - started
     records = [record for record, _log in results]
     stats = {

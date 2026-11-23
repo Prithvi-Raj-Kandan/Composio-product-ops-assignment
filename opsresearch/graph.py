@@ -505,16 +505,48 @@ def run_many(
     deps_for_app: Callable[[], ResearchDeps],
     *,
     concurrency: int = 4,
+    checkpoint_dir: Path | None = None,
+    resume: bool = False,
 ) -> list[tuple[AppRecord, dict[str, Any]]]:
     if concurrency < 1:
         raise ValueError("concurrency must be at least 1")
     results: list[tuple[AppRecord, dict[str, Any]]] = []
+    done = load_checkpoints(checkpoint_dir, pass_num) if (checkpoint_dir and resume) else {}
+    todo = []
+    for app in apps:
+        if app.app.lower() in done:
+            results.append(done[app.app.lower()])
+        else:
+            todo.append(app)
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
-        futures = {pool.submit(_run_app_safely, app, pass_num, deps_for_app): app for app in apps}
+        futures = {pool.submit(_run_app_safely, app, pass_num, deps_for_app): app for app in todo}
         for future in as_completed(futures):
-            results.append(future.result())
+            record, log = future.result()
+            if checkpoint_dir is not None:
+                _write_checkpoint(checkpoint_dir, record, log, pass_num)
+            results.append((record, log))
     results.sort(key=lambda item: item[0].app.lower())
     return results
+
+
+def _write_checkpoint(directory: Path, record: AppRecord, log: dict[str, Any], pass_num: int) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+    payload = {"record": record.model_dump(mode="json"), "log": log}
+    path = directory / f"{app_slug(record.app)}_pass{pass_num}.json"
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
+def load_checkpoints(directory: Path | None, pass_num: int) -> dict[str, tuple[AppRecord, dict[str, Any]]]:
+    out: dict[str, tuple[AppRecord, dict[str, Any]]] = {}
+    if directory is None or not Path(directory).exists():
+        return out
+    for path in Path(directory).glob(f"*_pass{pass_num}.json"):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        record = AppRecord.model_validate(payload["record"])
+        out[record.app.lower()] = (record, payload["log"])
+    return out
 
 
 def write_pass(path: Path, records: list[AppRecord], pass_num: int) -> None:

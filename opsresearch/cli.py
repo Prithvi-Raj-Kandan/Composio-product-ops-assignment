@@ -101,7 +101,9 @@ def cmd_pass3(args: argparse.Namespace) -> int:
     if args.only:
         print(json.dumps(out["records"], indent=1)[:4000])
         return 0
-    records = [AppRecord.model_validate(r) for r in out["records"]]
+    from opsresearch.unknown_reason import annotate
+
+    records = [AppRecord.model_validate(r) for r in annotate(root, out["records"])]
     write_pass(root / "data" / "results_pass3.json", records, 3)
     write_json(root / "data" / "run_stats_pass3.json", out["stats"])
     print(json.dumps(out["stats"], indent=1))

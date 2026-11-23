@@ -212,6 +212,10 @@ class AppRecord(BaseModel):
             "mcp_registry, derived_rule, or quote-not-rechecked."
         ),
     )
+    unknown_reason: dict[str, str] = Field(
+        default_factory=dict,
+        description="Per-field short reason a cell is unknown, derived from run data (e.g. 'no pricing page').",
+    )
     verifier_verdicts: dict[str, str] = Field(
         default_factory=dict,
         description="Per-field second-model verdict: supported, insufficient, contradicted, or not_run.",

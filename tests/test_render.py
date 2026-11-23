@@ -273,3 +273,17 @@ def test_reviewed_gold_labels_are_described_as_confirmed(tmp_path) -> None:
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
     assert "reviewed and confirmed by a human" in html
     assert "review is pending" not in html and "review pending" not in html
+
+
+def test_unknown_cells_show_reason_caption_and_tally(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    payload = json.loads((data / "results.json").read_text())
+    payload["records"][0]["self_serve"] = "unknown"
+    payload["records"][0]["unknown_reason"] = {"self_serve": "no pricing page", "buildability": "no pricing page"}
+    payload["records"][1]["unknown_reason"] = {"gate_type": "verifier contradicted"}
+    (data / "results.json").write_text(json.dumps(payload))
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert '<div class="ur">no pricing page</div>' in html
+    assert 'id="unknown-reasons"' in html
+    assert "<td>no pricing page</td><td>2</td>" in html

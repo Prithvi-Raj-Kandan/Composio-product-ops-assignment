@@ -190,3 +190,29 @@ def test_count_unknowns():
     counts = count_unknowns(recs)
     assert counts["self_serve"] == 1
     assert counts["auth_methods"] == 1
+
+
+def test_research_priority_puts_missing_access_first():
+    from opsresearch.pass3 import research_priority
+
+    full = _p1()
+    empty = AppRecord(app="B", category="c").model_dump(mode="json")
+    assert research_priority(empty) < research_priority(full)
+
+
+def test_one_liner_alone_does_not_trigger_research(tmp_path):
+    calls = []
+
+    def researcher(record, todo):
+        calls.append(todo)
+        return record, []
+
+    rec = _p1()
+    rec["gate_type"] = "none"
+    rec["api_surface"]["graphql"] = "no"
+    rec["evidence"] += [
+        {"field": "gate_type", "url": PRICING, "quote": PRICING_QUOTE, "source": "doc"},
+        {"field": "api_surface.graphql", "url": URL, "quote": "The Acme REST API uses JSON.", "source": "doc"},
+    ]
+    pass3_record(rec, None, {}, tmp_path, researcher=researcher)
+    assert calls == []

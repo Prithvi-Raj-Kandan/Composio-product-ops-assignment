@@ -69,6 +69,9 @@ def build_parser() -> argparse.ArgumentParser:
     p3_parser.add_argument("--concurrency", type=int, default=4)
     p3_parser.add_argument("--only", default="")
     p3_parser.add_argument("--no-research", action="store_true")
+    p3_parser.add_argument(
+        "--research-minutes", type=float, default=None, help="Stop starting re-research after N min."
+    )
     p3_parser.set_defaults(func=cmd_pass3)
 
     smoke_parser = sub.add_parser("smoke", help="Check each configured service on one app.")
@@ -79,6 +82,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def cmd_pass3(args: argparse.Namespace) -> int:
     import json
+    import time
 
     from opsresearch.graph import write_pass
     from opsresearch.pass3 import run_pass3, write_json
@@ -87,7 +91,12 @@ def cmd_pass3(args: argparse.Namespace) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     root = Path(args.repo)
     out = run_pass3(
-        root, resume=args.resume, concurrency=args.concurrency, only=args.only, research=not args.no_research
+        root,
+        resume=args.resume,
+        concurrency=args.concurrency,
+        only=args.only,
+        research=not args.no_research,
+        deadline=(time.time() + args.research_minutes * 60) if args.research_minutes else None,
     )
     if args.only:
         print(json.dumps(out["records"], indent=1)[:4000])

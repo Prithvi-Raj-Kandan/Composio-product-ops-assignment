@@ -506,7 +506,9 @@ def pass3_record(
             _tag(record, "existing_mcp", "mcp_registry", "not_run")
             steps["mcp_registry"] = 1
     if researcher is not None:
-        todo = [f for f in RESEARCH_FIELDS if is_unknown(get_field(record, f))]
+        todo = [f for f in RESEARCH_FIELDS if f != "one_liner" and is_unknown(get_field(record, f))]
+        if todo and is_unknown(record["one_liner"]):
+            todo.append("one_liner")
         if todo:
             record, filled = researcher(record, todo)
             steps["reresearch"] = len(filled)
@@ -675,7 +677,21 @@ class LiveResearcher:
         return record, kept
 
 
-def run_pass3(repo: Path, *, resume: bool = True, concurrency: int = 4, only: str = "", research: bool = True) -> dict:
+def research_priority(record: dict[str, Any]) -> int:
+    """Apps missing the fields the page leads with are researched first."""
+    weights = {"self_serve": 4, "auth_methods": 3, "api_surface.rest": 2, "gate_type": 1}
+    return -sum(w for f, w in weights.items() if is_unknown(get_field(record, f)))
+
+
+def run_pass3(
+    repo: Path,
+    *,
+    resume: bool = True,
+    concurrency: int = 4,
+    only: str = "",
+    research: bool = True,
+    deadline: float | None = None,
+) -> dict:
     import os
     from concurrent.futures import ThreadPoolExecutor
     from urllib.parse import quote as urlquote
@@ -742,7 +758,10 @@ def run_pass3(repo: Path, *, resume: bool = True, concurrency: int = 4, only: st
             out = obj.model_dump(mode="json")
             return out
 
-        researcher = LiveResearcher(cache, seed, resolved, extra, nodes) if research else None
+        late = deadline is not None and time.time() > deadline
+        if late:
+            nodes.append({"node": "reresearch3", "skipped": "time budget for this run was spent"})
+        researcher = LiveResearcher(cache, seed, resolved, extra, nodes) if research and not late else None
         record, steps = pass3_record(
             rec2,
             p1.get(rec2["app"].lower()),
@@ -757,8 +776,10 @@ def run_pass3(repo: Path, *, resume: bool = True, concurrency: int = 4, only: st
         write_json(data / "runs" / f"{slug}_pass3.json", log)
         return record, log
 
+    order = sorted(p2, key=lambda r: research_priority(p1.get(r["app"].lower()) or r))
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
-        results = list(pool.map(one, p2))
+        done = dict(zip([r["app"] for r in order], pool.map(one, order), strict=True))
+    results = [done[r["app"]] for r in p2]
     records = [r for r, _ in results]
     totals: dict[str, int] = {}
     for _, log in results:

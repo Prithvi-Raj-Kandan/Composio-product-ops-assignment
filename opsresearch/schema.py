@@ -113,6 +113,7 @@ class EvidenceSource(StrEnum):
     composio_oracle = "composio_oracle"
     mcp_registry = "mcp_registry"
     derived_rule = "derived_rule"
+    composio_metadata = "composio_metadata"
 
 
 class Provenance(BaseModel):
@@ -204,6 +205,17 @@ class AppRecord(BaseModel):
     extraction_model: str | None = None
     verifier_model: str | None = None
     pass_id: int | None = None
+    field_confidence: dict[str, str] = Field(
+        default_factory=dict,
+        description=(
+            "Per-field confidence tag: verifier-supported, quote-verified, composio_metadata, "
+            "mcp_registry, derived_rule, or quote-not-rechecked."
+        ),
+    )
+    verifier_verdicts: dict[str, str] = Field(
+        default_factory=dict,
+        description="Per-field second-model verdict: supported, insufficient, contradicted, or not_run.",
+    )
 
     @model_validator(mode="after")
     def _force_unknown_without_evidence(self) -> AppRecord:

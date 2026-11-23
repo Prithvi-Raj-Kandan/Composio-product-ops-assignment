@@ -1,0 +1,9 @@
+app,official_domain,path_prefix,notes,status
+fanbasis,fanbasis.com,,Hint lists fanbasis.com. Not confirmed against a second source in this run.,needs human confirm
+iPayX,ipayx.ai,,Public docs exist at ipayx.ai/docs (FX audit API). Confirm this is the iPayX in the brief.,needs human confirm
+Paygent Connect,gopaygent.com,,Best guess is Paygent Connect at gopaygent.com. The hint says NMI-powered; NMI (nmi.com) is a different company. Confirm which product is in scope.,needs human confirm
+Sherlock,github.com,/sherlock-project/sherlock,Hint points at the sherlock-project OSS CLI. Other products are also named Sherlock.,needs human confirm
+Waterfall.io,waterfall.io,,Hint describes a contact and company data API. docs.waterfall.io is the likely doc host. Confirm the entity.,needs human confirm
+Mermaid CLI,github.com,/mermaid-js/mermaid-cli,OSS CLI. Distinct from mermaid.live and other Mermaid products.,needs human confirm
+higgsfield,higgsfield.ai,,Hint is higgsfield.ai/cli. Confirm this is the intended product.,needs human confirm
+YouTube Transcript,transcriptapi.com,,Hint is transcriptapi.com. This is not the YouTube Data API.,needs human confirm

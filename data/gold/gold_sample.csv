@@ -1,0 +1,21 @@
+app,category,split,archetype
+Salesforce,CRM and Sales,dev,clean-public-docs (free dev org)
+DealCloud,CRM and Sales,test,gated/partner
+Gladly,Support and Helpdesk,dev,js-or-login-walled/gated
+Zendesk,Support and Helpdesk,test,clean-public-docs
+Slack,Communications and Messaging,dev,clean-public-docs + mcp
+WhatsApp Business,Communications and Messaging,test,platform-review-gated
+GoHighLevel,"Marketing, Ads, Email and Social",dev,paid-plan-gated
+Mailchimp,"Marketing, Ads, Email and Social",test,clean-public-docs
+fanbasis,Ecommerce,dev,ambiguous/obscure
+Shopify,Ecommerce,test,graphql-first
+Sherlock,"Data, SEO and Scraping",dev,no-api/oss-cli
+Firecrawl,"Data, SEO and Scraping",test,mcp-native/api-key
+GitHub,"Developer, Infra and Data platforms",dev,rest+graphql+mcp
+Snowflake,"Developer, Infra and Data platforms",test,enterprise/trial
+Coda,Productivity and Project Management,dev,clean-public-docs
+Linear,Productivity and Project Management,test,graphql-first
+PitchBook,Finance and Fintech,dev,gated/contact-sales
+iPayX,Finance and Fintech,test,ambiguous/obscure
+Devin,"AI, Research and Media-native",dev,mcp-only
+Mermaid CLI,"AI, Research and Media-native",test,no-api/oss-cli

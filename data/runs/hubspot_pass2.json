@@ -1,0 +1,250 @@
+{
+  "app": "HubSpot",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "hubspot.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://hubspot.com",
+        "https://www.hubspot.com/2026-entry-and-tiers-policy-for-hubspot-solutions-partners",
+        "https://developers.hubspot.com/docs/apps/legacy-apps/authentication/intro-to-auth",
+        "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/account-service-keys",
+        "https://developers.hubspot.com/docs/developer-tooling/platform/usage-guidelines",
+        "https://developers.hubspot.com/docs/cms/start-building/features/data-driven-content/graphql/query-hubspot-data-using-graphql"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview is not in the fetched pages"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from hubspot"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "Quote mentions OAuth but does not confirm presence of api_key or bearer_token."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No supporting evidence provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "Quote exactly matches the claimed one-liner."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "urls": [
+        "https://hubspot.com",
+        "https://developers.hubspot.com/docs/cms/start-building/features/data-driven-content/graphql/use-graphql-data-in-your-website-pages",
+        "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+        "https://developers.hubspot.com/blog/reducing-hubspot-requests-utilizing-batch-api-and-graphql-for-better-optimization",
+        "https://developers.hubspot.com/docs/api-reference/latest/crm/understanding-the-crm",
+        "https://developers.hubspot.com/docs/guides/api",
+        "https://developers.hubspot.com/docs/api-reference/latest/overview"
+      ],
+      "failed": []
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.graphql",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches hubspot"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

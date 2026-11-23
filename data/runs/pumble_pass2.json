@@ -1,0 +1,375 @@
+{
+  "app": "Pumble",
+  "pass": 2,
+  "needs_human": true,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "pumble.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://pumble.com",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+        "https://pumble.com/learn/pumble/ai-automation-guide"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "mcp_url",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from pumble"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The documentation states the token must be passed in the HTTP header as a bearer token, confirming bearer token authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No excerpt addresses whether the API is self\u2011serve."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No excerpt provides information about any gating mechanism."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "The excerpts do not describe REST, GraphQL, breadth, or style details of the API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "The page describes the Pumble Model Context Protocol (MCP) server as a provided service, indicating an official MCP server exists."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No information about buildability is present in the excerpts."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "The excerpts do not mention any main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No one\u2011liner description is provided in the excerpts."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://pumble.com",
+        "https://pumble.com/mcp",
+        "https://pumble.com/docs/mcp",
+        "https://pumble.com/pricing",
+        "https://pumble.com/developers",
+        "https://pumble.com/docs/getting-started",
+        "https://pumble.com/partners"
+      ],
+      "failed": [
+        "https://pumble.com/docs/mcp",
+        "https://pumble.com/developers",
+        "https://pumble.com/docs/getting-started",
+        "https://pumble.com/partners"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "existing_mcp"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "mcp_url",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches pumble"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "existing_mcp"
+      ],
+      "urls": [
+        "https://pumble.com",
+        "https://pumble.com/docs/mcp"
+      ],
+      "failed": [
+        "https://pumble.com/docs/mcp"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [
+        "existing_mcp"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "mcp_url",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches pumble"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": true,
+      "failing": [
+        "existing_mcp"
+      ]
+    }
+  ]
+}

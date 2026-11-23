@@ -1,0 +1,191 @@
+{
+  "app": "Zoho CRM",
+  "pass": 2,
+  "needs_human": true,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "zoho.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://zoho.com/crm",
+        "https://www.zoho.com/crm/developer/docs/api/v8/auth-request.html",
+        "https://www.zoho.com/crm/developer/mcp.html",
+        "https://www.zoho.com/crm/developer/docs/api/v8/oauth-overview.html",
+        "https://www.zoho.com/en-us/crm/zohocrm-pricing.html",
+        "https://www.zoho.com/books/api/v3/oauth"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "existing_mcp"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from zoho"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "existing_mcp"
+      ],
+      "urls": [
+        "https://zoho.com/crm",
+        "https://zoho.com/mcp",
+        "https://zoho.com/mcp",
+        "https://zoho.com/docs/mcp"
+      ],
+      "failed": [
+        "https://zoho.com/docs/mcp"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "existing_mcp"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches zoho"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Excerpt describes Zoho MCP as an official offering, confirming its existence"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "existing_mcp"
+      ],
+      "urls": [
+        "https://zoho.com/crm",
+        "https://zoho.com/docs/mcp"
+      ],
+      "failed": [
+        "https://zoho.com/docs/mcp"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [
+        "existing_mcp"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches zoho"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Excerpt describes Zoho MCP as an official Zoho offering, confirming its existence"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": true,
+      "failing": [
+        "existing_mcp"
+      ]
+    }
+  ]
+}

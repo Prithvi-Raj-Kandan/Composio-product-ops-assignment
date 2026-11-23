@@ -1,0 +1,164 @@
+{
+  "app": "Google Ads",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "google.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.google.com/google-ads",
+        "https://developers.google.com/google-ads/api/docs/reach-forecasting/authentication",
+        "https://developers.google.com/google-ads/api/docs/oauth/overview",
+        "https://business.google.com/us/ad-tools/google-ads-api",
+        "https://cloud.google.com/api-keys/pricing",
+        "https://developers.google.com/ads/blog/posts/2025/10/open-source-google-ads-api-mcp-server"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "api_surface.breadth",
+        "self_serve"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "https://support.google.com/google-ads/answer/15235?hl=en is not in the fetched pages"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "https://support.google.com/google-ads/answer/15235?hl=en is not in the fetched pages"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from googleads"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "api_surface.breadth",
+        "self_serve"
+      ],
+      "urls": [
+        "https://developers.google.com/google-ads",
+        "https://support.google.com/google-ads/answer/15235?hl=en",
+        "https://google.com/docs/api",
+        "https://google.com/api",
+        "https://google.com/developers/docs",
+        "https://google.com/pricing",
+        "https://google.com/developers"
+      ],
+      "failed": [
+        "https://google.com/docs/api",
+        "https://google.com/api",
+        "https://google.com/pricing"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "api_surface.breadth",
+        "self_serve"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.breadth",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches googleads"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "agent none matches the registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "app": "Vonage",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "vonage.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.vonage.com",
+        "https://developer.vonage.com/en/getting-started/overview",
+        "https://developer.vonage.com/en/verify/concepts/authentication",
+        "https://developer.vonage.com/en/home",
+        "https://www.vonage.com/communications-apis/pricing",
+        "https://developer.vonage.com/en/verify/concepts/silent-authentication"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods",
+        "self_serve"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "https://developer.vonage.com/en/vonage-business-cloud/getting-started/create-an-access-token is not in the fetched pages"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=no from a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "contradicted",
+          "detail": "The Verify API documentation explicitly states it supports only Basic and JWT authentication, contradicting the claim that it supports bearer_token and oauth2."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "The provided text mentions free trials for Vonage APIs but does not explicitly confirm a self-serve free tier or model."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "The provided code examples demonstrate the use of RESTful HTTP requests (fetch and curl) to interact with the API."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods",
+        "self_serve"
+      ],
+      "urls": [
+        "https://developer.vonage.com",
+        "https://developer.vonage.com/en/vonage-business-cloud/getting-started/create-an-access-token",
+        "https://vonage.com/docs/authentication",
+        "https://vonage.com/docs/api/authentication",
+        "https://vonage.com/developers",
+        "https://vonage.com/pricing",
+        "https://vonage.com/docs/getting-started"
+      ],
+      "failed": [
+        "https://vonage.com/docs/authentication",
+        "https://vonage.com/docs/api/authentication",
+        "https://vonage.com/developers",
+        "https://vonage.com/docs/getting-started"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods",
+        "self_serve"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent no matches a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "agent community matches the registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "The provided excerpt shows a RESTful request using the fetch API and curl with standard HTTP headers and JSON body."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The excerpts confirm the use of OAuth (specifically mentioning Bearer tokens) and Basic authentication for different Vonage APIs."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

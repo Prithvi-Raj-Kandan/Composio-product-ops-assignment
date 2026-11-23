@@ -1,0 +1,194 @@
+{
+  "app": "GoHighLevel",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "stoplight.io",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://highlevel.stoplight.io"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 0
+    },
+    {
+      "node": "fetch",
+      "pages": 1,
+      "cache_hits": 1,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=no from a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "The provided URL and excerpt confirm the site is a Stoplight documentation portal for the GoHighLevel API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding authentication methods."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding self-serve capabilities."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding gate types."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding the API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding existing MCP status."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding buildability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "The provided excerpt does not contain information regarding main blockers."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "urls": [
+        "https://highlevel.stoplight.io",
+        "https://stoplight.io/docs/authentication",
+        "https://stoplight.io/docs/api/authentication",
+        "https://stoplight.io/developers",
+        "https://stoplight.io/pricing",
+        "https://stoplight.io/docs/getting-started",
+        "https://stoplight.io/partners"
+      ],
+      "failed": [
+        "https://stoplight.io/docs/authentication",
+        "https://stoplight.io/docs/api/authentication",
+        "https://stoplight.io/developers",
+        "https://stoplight.io/docs/getting-started",
+        "https://stoplight.io/partners"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent no matches a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

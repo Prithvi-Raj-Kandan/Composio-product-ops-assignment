@@ -1,0 +1,394 @@
+{
+  "app": "WhatsApp Business",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "facebook.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.facebook.com/docs/whatsapp",
+        "https://developers.facebook.com/documentation/mcp/whatsapp-business-tools-mcp",
+        "https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing",
+        "https://developers.facebook.com/documentation/business-messaging/whatsapp/reference/whatsapp-business-account/whatsapp-business-account-api"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from whatsapp"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Excerpt confirms bearer token authentication and mentions obtaining it via an OAuth flow, supporting both oauth2 and bearer_token."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No excerpt addresses self\u2011service availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No excerpt provides information about any gating mechanism."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "Base URL and HTTP methods listed indicate a RESTful Graph API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "Excerpt contains no mention of GraphQL support."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "Excerpt does not describe the breadth of the API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No information about API styles is provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Excerpt describes the official WhatsApp Business Tools MCP server provided by the platform."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No details on buildability are given."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "Excerpt does not identify any main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "Quote matches the claimed one\u2011liner about enterprise\u2011grade APIs for messaging and calling."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker"
+      ],
+      "urls": [
+        "https://developers.facebook.com/docs/whatsapp",
+        "https://facebook.com/mcp",
+        "https://facebook.com/docs/mcp",
+        "https://facebook.com/pricing",
+        "https://facebook.com/developers",
+        "https://facebook.com/docs/getting-started",
+        "https://facebook.com/partners"
+      ],
+      "failed": [
+        "https://facebook.com/mcp",
+        "https://facebook.com/docs/mcp",
+        "https://facebook.com/docs/getting-started"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches whatsapp"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The documentation explicitly states that a Bearer token obtained through an OAuth flow or system user token is used for API authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "The provided excerpts do not contain information regarding whether the platform is self-serve."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "The provided excerpts do not mention any gate type or access restrictions."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "The excerpts confirm the existence of a REST-like API (graph.facebook.com), but do not provide enough information to categorize the full breadth or styles of the API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "The provided text does not mention MCP, and there is no evidence of an existing MCP implementation."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "The excerpts do not provide enough information to assess the buildability of the platform."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "The excerpts do not mention any main blockers."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "The quote 'enterprise-grade APIs for messaging and calling' directly supports the one-liner description."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker"
+      ],
+      "urls": [
+        "https://developers.facebook.com/docs/whatsapp",
+        "https://facebook.com/docs/getting-started",
+        "https://facebook.com/docs/api",
+        "https://facebook.com/api"
+      ],
+      "failed": [
+        "https://facebook.com/docs/getting-started",
+        "https://facebook.com/docs/api"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface",
+        "buildability",
+        "main_blocker"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches whatsapp"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "agent none matches the registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

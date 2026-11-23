@@ -1,0 +1,439 @@
+{
+  "app": "Podio",
+  "pass": 2,
+  "needs_human": true,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "podio.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://podio.com",
+        "https://developers.podio.com/authentication/username_password",
+        "https://developers.podio.com/index/api",
+        "https://developers.podio.com/authentication/server_side",
+        "https://developers.podio.com/doc",
+        "https://developers.podio.com/index/faq"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "https://developers.podio.com/authentication is not in the fetched pages"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from podio"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth api_key is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "Quote confirms OAuth2 but provides no evidence for API key, so claim of both methods cannot be verified"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "FAQ states the API is available to both paid and free accounts with no extra charge, matching self\u2011serve free claim"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No evidence provided regarding any gating mechanism"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "insufficient",
+          "detail": "No information about REST availability in the excerpt"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No information about GraphQL availability in the excerpt"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "No information about the breadth of the API surface in the excerpt"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No information about API styles in the excerpt"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No evidence regarding existing MCP presence"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No evidence regarding buildability"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No evidence regarding any main blocker"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No evidence provided for a one\u2011liner description"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://podio.com",
+        "https://developers.podio.com/authentication",
+        "https://podio.com/partners",
+        "https://podio.com/api",
+        "https://podio.com/developers/docs",
+        "https://podio.com/docs/api",
+        "https://podio.com/docs/authentication"
+      ],
+      "failed": []
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches podio"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The documentation states \"The Podio API uses the OAuth2 protocol for authentication.\" confirming OAuth2 is the authentication method."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "The FAQ says \"The Podio API is available to use for both paid and free Podio accounts... There is no extra charge for using the API as long as the usage is within these base rate limits,\" indicating free self\u2011serve access."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No excerpt addresses any gating mechanism."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "The provided excerpts contain no information about REST, GraphQL, breadth, or style support."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No evidence about existing MCP (Managed Cloud Platform) presence."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No excerpt discusses buildability of the API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No information about any main blocker is provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No excerpt supplies a one\u2011liner description."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://podio.com",
+        "https://podio.com/developers",
+        "https://podio.com/pricing",
+        "https://podio.com/pricing",
+        "https://podio.com/developers"
+      ],
+      "failed": []
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches podio"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The documentation states the Podio API uses the OAuth2 protocol."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "FAQ says the API is free to use for both paid and free accounts."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No information provided about gate type."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "Endpoint list includes \"api\":\"https://api.podio.com\" indicating a REST API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No mention of GraphQL support in the excerpt."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "No information on the breadth of API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "Only REST endpoint is shown, matching style \"rest\"."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No evidence regarding existing MCP."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No evidence about buildability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No evidence about main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No evidence provided."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": true,
+      "failing": [
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ]
+    }
+  ]
+}

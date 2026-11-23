@@ -148,6 +148,7 @@ def pass3_summary(
     pass2: list[dict[str, Any]],
     pass3: list[dict[str, Any]],
     stats: dict[str, Any] | None,
+    runs_dir: Path | None = None,
 ) -> dict[str, Any] | None:
     """Unknown counts pass 1 -> 2 -> 3 plus confidence tags, only when pass 3 is the published data."""
     if not stats or not pass3 or not any(r.get("field_confidence") for r in pass3):
@@ -158,7 +159,24 @@ def pass3_summary(
     tags: Counter = Counter()
     for r in pass3:
         tags.update((r.get("field_confidence") or {}).values())
+    by_app = {r.get("app"): r for r in pass3}
+    claims = checked = 0
+    for path in sorted(runs_dir.glob("*_pass3.json")) if runs_dir else []:
+        log = _load(path, {})
+        verdicts = (by_app.get(log.get("app")) or {}).get("verifier_verdicts") or {}
+        for node in log.get("nodes") or []:
+            if node.get("node") != "reresearch3":
+                continue
+            for field in node.get("kept") or []:
+                claims += 1
+                checked += verdicts.get(field) == "supported"
+    crashed = sum(1 for r in pass2 if any("pipeline error" in x for x in r.get("needs_human_reasons") or []))
     return {
+        "research_claims": claims,
+        "research_supported": checked,
+        "crashed": crashed,
+        "quote_only": tags.get("quote-verified", 0),
+        "supported_total": tags.get("verifier-supported", 0),
         "rows": [{"field": f, "p1": a[f], "p2": b[f], "p3": c[f]} for f in COUNTED],
         "tags": dict(tags.most_common()),
         "steps": stats.get("fields_filled_by_step") or {},
@@ -217,7 +235,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "gold_by_ai": gold_by_ai,
         "verification": verification_stats(data / "runs"),
         "delta": pass_delta(pass1, records) if pass1 else None,
-        "pass3": pass3_summary(pass1, pass2, records, stats.get(3)),
+        "pass3": pass3_summary(pass1, pass2, records, stats.get(3), data / "runs"),
         "needs_human": [r for r in rows if r.get("needs_human")],
         "derived_count": sum(1 for r in rows if r["derived"]),
         "overrides": [r for r in rows if r["human_override"]],

@@ -183,3 +183,27 @@ def test_pass3_before_after_and_confidence_tags(tmp_path) -> None:
     assert "quote-verified" in html and "composio_metadata" in html
     assert "policy_restore" in html
     assert "Only <b>contradicted</b> demotes" in html
+
+
+def test_pass3_note_states_verification_facts(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    payload = json.loads((data / "results.json").read_text())
+    p2 = json.loads(json.dumps(payload))
+    p2["records"][1]["needs_human_reasons"] = ["pipeline error: RuntimeError"]
+    (data / "results_pass2.json").write_text(json.dumps(p2))
+    payload["records"][0]["field_confidence"] = {"self_serve": "quote-verified", "gate_type": "verifier-supported"}
+    payload["records"][0]["verifier_verdicts"] = {"self_serve": "not_run", "gate_type": "supported"}
+    (data / "results.json").write_text(json.dumps(payload))
+    (data / "run_stats_pass3.json").write_text(
+        json.dumps({"pass": 3, "apps": 3, "wall_clock_s": 1, "usage": {"models": {}, "cost_usd_known": 0.0}})
+    )
+    (data / "runs" / "acme_pass3.json").write_text(
+        json.dumps(
+            {"app": "Acme", "nodes": [{"node": "reresearch3", "kept": ["self_serve", "gate_type"], "verifier": "m"}]}
+        )
+    )
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "1 of 2 re-research claims are quote-verified only" in html
+    assert "1 apps crashed in pass 2" in html
+    assert "and a second model checked them" not in html

@@ -9,5 +9,22 @@
     "reresearch": 0,
     "derived_rule": 0
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 10,
+      "fetched": 2,
+      "docs": 5,
+      "errors": [
+        "openai/gpt-oss-20b: RuntimeError"
+      ]
+    }
+  ]
 }

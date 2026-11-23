@@ -632,7 +632,7 @@ class LiveResearcher:
 
     def __call__(self, record: dict[str, Any], todo: list[str]) -> tuple[dict[str, Any], list[str]]:
         from opsresearch.extract import extract_record
-        from opsresearch.llm import GeminiJsonClient, GroqJsonClient
+        from opsresearch.llm import GroqJsonClient
         from opsresearch.ratelimit import get_rate_limiter
         from opsresearch.seed import url_is_official
 
@@ -656,7 +656,6 @@ class LiveResearcher:
         update = None
         attempts = [
             (_JsonPrompt(GroqJsonClient("openai/gpt-oss-20b")), ranked[:2], 3500),
-            (GeminiJsonClient("gemini-3.1-flash-lite"), ranked[:5], 8000),
         ]
         for client, chosen, clip in attempts:
             clipped = [CachedDoc(url=d.url, text=d.text[:clip], path=d.path, cache_hit=True) for d in chosen]
@@ -676,7 +675,7 @@ class LiveResearcher:
         return self._verify(merged, filled, ranked, entry)
 
     def _verify(self, record: dict[str, Any], filled: list[str], docs: list[CachedDoc], entry: dict) -> tuple:
-        from opsresearch.llm import GeminiJsonClient, GroqJsonClient
+        from opsresearch.llm import GroqJsonClient
         from opsresearch.verify import CROSS_SCHEMA, cross_model_prompt, parse_cross_model
 
         temp = copy.deepcopy(record)
@@ -684,11 +683,8 @@ class LiveResearcher:
         pages = {d.url: d.text for d in docs}
         prompt = cross_model_prompt(AppRecord.model_validate(temp), pages)
         extractor = entry.get("model")
-        chain = [
-            GeminiJsonClient("gemini-3.1-flash-lite"),
-            GeminiJsonClient("gemma-4-31b-it"),
-            GroqJsonClient("openai/gpt-oss-20b"),
-        ]
+        # Gemini 3.x and gemma were quota-spent or overloaded tonight; each failed call cost ~20 s of pacing.
+        chain = [GroqJsonClient("openai/gpt-oss-120b"), GroqJsonClient("openai/gpt-oss-20b")]
         chain = [c for c in chain if c.model_name != extractor]
         verdicts: dict[str, str] = {}
         for client in chain:

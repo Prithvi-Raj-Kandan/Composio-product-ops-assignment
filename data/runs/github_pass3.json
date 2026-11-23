@@ -6,7 +6,7 @@
     "policy_restore": 0,
     "composio_metadata": 1,
     "mcp_registry": 0,
-    "reresearch": 0,
+    "reresearch": 1,
     "derived_rule": 0
   },
   "nodes": [
@@ -21,9 +21,13 @@
       "probed": 14,
       "fetched": 0,
       "docs": 15,
+      "model": "openai/gpt-oss-20b",
       "errors": [
-        "openai/gpt-oss-20b: RuntimeError",
-        "gemini-3.1-flash-lite: RuntimeError"
+        "verify gemini-3.1-flash-lite: ClientError",
+        "verify gemma-4-31b-it: ServerError"
+      ],
+      "kept": [
+        "api_surface.rest"
       ]
     }
   ]

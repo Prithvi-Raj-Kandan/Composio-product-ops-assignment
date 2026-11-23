@@ -6,8 +6,27 @@
     "policy_restore": 0,
     "composio_metadata": 0,
     "mcp_registry": 0,
-    "reresearch": 0,
-    "derived_rule": 0
+    "reresearch": 2,
+    "derived_rule": 2
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 11,
+      "fetched": 3,
+      "docs": 10,
+      "model": "openai/gpt-oss-20b",
+      "verifier": "openai/gpt-oss-120b",
+      "kept": [
+        "self_serve",
+        "one_liner"
+      ]
+    }
+  ]
 }

@@ -9,5 +9,18 @@
     "reresearch": 0,
     "derived_rule": 0
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "one_liner"
+      ],
+      "probed": 14,
+      "fetched": 9,
+      "docs": 15,
+      "model": "openai/gpt-oss-20b"
+    }
+  ]
 }

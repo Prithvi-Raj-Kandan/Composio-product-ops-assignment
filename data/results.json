@@ -2043,10 +2043,10 @@
       "category": "CRM and Sales",
       "one_liner": "An AI-powered platform that provides robust deal and relationship workflows, key insights for better decision-making, and a central hub for collaboration and knowledge sharing.",
       "auth_methods": [
-        "unknown"
+        "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "admin_approval",
+      "gate_type": "admin_approval",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -2062,8 +2062,8 @@
       "composio_slug": null,
       "composio_toolkit_type": null,
       "composio_tools_count": null,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes_with_caveats",
+      "main_blocker": "platform_review",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -2089,13 +2089,53 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/dealcloud",
           "quote": "no toolkit for slugs dealcloud and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "auth_methods",
+          "url": "https://api.docs.dealcloud.com/docs/apikeys",
+          "quote": "API Key section",
+          "source": "doc"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://api.docs.dealcloud.com/docs/apikeys",
+          "quote": "If you do not see the Admin section, contact your organization's admin or DealCloud Customer Success Manager (CSM) for assistance.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://api.docs.dealcloud.com/docs/apikeys",
+          "quote": "If you do not see the Admin section, contact your organization's admin or DealCloud Customer Success Manager (CSM) for assistance.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://api.docs.dealcloud.com/docs",
+          "quote": "This site provides a comprehensive overview of our REST APIs",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://api.docs.dealcloud.com/docs/apikeys",
+          "quote": "If you do not see the Admin section, contact your organization's admin or DealCloud Customer Success Manager (CSM) for assistance.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://api.docs.dealcloud.com/docs",
+          "quote": "This site provides a comprehensive overview of our REST APIs",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://api.docs.dealcloud.com/docs/apikeys",
+          "quote": "If you do not see the Admin section, contact your organization's admin or DealCloud Customer Success Manager (CSM) for assistance.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "api_surface.styles": "no evidence quote and url"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -2112,13 +2152,21 @@
         "one_liner": "verifier-supported",
         "api_surface.rest": "verifier-supported",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "auth_methods": "verifier-supported",
+        "self_serve": "verifier-supported",
+        "gate_type": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "verifier_verdicts": {
         "one_liner": "supported",
         "api_surface.rest": "supported",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "auth_methods": "supported",
+        "self_serve": "supported",
+        "gate_type": "supported"
       }
     },
     {
@@ -2936,7 +2984,7 @@
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -2976,6 +3024,12 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/github",
           "quote": "auth_config_details / composio_managed_auth_schemes: OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api",
+          "quote": "REST API",
+          "source": "doc"
         }
       ],
       "confidence": 0.95,
@@ -2983,7 +3037,6 @@
         "self_serve": "no evidence quote and url",
         "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
-        "api_surface.rest": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
         "composio_toolkit_type": "no evidence quote and url",
@@ -3005,13 +3058,15 @@
         "one_liner": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
-        "auth_methods": "composio_metadata"
+        "auth_methods": "composio_metadata",
+        "api_surface.rest": "quote-verified"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "auth_methods": "not_run"
+        "auth_methods": "not_run",
+        "api_surface.rest": "not_run"
       }
     },
     {
@@ -4819,13 +4874,13 @@
     {
       "app": "Magento (Adobe Commerce)",
       "category": "Ecommerce",
-      "one_liner": "unknown",
+      "one_liner": "Adobe Commerce provides a wide range of REST API endpoints that allow you to perform actions on behalf of Commerce administrators, customers, and guest shoppers.",
       "auth_methods": [
         "oauth1",
         "bearer_token",
         "basic"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -4844,8 +4899,8 @@
       "composio_slug": null,
       "composio_toolkit_type": null,
       "composio_tools_count": null,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -4895,17 +4950,49 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/magento-adobe-commerce",
           "quote": "no toolkit for slugs magento-adobe-commerce, magentoadobecommerce, magento and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://developer.adobe.com/commerce",
+          "quote": "Developer playground",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developer.adobe.com/commerce/webapi/rest",
+          "quote": "Adobe Commerce provides a wide range of REST API endpoints that allow you to perform actions on behalf of Commerce administrators, customers, and guest shoppers.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developer.adobe.com/commerce/webapi/rest",
+          "quote": "The REST API documentation describes the REST APIs that are available in Adobe Commerce",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developer.adobe.com/commerce/webapi/graphql/reference",
+          "quote": "The Adobe Commerce and Magento Open Source GraphQL API provides a flexible",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developer.adobe.com/commerce/webapi/rest",
+          "quote": "The REST API documentation describes the REST APIs that are available in Adobe Commerce",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developer.adobe.com/commerce/webapi/graphql/reference",
+          "quote": "The Adobe Commerce and Magento Open Source GraphQL API provides a flexible",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "self_serve": "Pricing or account tier rules for accessing Adobe Commerce developer environments are not detailed in the docs.",
-        "one_liner": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -4924,7 +5011,11 @@
         "api_surface.graphql": "verifier-supported",
         "api_surface.styles": "verifier-supported",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -4932,19 +5023,22 @@
         "api_surface.graphql": "supported",
         "api_surface.styles": "supported",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "gate_type": "contradicted",
+        "one_liner": "supported"
       }
     },
     {
       "app": "Mailchimp",
       "category": "Marketing, Ads, Email and Social",
-      "one_liner": "unknown",
+      "one_liner": "Get links to all other resources available in the API.",
       "auth_methods": [
         "api_key",
         "oauth2",
         "bearer_token"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -4961,8 +5055,8 @@
       "composio_slug": "mailchimp",
       "composio_toolkit_type": "api",
       "composio_tools_count": 275,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -4994,19 +5088,51 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/mailchimp",
           "quote": "slug=mailchimp toolkit_type=api tools_count=275 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://mailchimp.com/pricing",
+          "quote": "Under 250 contacts? It's free.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://mailchimp.com/developer/marketing/api/root/list",
+          "quote": "Get links to all other resources available in the API.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://mailchimp.com/developer/marketing/api-concepts/methods-and-parameters",
+          "quote": "The Mailchimp Marketing API largely follows RESTful API conventions",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://mailchimp.com/pricing",
+          "quote": "Under 250 contacts? It's free.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://mailchimp.com/developer/marketing/api-concepts/methods-and-parameters",
+          "quote": "The Mailchimp Marketing API largely follows RESTful API conventions",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://mailchimp.com/pricing",
+          "quote": "Under 250 contacts? It's free.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -5023,13 +5149,20 @@
         "auth_methods": "verifier-supported",
         "api_surface.rest": "verifier-supported",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "api_surface.rest": "supported",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "contradicted",
+        "one_liner": "supported"
       }
     },
     {
@@ -6423,11 +6556,11 @@
     {
       "app": "Plaid",
       "category": "Finance and Fintech",
-      "one_liner": "unknown",
+      "one_liner": "Consumers connect their financial accounts to apps and services through Plaid at no cost.",
       "auth_methods": [
         "api_key"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
@@ -6444,8 +6577,8 @@
       "composio_slug": "plaid",
       "composio_toolkit_type": "api",
       "composio_tools_count": 70,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -6495,15 +6628,46 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/plaid",
           "quote": "auth_config_details / composio_managed_auth_schemes: API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://plaid.com/pricing",
+          "quote": "Free Trial allows you to make API calls using live data.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://plaid.com/pricing",
+          "quote": "Consumers connect their financial accounts to apps and services through Plaid at no cost.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://plaid.com/docs/api",
+          "quote": "The Plaid API is JSON over HTTP. Requests are POST requests, and responses are JSON",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://plaid.com/docs/api",
+          "quote": "The Plaid API is JSON over HTTP. Requests are POST requests, and responses are JSON",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://plaid.com/docs/api",
+          "quote": "The Plaid API is JSON over HTTP. Requests are POST requests, and responses are JSON",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://plaid.com/docs/api",
+          "quote": "The Plaid API is JSON over HTTP. Requests are POST requests, and responses are JSON",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
-      "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
-        "self_serve": "no evidence quote and url"
-      },
+      "unknown_reasons": {},
       "needs_human": false,
       "needs_human_reasons": [],
       "hint_url": "plaid.com/docs",
@@ -6523,7 +6687,11 @@
         "api_surface.styles": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
-        "auth_methods": "composio_metadata"
+        "auth_methods": "composio_metadata",
+        "self_serve": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "verifier_verdicts": {
         "gate_type": "not_run",
@@ -6533,7 +6701,9 @@
         "api_surface.styles": "not_run",
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "auth_methods": "not_run"
+        "auth_methods": "not_run",
+        "self_serve": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -6543,7 +6713,7 @@
       "auth_methods": [
         "api_key"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -6560,8 +6730,8 @@
       "composio_slug": "plain",
       "composio_toolkit_type": "api",
       "composio_tools_count": 119,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -6587,6 +6757,36 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/plain",
           "quote": "auth_config_details / composio_managed_auth_schemes: API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://plain.com/docs/getting-started",
+          "quote": "The person signs up themselves.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://www.plain.com/docs/graphql/introduction",
+          "quote": "Plain itself is built on this same GraphQL API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://plain.com/docs/getting-started",
+          "quote": "The person signs up themselves.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://www.plain.com/docs/graphql/introduction",
+          "quote": "Plain itself is built on this same GraphQL API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://plain.com/docs/getting-started",
+          "quote": "The person signs up themselves.",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -6608,13 +6808,17 @@
         "api_surface.graphql": "quote-verified",
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "verifier_verdicts": {
         "api_surface.graphql": "not_run",
         "existing_mcp": "not_run",
         "auth_methods": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient"
       }
     },
     {
@@ -7729,12 +7933,12 @@
     {
       "app": "Sherlock",
       "category": "Data, SEO and Scraping",
-      "one_liner": "unknown",
+      "one_liner": "Hunt down social media accounts by username across 400+ social networks",
       "auth_methods": [
         "none"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "no",
@@ -7779,6 +7983,24 @@
           "source": "composio_metadata"
         },
         {
+          "field": "self_serve",
+          "url": "https://github.com/sherlock-project/sherlock",
+          "quote": "Hunt down social media accounts by username across 400+ social networks",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://github.com/sherlock-project/sherlock",
+          "quote": "Hunt down social media accounts by username across 400+ social networks",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://github.com/sherlock-project/sherlock",
+          "quote": "Hunt down social media accounts by username across 400+ social networks",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://github.com/sherlock-project/sherlock",
           "quote": "usage: sherlock [-h] [--version] [--verbose] [--folderoutput FOLDEROUTPUT]",
@@ -7792,11 +8014,7 @@
         }
       ],
       "confidence": 1.0,
-      "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url"
-      },
+      "unknown_reasons": {},
       "needs_human": false,
       "needs_human_reasons": [],
       "hint_url": "github.com/sherlock-project/sherlock",
@@ -7817,7 +8035,10 @@
         "existing_mcp": "mcp_registry",
         "buildability": "derived_rule",
         "main_blocker": "derived_rule",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "gate_type": "quote-verified",
+        "one_liner": "quote-verified"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7828,7 +8049,10 @@
         "existing_mcp": "not_run",
         "buildability": "not_run",
         "main_blocker": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "not_run",
+        "gate_type": "not_run",
+        "one_liner": "not_run"
       }
     },
     {

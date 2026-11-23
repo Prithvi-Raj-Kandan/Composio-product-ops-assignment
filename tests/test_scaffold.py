@@ -17,5 +17,9 @@ def test_help_lists_commands(capsys) -> None:
         assert name in captured.out
 
 
-def test_unimplemented_command_is_explicit() -> None:
-    assert main(["export"]) == 2
+def test_run_requires_a_pass() -> None:
+    try:
+        code = main(["run"])
+    except SystemExit as exc:
+        code = exc.code
+    assert code != 0

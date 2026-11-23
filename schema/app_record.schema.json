@@ -1,0 +1,415 @@
+{
+  "$defs": {
+    "ApiBreadth": {
+      "enum": [
+        "narrow",
+        "medium",
+        "broad",
+        "unknown"
+      ],
+      "title": "ApiBreadth",
+      "type": "string"
+    },
+    "ApiStyle": {
+      "enum": [
+        "rest",
+        "graphql",
+        "soap",
+        "sdk_only",
+        "cli_only",
+        "none",
+        "unknown"
+      ],
+      "title": "ApiStyle",
+      "type": "string"
+    },
+    "ApiSurface": {
+      "additionalProperties": false,
+      "properties": {
+        "rest": {
+          "$ref": "#/$defs/YesNoUnknown",
+          "description": "yes, no, or unknown. no is a claim and needs evidence."
+        },
+        "graphql": {
+          "$ref": "#/$defs/YesNoUnknown",
+          "description": "yes, no, or unknown."
+        },
+        "breadth": {
+          "$ref": "#/$defs/ApiBreadth",
+          "description": "narrow is under 20 endpoints, medium is 20 to 99, broad is 100 or more."
+        },
+        "styles": {
+          "description": "API styles actually offered. unknown if the docs do not say.",
+          "items": {
+            "$ref": "#/$defs/ApiStyle"
+          },
+          "title": "Styles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rest",
+        "graphql",
+        "breadth"
+      ],
+      "title": "ApiSurface",
+      "type": "object"
+    },
+    "AuthMethod": {
+      "enum": [
+        "oauth2",
+        "oauth1",
+        "api_key",
+        "basic",
+        "bearer_token",
+        "jwt",
+        "session",
+        "none",
+        "unknown"
+      ],
+      "title": "AuthMethod",
+      "type": "string"
+    },
+    "Blocker": {
+      "enum": [
+        "none",
+        "partner_program",
+        "contact_sales",
+        "no_public_api",
+        "login_walled_docs",
+        "unclear_entity",
+        "platform_review",
+        "enterprise_only",
+        "unknown"
+      ],
+      "title": "Blocker",
+      "type": "string"
+    },
+    "Buildability": {
+      "enum": [
+        "yes",
+        "yes_with_caveats",
+        "no",
+        "unknown"
+      ],
+      "title": "Buildability",
+      "type": "string"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "Record field this quote supports.",
+          "title": "Field",
+          "type": "string"
+        },
+        "url": {
+          "description": "http(s) URL of the page or API response.",
+          "title": "Url",
+          "type": "string"
+        },
+        "quote": {
+          "description": "Verbatim span from that URL.",
+          "title": "Quote",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/EvidenceSource",
+          "default": "doc",
+          "description": "doc quotes are checked against the page. Oracle and registry quotes are not."
+        }
+      },
+      "required": [
+        "field",
+        "url",
+        "quote"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceSource": {
+      "enum": [
+        "doc",
+        "composio_oracle",
+        "mcp_registry"
+      ],
+      "title": "EvidenceSource",
+      "type": "string"
+    },
+    "ExistingMcp": {
+      "enum": [
+        "official",
+        "community",
+        "none",
+        "unknown"
+      ],
+      "title": "ExistingMcp",
+      "type": "string"
+    },
+    "GateType": {
+      "enum": [
+        "none",
+        "paid_plan",
+        "admin_approval",
+        "partner",
+        "contact_sales",
+        "platform_review",
+        "login_wall",
+        "unknown"
+      ],
+      "title": "GateType",
+      "type": "string"
+    },
+    "SelfServe": {
+      "enum": [
+        "self_serve_free",
+        "self_serve_trial",
+        "paid_plan_required",
+        "admin_approval",
+        "partner_gated",
+        "contact_sales",
+        "unknown"
+      ],
+      "title": "SelfServe",
+      "type": "string"
+    },
+    "YesNoUnknown": {
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "title": "YesNoUnknown",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One app after extraction. Concrete fields without evidence become unknown.",
+  "properties": {
+    "app": {
+      "title": "App",
+      "type": "string"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "one_liner": {
+      "default": "unknown",
+      "title": "One Liner",
+      "type": "string"
+    },
+    "auth_methods": {
+      "items": {
+        "$ref": "#/$defs/AuthMethod"
+      },
+      "title": "Auth Methods",
+      "type": "array"
+    },
+    "self_serve": {
+      "$ref": "#/$defs/SelfServe",
+      "default": "unknown"
+    },
+    "gate_type": {
+      "$ref": "#/$defs/GateType",
+      "default": "unknown"
+    },
+    "gate_detail": {
+      "default": "unknown",
+      "title": "Gate Detail",
+      "type": "string"
+    },
+    "api_surface": {
+      "$ref": "#/$defs/ApiSurface"
+    },
+    "existing_mcp": {
+      "$ref": "#/$defs/ExistingMcp",
+      "default": "unknown"
+    },
+    "mcp_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mcp Url"
+    },
+    "composio_has_toolkit": {
+      "$ref": "#/$defs/YesNoUnknown",
+      "default": "unknown"
+    },
+    "composio_slug": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Composio Slug"
+    },
+    "composio_toolkit_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Composio Toolkit Type"
+    },
+    "composio_tools_count": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Composio Tools Count"
+    },
+    "buildability": {
+      "$ref": "#/$defs/Buildability",
+      "default": "unknown"
+    },
+    "main_blocker": {
+      "$ref": "#/$defs/Blocker",
+      "default": "unknown"
+    },
+    "blocker_detail": {
+      "default": "unknown",
+      "title": "Blocker Detail",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "unknown_reasons": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Unknown Reasons",
+      "type": "object"
+    },
+    "needs_human": {
+      "default": false,
+      "title": "Needs Human",
+      "type": "boolean"
+    },
+    "needs_human_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Needs Human Reasons",
+      "type": "array"
+    },
+    "hint_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Hint Url"
+    },
+    "official_domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Official Domain"
+    },
+    "source_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Id"
+    },
+    "extraction_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Extraction Model"
+    },
+    "verifier_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Verifier Model"
+    },
+    "pass_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pass Id"
+    }
+  },
+  "required": [
+    "app",
+    "category"
+  ],
+  "title": "AppRecord",
+  "type": "object",
+  "$id": "https://github.com/Prithvi-Raj-Kandan/Composio-product-ops-assignment/blob/main/schema/app_record.schema.json",
+  "$comment": "schema_version 1.0.0. unknown is a value. A concrete value with no evidence is not valid agent output."
+}

@@ -89,3 +89,7 @@ def test_api_dependency_chains_to_rest_reason():
     log3 = {"nodes": [{"node": "reresearch3", "fields": ["api_surface.rest"], "docs": 0}]}
     out = derive_unknown_reasons(rec, None, log3, pages=[])
     assert out["buildability"] == "api_surface unknown: no docs page found"
+
+
+def test_tally_skips_one_liner():
+    assert tally([{"unknown_reason": {"one_liner": "x", "self_serve": "y"}}]) == [("y", 1, 0)]

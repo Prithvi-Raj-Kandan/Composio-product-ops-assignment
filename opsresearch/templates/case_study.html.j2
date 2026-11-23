@@ -115,7 +115,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 {% macro ur(r, f) %}{% set why = (r.unknown_reason or {}).get(f) %}{% if why %}<div class="ur">{{ why }}</div>{% endif %}{% endmacro %}
 {% for r in records %}
 <tr>
-<td><b>{{ r.app }}</b><div class="small">{{ r.one_liner }}</div>{{ ur(r,'one_liner') }}</td>
+<td><b>{{ r.app }}</b>{% if r.one_liner and r.one_liner != 'unknown' %}<div class="small">{{ r.one_liner }}</div>{% endif %}</td>
 <td>{{ r.category }}</td>
 <td>{% for a in r.auth_methods %}{{ vp(a) }} {% endfor %}{{ ur(r,'auth_methods') }}<div class="ev">{{ evl(r,'auth_methods') }}</div></td>
 <td>{{ vp(r.self_serve) }}{{ ur(r,'self_serve') }}{% if r.gate_type not in ['none','unknown'] %}<div class="small">{{ r.gate_type }}</div>{% endif %}<div class="ev">{{ evl(r,'self_serve') }}{{ evl(r,'gate_type') }}</div></td>

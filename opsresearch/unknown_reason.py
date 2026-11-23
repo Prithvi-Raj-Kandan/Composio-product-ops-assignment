@@ -108,7 +108,9 @@ def tally(records: list[dict[str, Any]]) -> list[tuple[str, int, int]]:
     counts: Counter = Counter()
     derived: Counter = Counter()
     for r in records:
-        for reason in (r.get("unknown_reason") or {}).values():
+        for field, reason in (r.get("unknown_reason") or {}).items():
+            if field == "one_liner":  # not shown on the page, so not counted
+                continue
             root, is_derived = root_reason(reason)
             counts[root] += 1
             derived[root] += is_derived

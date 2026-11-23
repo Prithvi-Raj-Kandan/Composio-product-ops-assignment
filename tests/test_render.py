@@ -291,3 +291,16 @@ def test_unknown_cells_show_reason_caption_and_tally(tmp_path) -> None:
     assert 'id="unknown-reasons"' in html
     assert "<td>no pricing page</td><td>2</td><td>1</td>" in html
     assert '<div class="ur">self_serve unknown: no pricing page</div>' in html
+
+
+def test_unknown_one_liner_shows_nothing(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    payload = json.loads((data / "results.json").read_text())
+    payload["records"][0]["one_liner"] = "unknown"
+    payload["records"][0]["unknown_reason"] = {"one_liner": "only in one liner", "self_serve": "no pricing page"}
+    (data / "results.json").write_text(json.dumps(payload))
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert '<b>Acme</b><div class="small">unknown</div>' not in html
+    assert "only in one liner" not in html
+    assert "<td>no pricing page</td>" in html

@@ -65,7 +65,9 @@ Tools: `query_apps` (filter by category, self_serve, gate_type, existing_mcp, co
 
 ## Where a human is needed
 
-See [HUMAN_IN_THE_LOOP.md](HUMAN_IN_THE_LOOP.md). In short: provide keys (and repo secrets for the Action), connect Composio's Tavily toolkit once, confirm ambiguous domains (`data/domain_overrides.csv`, already done for 6 apps and marked `human_override` on those rows), read the `needs_human` rows, and approve publishing. The 20-app gold set is labelled once by the owner and ships in `data/gold/`; replicators do not label.
+See [HUMAN_IN_THE_LOOP.md](HUMAN_IN_THE_LOOP.md). In short: provide keys (and repo secrets for the Action), connect Composio's Tavily toolkit once, confirm ambiguous domains (`data/domain_overrides.csv`, already done for 6 apps and marked `human_override` on those rows), read the `needs_human` rows, and approve publishing. The 20-app gold set ships in `data/gold/`; replicators do not label.
+
+**About the accuracy numbers:** the gold labels were made by an AI assistant (Grok Bot) working independently from official docs, not by a human. It did not look at the pipeline's output. So the dev/test accuracy measures agreement between two AI processes and is not ground truth. **Human intervention needed:** a human should audit the 20 labels (`data/gold/gold_labels.csv`, one evidence URL per field, doubts in `notes`) before the numbers are trusted. See step 4 in HUMAN_IN_THE_LOOP.md.
 
 ## Tests
 

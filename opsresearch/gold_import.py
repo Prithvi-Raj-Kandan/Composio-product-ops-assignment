@@ -155,12 +155,13 @@ def map_row(row: dict[str, str]) -> tuple[dict[str, str], list[tuple[str, str, s
     docs = row.get("docs_url_found", "").strip()
     out["doc_auth"] = evidence
     out["doc_self_serve"] = evidence
-    out["doc_api"] = docs
-    out["doc_mcp"] = docs
-    out["doc_buildability"] = evidence or docs
+    out["doc_api"] = (row.get("evidence_api_url") or "").strip() or docs
+    out["doc_mcp"] = (row.get("evidence_mcp_url") or "").strip() or docs
+    out["doc_buildability"] = (row.get("evidence_buildability_url") or "").strip() or evidence or docs
+    labeller = (row.get("labeller") or "").strip()
     notes = row.get("labeller_notes", "").strip()
     minutes = row.get("minutes_spent", "").strip()
-    out["notes"] = "; ".join(x for x in [notes, f"{minutes} min" if minutes else ""] if x)
+    out["notes"] = "; ".join(x for x in [labeller, notes, f"{minutes} min" if minutes else ""] if x)
     return out, unmapped
 
 

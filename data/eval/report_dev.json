@@ -1,0 +1,1285 @@
+{
+  "split": "dev",
+  "gold_apps": [
+    "Coda",
+    "Devin",
+    "GitHub",
+    "Gladly",
+    "GoHighLevel",
+    "PitchBook",
+    "Salesforce",
+    "Sherlock",
+    "Slack",
+    "fanbasis"
+  ],
+  "pass1": {
+    "split": "dev",
+    "pass": 1,
+    "missing_results": false,
+    "labelled_cells": 80,
+    "correct_cells": 11,
+    "unlabelled_cells": 0,
+    "accuracy": 0.1375,
+    "per_field": {
+      "auth_methods": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "self_serve": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "api_rest": {
+        "labelled": 10,
+        "correct": 2,
+        "accuracy": 0.2
+      },
+      "api_graphql": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "api_breadth": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "existing_mcp": {
+        "labelled": 10,
+        "correct": 3,
+        "accuracy": 0.3
+      },
+      "buildability": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "main_blocker": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      }
+    },
+    "taxonomy": {
+      "partial": 2,
+      "underclaim": 64,
+      "exact_miss": 2,
+      "overclaim": 1
+    },
+    "errors": [
+      {
+        "app": "Salesforce",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "bearer_token|oauth2",
+        "gold": "oauth2",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "basic",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "oauth2",
+        "gold": "bearer_token|oauth2",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token|oauth2",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token|oauth2",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "self_serve",
+        "taxonomy": "exact_miss",
+        "predicted": "self_serve_trial",
+        "gold": "self_serve_free",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_trial",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 1
+      },
+      {
+        "app": "Sherlock",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "self_serve",
+        "taxonomy": "exact_miss",
+        "predicted": "self_serve_trial",
+        "gold": "paid_plan_required",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "existing_mcp",
+        "taxonomy": "overclaim",
+        "predicted": "official",
+        "gold": "unknown",
+        "pass": 1
+      },
+      {
+        "app": "Sherlock",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "community",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 1
+      },
+      {
+        "app": "Salesforce",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 1
+      },
+      {
+        "app": "Gladly",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 1
+      },
+      {
+        "app": "Slack",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 1
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "enterprise_only",
+        "pass": 1
+      },
+      {
+        "app": "fanbasis",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 1
+      },
+      {
+        "app": "GitHub",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 1
+      },
+      {
+        "app": "Coda",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 1
+      },
+      {
+        "app": "PitchBook",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 1
+      },
+      {
+        "app": "Devin",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "enterprise_only",
+        "pass": 1
+      }
+    ]
+  },
+  "pass2": {
+    "split": "dev",
+    "pass": 2,
+    "missing_results": false,
+    "labelled_cells": 80,
+    "correct_cells": 11,
+    "unlabelled_cells": 0,
+    "accuracy": 0.1375,
+    "per_field": {
+      "auth_methods": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "self_serve": {
+        "labelled": 10,
+        "correct": 0,
+        "accuracy": 0.0
+      },
+      "api_rest": {
+        "labelled": 10,
+        "correct": 2,
+        "accuracy": 0.2
+      },
+      "api_graphql": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "api_breadth": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "existing_mcp": {
+        "labelled": 10,
+        "correct": 3,
+        "accuracy": 0.3
+      },
+      "buildability": {
+        "labelled": 10,
+        "correct": 2,
+        "accuracy": 0.2
+      },
+      "main_blocker": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      }
+    },
+    "taxonomy": {
+      "partial": 1,
+      "underclaim": 63,
+      "exact_miss": 5
+    },
+    "errors": [
+      {
+        "app": "Salesforce",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "bearer_token|oauth2",
+        "gold": "oauth2",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "basic",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token|oauth2",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token|oauth2",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token|oauth2",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "bearer_token",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 2
+      },
+      {
+        "app": "Salesforce",
+        "field": "self_serve",
+        "taxonomy": "exact_miss",
+        "predicted": "self_serve_trial",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_trial",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "Sherlock",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "paid_plan_required",
+        "pass": 2
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "Salesforce",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "community",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "community",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "Sherlock",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "official",
+        "gold": "community",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "none",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "existing_mcp",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "official",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 2
+      },
+      {
+        "app": "Salesforce",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 2
+      },
+      {
+        "app": "Gladly",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 2
+      },
+      {
+        "app": "Slack",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 2
+      },
+      {
+        "app": "GoHighLevel",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "enterprise_only",
+        "pass": 2
+      },
+      {
+        "app": "fanbasis",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 2
+      },
+      {
+        "app": "GitHub",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 2
+      },
+      {
+        "app": "Coda",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 2
+      },
+      {
+        "app": "PitchBook",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 2
+      },
+      {
+        "app": "Devin",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "enterprise_only",
+        "pass": 2
+      }
+    ]
+  },
+  "comparison": {
+    "split": "dev",
+    "pass1_accuracy": 0.1375,
+    "pass2_accuracy": 0.1375,
+    "delta": 0.0,
+    "fields": {
+      "auth_methods": {
+        "pass1": 0.1,
+        "pass2": 0.1,
+        "delta": 0.0
+      },
+      "self_serve": {
+        "pass1": 0.1,
+        "pass2": 0.0,
+        "delta": -0.1
+      },
+      "api_rest": {
+        "pass1": 0.2,
+        "pass2": 0.2,
+        "delta": 0.0
+      },
+      "api_graphql": {
+        "pass1": 0.1,
+        "pass2": 0.1,
+        "delta": 0.0
+      },
+      "api_breadth": {
+        "pass1": 0.1,
+        "pass2": 0.1,
+        "delta": 0.0
+      },
+      "existing_mcp": {
+        "pass1": 0.3,
+        "pass2": 0.3,
+        "delta": 0.0
+      },
+      "buildability": {
+        "pass1": 0.1,
+        "pass2": 0.2,
+        "delta": 0.1
+      },
+      "main_blocker": {
+        "pass1": 0.1,
+        "pass2": 0.1,
+        "delta": 0.0
+      }
+    }
+  },
+  "note": "Accuracy is null when a cell has no human label or a pass file is missing. The harness does not invent a score."
+}

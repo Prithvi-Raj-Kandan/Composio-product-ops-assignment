@@ -128,3 +128,28 @@ def test_rule_verdicts_are_tagged(tmp_path) -> None:
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
     assert ">rule</span>" in html
     assert "1 buildability verdicts were derived" in html
+
+
+def _gold(repo, note):
+    gold = repo / "data" / "gold"
+    gold.mkdir(parents=True, exist_ok=True)
+    (gold / "gold_labels.csv").write_text(f"app,split,self_serve,notes\nAcme,dev,self_serve_free,{note}\n")
+
+
+def test_ai_made_gold_labels_are_disclosed_next_to_accuracy(tmp_path) -> None:
+    repo = _repo(tmp_path, with_eval=True)
+    _gold(repo, "assistant-labelled (Grok Bot), not human-audited; 2 min")
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "made by an AI assistant" in html
+    assert "not ground truth" in html
+    assert "agreement between two AI processes" in html
+    assert "A human should audit" in html
+    assert "hand-labelled" not in html
+
+
+def test_human_gold_labels_are_not_called_ai(tmp_path) -> None:
+    repo = _repo(tmp_path, with_eval=True)
+    _gold(repo, "checked the pricing page")
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "These gold labels were made by an AI assistant" not in html
+    assert "agreement between two AI processes" not in html

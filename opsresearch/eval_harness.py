@@ -156,13 +156,14 @@ def score_split(
     }
 
 
-def compare_passes(pass1: dict[str, Any], pass2: dict[str, Any]) -> dict[str, Any]:
+def compare_passes(pass1: dict[str, Any], pass2: dict[str, Any], pass3: dict[str, Any] | None = None) -> dict[str, Any]:
     fields = {}
     for field in SCORED_FIELDS:
         before = pass1["per_field"][field]["accuracy"]
         after = pass2["per_field"][field]["accuracy"]
         delta = None if before is None or after is None else after - before
         fields[field] = {"pass1": before, "pass2": after, "delta": delta}
+        fields[field]["pass3"] = pass3["per_field"][field]["accuracy"] if pass3 else None
     overall_delta = None
     if pass1["accuracy"] is not None and pass2["accuracy"] is not None:
         overall_delta = pass2["accuracy"] - pass1["accuracy"]
@@ -170,6 +171,7 @@ def compare_passes(pass1: dict[str, Any], pass2: dict[str, Any]) -> dict[str, An
         "split": pass1["split"],
         "pass1_accuracy": pass1["accuracy"],
         "pass2_accuracy": pass2["accuracy"],
+        "pass3_accuracy": pass3["accuracy"] if pass3 else None,
         "delta": overall_delta,
         "fields": fields,
     }
@@ -199,12 +201,15 @@ def evaluate(repo: Path, split: str) -> dict[str, Any]:
     pass2_records = _load_pass(repo / "data" / "results_pass2.json")
     pass1 = score_split(labels, pass1_records, split, pass_num=1)
     pass2 = score_split(labels, pass2_records, split, pass_num=2)
+    pass3_records = _load_pass(repo / "data" / "results_pass3.json")
+    pass3 = score_split(labels, pass3_records, split, pass_num=3) if pass3_records is not None else None
     report = {
         "split": split,
         "gold_apps": sorted(gold_apps),
         "pass1": pass1,
         "pass2": pass2,
-        "comparison": compare_passes(pass1, pass2),
+        **({"pass3": pass3} if pass3 else {}),
+        "comparison": compare_passes(pass1, pass2, pass3),
         "note": (
             "Accuracy is null when a cell has no human label or a pass file is missing. "
             "The harness does not invent a score."

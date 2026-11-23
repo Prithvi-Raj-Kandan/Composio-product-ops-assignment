@@ -94,3 +94,16 @@ def test_partial_auth_set_is_not_a_full_hit() -> None:
     assert scored["per_field"]["auth_methods"]["accuracy"] == 0
     assert scored["errors"][0]["taxonomy"] == "partial"
     assert scored["per_field"]["self_serve"]["labelled"] == 0
+
+
+def test_pass3_is_scored_when_present() -> None:
+    from opsresearch.eval_harness import compare_passes
+
+    labels = [{"app": "Acme", "split": "dev", "self_serve": "self_serve_free"}]
+    p1 = score_split(labels, [{"app": "Acme", "self_serve": "unknown"}], "dev", pass_num=1)
+    p2 = score_split(labels, [{"app": "Acme", "self_serve": "unknown"}], "dev", pass_num=2)
+    p3 = score_split(labels, [{"app": "Acme", "self_serve": "self_serve_free"}], "dev", pass_num=3)
+    comparison = compare_passes(p1, p2, p3)
+    assert comparison["pass3_accuracy"] == 1
+    assert comparison["fields"]["self_serve"]["pass3"] == 1
+    assert compare_passes(p1, p2)["pass3_accuracy"] is None

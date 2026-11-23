@@ -559,6 +559,40 @@ class _ShortClient:
         return httpx.get(url, follow_redirects=True, timeout=10, headers={"User-Agent": "opsresearch/0.1"})
 
 
+class _JsonPrompt:
+    """Groq json_object mode rejects a prompt that never says 'json'; the rubric is unchanged."""
+
+    def __init__(self, inner: Any) -> None:
+        self.inner = inner
+        self.model_name = inner.model_name
+
+    def complete_json(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        suffix = (
+            "\n\nReply with one JSON object shaped like "
+            '{"self_serve": "...", "auth_methods": ["api_key"], "api_surface": {"rest": "yes", "graphql": "unknown", '
+            '"breadth": "unknown", "styles": ["rest"]}, "evidence": [{"field": "self_serve", "url": "https://...", '
+            '"quote": "verbatim text from that page", "source": "doc"}]}. Every evidence item names its field.'
+        )
+        return tidy_output(self.inner.complete_json(prompt + suffix, schema))
+
+
+def tidy_output(data: dict[str, Any]) -> dict[str, Any]:
+    """Shape fixes only (a bare string where a list belongs, extra keys); never invents a value."""
+    out = dict(data)
+    if isinstance(out.get("auth_methods"), str):
+        out["auth_methods"] = [out["auth_methods"]]
+    surface = out.get("api_surface")
+    if isinstance(surface, dict) and isinstance(surface.get("styles"), str):
+        surface["styles"] = [surface["styles"]]
+    evidence = []
+    for item in out.get("evidence") or []:
+        if isinstance(item, dict) and item.get("field") and item.get("url") and item.get("quote"):
+            evidence.append({k: item[k] for k in ("field", "url", "quote")} | {"source": "doc"})
+    out["evidence"] = evidence
+    out.pop("confidence", None)
+    return out
+
+
 class LiveResearcher:
     """Probe official doc paths, extract only still-unknown fields, then a second model checks them."""
 
@@ -621,7 +655,7 @@ class LiveResearcher:
         limiter = get_rate_limiter()
         update = None
         attempts = [
-            (GroqJsonClient("openai/gpt-oss-20b"), ranked[:2], 3500),
+            (_JsonPrompt(GroqJsonClient("openai/gpt-oss-20b")), ranked[:2], 3500),
             (GeminiJsonClient("gemini-3.1-flash-lite"), ranked[:5], 8000),
         ]
         for client, chosen, clip in attempts:

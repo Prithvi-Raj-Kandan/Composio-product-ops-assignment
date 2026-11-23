@@ -153,3 +153,33 @@ def test_human_gold_labels_are_not_called_ai(tmp_path) -> None:
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
     assert "These gold labels were made by an AI assistant" not in html
     assert "agreement between two AI processes" not in html
+
+
+def test_pass3_before_after_and_confidence_tags(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    payload = json.loads((data / "results.json").read_text())
+    p2 = json.loads(json.dumps(payload))
+    for r in p2["records"]:
+        r["self_serve"] = "unknown"
+    (data / "results_pass2.json").write_text(json.dumps(p2))
+    payload["pass"] = 3
+    payload["records"][0]["field_confidence"] = {"self_serve": "quote-verified", "auth_methods": "composio_metadata"}
+    (data / "results.json").write_text(json.dumps(payload))
+    (data / "run_stats_pass3.json").write_text(
+        json.dumps(
+            {
+                "pass": 3,
+                "apps": 3,
+                "wall_clock_s": 60,
+                "fields_filled_by_step": {"policy_restore": 3, "composio_metadata": 1},
+                "usage": {"models": {"m": {"calls": 2}}, "cost_usd_known": 0.0},
+            }
+        )
+    )
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert 'id="pass3"' in html
+    assert "Pass 1 → pass 2 → pass 3" in html
+    assert "quote-verified" in html and "composio_metadata" in html
+    assert "policy_restore" in html
+    assert "Only <b>contradicted</b> demotes" in html

@@ -1,0 +1,43 @@
+{
+  "app": "Intercom",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "intercom.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://intercom.com",
+        "https://developers.intercom.com/docs/build-an-integration/learn-more/authentication",
+        "https://developers.intercom.com/docs/references/rest-api/api.intercom.io/companies",
+        "https://developers.intercom.com/docs/references/introduction",
+        "https://developers.intercom.com/docs/references/rest-api/api.intercom.io"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": [
+        "https://intercom.com"
+      ]
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

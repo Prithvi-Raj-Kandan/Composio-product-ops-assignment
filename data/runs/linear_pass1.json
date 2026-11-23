@@ -1,0 +1,42 @@
+{
+  "app": "Linear",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "linear.app",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.linear.app",
+        "https://linear.app/developers/graphql",
+        "https://linear.app/docs/api-and-webhooks",
+        "https://linear.app/pricing",
+        "https://linear.app/docs/mcp",
+        "https://linear.app/developers"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

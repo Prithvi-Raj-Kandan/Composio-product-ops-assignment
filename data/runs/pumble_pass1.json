@@ -1,0 +1,40 @@
+{
+  "app": "Pumble",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "pumble.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://pumble.com",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration",
+        "https://pumble.com/learn/pumble/ai-automation-guide",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 3,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

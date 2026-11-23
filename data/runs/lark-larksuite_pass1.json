@@ -1,0 +1,42 @@
+{
+  "app": "Lark (Larksuite)",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "larksuite.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://open.larksuite.com",
+        "https://open.larksuite.com/document/ukTMukTMukTM/uMTNz4yM1MjLzUzM",
+        "https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/tenant-v2",
+        "https://open.larksuite.com/document/ukTMukTMukTM/ucDN3UjL3QzN14yN0cTN",
+        "https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/mcp_integration/install-and-use-document-search-mcp",
+        "https://open.larksuite.com/document/ukTMukTMukTM/uITNz4iM1MjLyUzM"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "app": "Apify",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "apify.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://docs.apify.com",
+        "https://docs.apify.com/integrations/api",
+        "https://docs.apify.com/api/v2",
+        "https://docs.apify.com/api/v2/getting-started",
+        "https://docs.apify.com/api",
+        "https://apify.com/junipr/actor-pricing-simulator/api"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

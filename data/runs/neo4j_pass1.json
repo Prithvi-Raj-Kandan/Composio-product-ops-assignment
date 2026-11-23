@@ -1,0 +1,44 @@
+{
+  "app": "Neo4j",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "neo4j.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://neo4j.com/docs/api",
+        "https://neo4j.com/docs/query-api/current/authentication-authorization",
+        "https://neo4j.com/docs/http-api/current/authentication-authorization",
+        "https://neo4j.com/docs/mcp/current/authentication",
+        "https://neo4j.com/labs/agent-memory/reference/authentication",
+        "https://neo4j.com/pricing"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 5,
+      "failed": [
+        "https://neo4j.com/docs/api"
+      ]
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "app": "fanbasis",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "commas.com",
+      "source": "human_override",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://commas.com",
+        "https://commasdocs.com/",
+        "https://commas.com/fanbasis-is-now-commas"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 0
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 3,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

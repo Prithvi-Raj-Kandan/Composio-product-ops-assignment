@@ -1,0 +1,38 @@
+{
+  "app": "Xero",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "xero.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.xero.com",
+        "https://developer.xero.com/documentation/api/accounting/overview"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 1
+    },
+    {
+      "node": "fetch",
+      "pages": 2,
+      "cache_hits": 1,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

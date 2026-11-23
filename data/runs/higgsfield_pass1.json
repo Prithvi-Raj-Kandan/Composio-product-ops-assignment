@@ -1,0 +1,42 @@
+{
+  "app": "higgsfield",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "higgsfield.ai",
+      "source": "human_override",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://higgsfield.ai",
+        "https://docs.higgsfield.ai/docs",
+        "https://docs.higgsfield.ai/docs/authentication",
+        "https://open.higgsfield.ai/quick-start",
+        "https://higgsfield.ai/blog/higgsfield-api",
+        "https://higgsfield.ai/blog/ai-video-api-pricing-vs-subscriptions"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

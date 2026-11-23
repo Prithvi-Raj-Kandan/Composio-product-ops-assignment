@@ -1,0 +1,42 @@
+{
+  "app": "HubSpot",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "hubspot.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://hubspot.com",
+        "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+        "https://developers.hubspot.com/docs/apps/legacy-apps/authentication/intro-to-auth",
+        "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/account-service-keys",
+        "https://developers.hubspot.com/docs/developer-tooling/platform/usage-guidelines",
+        "https://www.hubspot.com/2026-entry-and-tiers-policy-for-hubspot-solutions-partners"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

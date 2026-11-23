@@ -123,9 +123,7 @@ def test_fallback_client_is_used_when_the_first_fails() -> None:
     backup = FakeLlm(
         {
             "auth_methods": ["api_key"],
-            "evidence": [
-                {"field": "auth_methods", "url": "https://example.com/docs", "quote": quote, "source": "doc"}
-            ],
+            "evidence": [{"field": "auth_methods", "url": "https://example.com/docs", "quote": quote, "source": "doc"}],
         },
         name="gemini-2.5-flash-lite",
     )

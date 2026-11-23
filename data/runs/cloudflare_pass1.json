@@ -1,0 +1,42 @@
+{
+  "app": "Cloudflare",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "cloudflare.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.cloudflare.com/api",
+        "https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication",
+        "https://developers.cloudflare.com/r2/api/tokens",
+        "https://developers.cloudflare.com/fundamentals/api/get-started/create-token",
+        "https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-key-auth",
+        "https://www.cloudflare.com/plans"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

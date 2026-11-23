@@ -1,0 +1,39 @@
+{
+  "app": "Harvest",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "getharvest.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://harvestapp.com",
+        "https://help.getharvest.com/api-v2/authentication-api/authentication/authentication",
+        "https://help.getharvest.com/api-v2"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 2
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 2,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

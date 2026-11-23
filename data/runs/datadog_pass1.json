@@ -1,0 +1,42 @@
+{
+  "app": "Datadog",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "datadoghq.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://docs.datadoghq.com/api",
+        "https://docs.datadoghq.com/api/latest",
+        "https://docs.datadoghq.com/api/latest/authentication",
+        "https://www.datadoghq.com/blog/datadog-api-authentication",
+        "https://www.datadoghq.com/pricing",
+        "https://docs.datadoghq.com/mcp_server"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

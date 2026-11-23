@@ -1,0 +1,44 @@
+{
+  "app": "Zoho Cliq",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "zoho.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://zoho.com/cliq",
+        "https://www.zoho.com/cliq/help/restapi/v3/oauth",
+        "https://www.zoho.com/cliq/help/restapi/v3/introduction",
+        "https://www.zoho.com/cliq/help/restapi/v3/postman",
+        "https://www.zoho.com/cliq/mcp-server.html",
+        "https://www.zoho.com/cliq/help/platform/configure-zoho-cliq-mcp.html"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 5,
+      "failed": [
+        "https://zoho.com/cliq"
+      ]
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

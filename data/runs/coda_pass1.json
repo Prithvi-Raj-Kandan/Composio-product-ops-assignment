@@ -1,0 +1,38 @@
+{
+  "app": "Coda",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "coda.io",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://coda.io/developers",
+        "https://coda.io/packs/build/latest/guides/basics/authentication"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 1
+    },
+    {
+      "node": "fetch",
+      "pages": 2,
+      "cache_hits": 1,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "app": "Telegram",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "telegram.org",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://core.telegram.org",
+        "https://core.telegram.org/widgets/login",
+        "https://core.telegram.org/bots/api",
+        "https://core.telegram.org/api/obtaining_api_id"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

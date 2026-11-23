@@ -1,0 +1,42 @@
+{
+  "app": "Reducto",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "reducto.ai",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://reducto.ai",
+        "https://docs.reducto.ai/quickstart",
+        "https://docs.reducto.ai/onprem/securing_reducto",
+        "https://docs.reducto.ai/studio-account",
+        "https://reducto.ai/blog/workload-identity-reducto-api",
+        "https://reducto.ai/developers"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

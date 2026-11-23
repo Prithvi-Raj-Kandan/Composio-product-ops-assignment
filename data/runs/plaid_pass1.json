@@ -1,0 +1,42 @@
+{
+  "app": "Plaid",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "plaid.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://plaid.com/docs",
+        "https://plaid.com/docs/api/oauth",
+        "https://plaid.com/docs/api",
+        "https://plaid.com/docs/api/items",
+        "https://plaid.com/docs/api/institutions",
+        "https://plaid.com/docs/auth"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

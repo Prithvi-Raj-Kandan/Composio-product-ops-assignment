@@ -1,0 +1,39 @@
+{
+  "app": "YouTube Transcript",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "transcriptapi.com",
+      "source": "human_override",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://transcriptapi.com",
+        "https://transcriptapi.com/docs/",
+        "https://transcriptapi.com/blog/best-youtube-transcript-apis-compared"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 1
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 3,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

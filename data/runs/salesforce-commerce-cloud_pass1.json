@@ -1,0 +1,42 @@
+{
+  "app": "Salesforce Commerce Cloud",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "salesforce.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.salesforce.com/docs/commerce",
+        "https://developer.salesforce.com/docs/commerce/commerce-api/guide/authorization.html",
+        "https://developer.salesforce.com/docs/commerce/commerce-api/references/about-commerce-api/about.html",
+        "https://developer.salesforce.com/docs/commerce/commerce-api/guide/custom-api-authentication.html",
+        "https://www.salesforce.com/commerce/pricing",
+        "https://www.salesforce.com/commerce"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

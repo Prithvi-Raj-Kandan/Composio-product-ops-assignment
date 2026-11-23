@@ -1,0 +1,42 @@
+{
+  "app": "Jira",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "atlassian.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.atlassian.com",
+        "https://community.atlassian.com/forums/discussion/814987/how-to-authenticate-to-jira-rest-api",
+        "https://community.atlassian.com/forums/discussion/3119645/jira-api-with-basic-auth-and-service-account",
+        "https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis",
+        "https://community.atlassian.com/forums/discussion/2955396/use-rest-api-with-jira-instance-on-free-plan",
+        "https://community.developer.atlassian.com/t/creating-jira-issues-oauth-access-token-vs-api-key/75151"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "app": "Zoho CRM",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "zoho.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://zoho.com/crm",
+        "https://www.zoho.com/crm/developer/docs/api/v8/oauth-overview.html",
+        "https://www.zoho.com/crm/developer/docs/api/v8/auth-request.html",
+        "https://www.zoho.com/books/api/v3/oauth",
+        "https://www.zoho.com/en-us/crm/zohocrm-pricing.html",
+        "https://www.zoho.com/crm/developer/mcp.html"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

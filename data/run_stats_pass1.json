@@ -1,0 +1,28 @@
+{
+  "pass": 1,
+  "apps": 100,
+  "wall_clock_s": 1280.0,
+  "concurrency": 6,
+  "needs_human": 0,
+  "usage": {
+    "models": {
+      "gemini-3.5-flash-lite": {
+        "calls": 62,
+        "input_tokens": 322714,
+        "output_tokens": 41645,
+        "cost_usd": 0.200927
+      },
+      "gemini-3.1-flash-lite": {
+        "calls": 38,
+        "input_tokens": 195530,
+        "output_tokens": 18756,
+        "cost_usd": null
+      }
+    },
+    "cost_usd_known": 0.200927,
+    "unpriced_models": [
+      "gemini-3.1-flash-lite"
+    ],
+    "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
+  }
+}

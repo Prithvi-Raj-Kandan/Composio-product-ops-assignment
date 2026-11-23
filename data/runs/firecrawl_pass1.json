@@ -1,0 +1,42 @@
+{
+  "app": "Firecrawl",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "firecrawl.dev",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://firecrawl.dev",
+        "https://docs.firecrawl.dev/api-reference/introduction",
+        "https://docs.firecrawl.dev/api-reference/v2-introduction",
+        "https://docs.firecrawl.dev/introduction",
+        "https://www.firecrawl.dev/pricing",
+        "https://www.firecrawl.dev"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

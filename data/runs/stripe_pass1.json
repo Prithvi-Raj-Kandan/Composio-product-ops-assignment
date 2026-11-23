@@ -1,0 +1,42 @@
+{
+  "app": "Stripe",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "stripe.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://stripe.com/docs/api",
+        "https://docs.stripe.com/api",
+        "https://docs.stripe.com/api/authentication",
+        "https://docs.stripe.com/stripe-apps/api-authentication",
+        "https://docs.stripe.com/keys",
+        "https://docs.stripe.com/stripe-apps/api-authentication/managed-api-keys"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

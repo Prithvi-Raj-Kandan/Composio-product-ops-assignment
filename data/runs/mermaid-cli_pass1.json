@@ -1,0 +1,37 @@
+{
+  "app": "Mermaid CLI",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "github.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://github.com/mermaid-js/mermaid-cli"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 0
+    },
+    {
+      "node": "fetch",
+      "pages": 1,
+      "cache_hits": 1,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

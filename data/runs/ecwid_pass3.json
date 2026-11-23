@@ -1,0 +1,13 @@
+{
+  "app": "Ecwid",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 0,
+    "composio_metadata": 0,
+    "mcp_registry": 0,
+    "reresearch": 0,
+    "derived_rule": 0
+  },
+  "nodes": []
+}

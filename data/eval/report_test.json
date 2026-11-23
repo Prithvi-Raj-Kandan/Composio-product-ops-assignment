@@ -1136,51 +1136,582 @@
       }
     ]
   },
+  "pass3": {
+    "split": "test",
+    "pass": 3,
+    "missing_results": false,
+    "labelled_cells": 80,
+    "correct_cells": 22,
+    "unlabelled_cells": 0,
+    "accuracy": 0.275,
+    "per_field": {
+      "auth_methods": {
+        "labelled": 10,
+        "correct": 0,
+        "accuracy": 0.0
+      },
+      "self_serve": {
+        "labelled": 10,
+        "correct": 3,
+        "accuracy": 0.3
+      },
+      "api_rest": {
+        "labelled": 10,
+        "correct": 6,
+        "accuracy": 0.6
+      },
+      "api_graphql": {
+        "labelled": 10,
+        "correct": 1,
+        "accuracy": 0.1
+      },
+      "api_breadth": {
+        "labelled": 10,
+        "correct": 0,
+        "accuracy": 0.0
+      },
+      "existing_mcp": {
+        "labelled": 10,
+        "correct": 4,
+        "accuracy": 0.4
+      },
+      "buildability": {
+        "labelled": 10,
+        "correct": 4,
+        "accuracy": 0.4
+      },
+      "main_blocker": {
+        "labelled": 10,
+        "correct": 4,
+        "accuracy": 0.4
+      }
+    },
+    "taxonomy": {
+      "underclaim": 44,
+      "partial": 7,
+      "exact_miss": 7
+    },
+    "errors": [
+      {
+        "app": "DealCloud",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "Zendesk",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "api_key|basic|bearer_token|jwt|oauth2",
+        "gold": "basic|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "bearer_token|oauth2",
+        "gold": "bearer_token",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "api_key|bearer_token|oauth2",
+        "gold": "api_key|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "Shopify",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "api_key|bearer_token|oauth2",
+        "gold": "bearer_token|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "Firecrawl",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "api_key|oauth2",
+        "gold": "api_key",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "basic|bearer_token|jwt|oauth2",
+        "gold": "bearer_token|jwt|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "Linear",
+        "field": "auth_methods",
+        "taxonomy": "partial",
+        "predicted": "api_key|bearer_token|oauth2",
+        "gold": "api_key|oauth2",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "api_key",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "auth_methods",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 3
+      },
+      {
+        "app": "Shopify",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_trial",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "paid_plan_required",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "self_serve",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "self_serve_free",
+        "pass": 3
+      },
+      {
+        "app": "Zendesk",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 3
+      },
+      {
+        "app": "Linear",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "api_rest",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "Zendesk",
+        "field": "api_graphql",
+        "taxonomy": "exact_miss",
+        "predicted": "yes",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "Shopify",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 3
+      },
+      {
+        "app": "Firecrawl",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "api_graphql",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 3
+      },
+      {
+        "app": "Zendesk",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 3
+      },
+      {
+        "app": "Shopify",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 3
+      },
+      {
+        "app": "Firecrawl",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "medium",
+        "pass": 3
+      },
+      {
+        "app": "Linear",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "broad",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "narrow",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "api_breadth",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "narrow",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "none",
+        "gold": "official",
+        "pass": 3
+      },
+      {
+        "app": "Zendesk",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "community",
+        "gold": "official",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "none",
+        "gold": "official",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "community",
+        "gold": "official",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "community",
+        "gold": "official",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "existing_mcp",
+        "taxonomy": "exact_miss",
+        "predicted": "none",
+        "gold": "community",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "yes_with_caveats",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "buildability",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no",
+        "pass": 3
+      },
+      {
+        "app": "DealCloud",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "contact_sales",
+        "pass": 3
+      },
+      {
+        "app": "WhatsApp Business",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "platform_review",
+        "pass": 3
+      },
+      {
+        "app": "Mailchimp",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 3
+      },
+      {
+        "app": "Snowflake",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "none",
+        "pass": 3
+      },
+      {
+        "app": "iPayX",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "enterprise_only",
+        "pass": 3
+      },
+      {
+        "app": "Mermaid CLI",
+        "field": "main_blocker",
+        "taxonomy": "underclaim",
+        "predicted": "unknown",
+        "gold": "no_public_api",
+        "pass": 3
+      }
+    ]
+  },
   "comparison": {
     "split": "test",
     "pass1_accuracy": 0.275,
     "pass2_accuracy": 0.15,
+    "pass3_accuracy": 0.275,
     "delta": -0.12500000000000003,
     "fields": {
       "auth_methods": {
         "pass1": 0.1,
         "pass2": 0.0,
-        "delta": -0.1
+        "delta": -0.1,
+        "pass3": 0.0
       },
       "self_serve": {
         "pass1": 0.3,
         "pass2": 0.1,
-        "delta": -0.19999999999999998
+        "delta": -0.19999999999999998,
+        "pass3": 0.3
       },
       "api_rest": {
         "pass1": 0.6,
         "pass2": 0.4,
-        "delta": -0.19999999999999996
+        "delta": -0.19999999999999996,
+        "pass3": 0.6
       },
       "api_graphql": {
         "pass1": 0.1,
         "pass2": 0.0,
-        "delta": -0.1
+        "delta": -0.1,
+        "pass3": 0.1
       },
       "api_breadth": {
         "pass1": 0.0,
         "pass2": 0.0,
-        "delta": 0.0
+        "delta": 0.0,
+        "pass3": 0.0
       },
       "existing_mcp": {
         "pass1": 0.5,
         "pass2": 0.3,
-        "delta": -0.2
+        "delta": -0.2,
+        "pass3": 0.4
       },
       "buildability": {
         "pass1": 0.3,
         "pass2": 0.2,
-        "delta": -0.09999999999999998
+        "delta": -0.09999999999999998,
+        "pass3": 0.4
       },
       "main_blocker": {
         "pass1": 0.3,
         "pass2": 0.2,
-        "delta": -0.09999999999999998
+        "delta": -0.09999999999999998,
+        "pass3": 0.4
       }
     }
   },

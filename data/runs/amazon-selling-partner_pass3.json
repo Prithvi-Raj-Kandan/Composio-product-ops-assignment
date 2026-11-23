@@ -1,0 +1,28 @@
+{
+  "app": "Amazon Selling Partner",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 0,
+    "composio_metadata": 2,
+    "mcp_registry": 1,
+    "reresearch": 0,
+    "derived_rule": 0
+  },
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 14,
+      "fetched": 0,
+      "docs": 4,
+      "model": "openai/gpt-oss-20b"
+    }
+  ]
+}

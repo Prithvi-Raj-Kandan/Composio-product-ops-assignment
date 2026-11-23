@@ -1,0 +1,28 @@
+{
+  "app": "Discord",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 0,
+    "composio_metadata": 1,
+    "mcp_registry": 0,
+    "reresearch": 0,
+    "derived_rule": 0
+  },
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 11,
+      "fetched": 0,
+      "docs": 5,
+      "errors": [
+        "openai/gpt-oss-20b: RuntimeError",
+        "gemini-3.1-flash-lite: RuntimeError"
+      ]
+    }
+  ]
+}

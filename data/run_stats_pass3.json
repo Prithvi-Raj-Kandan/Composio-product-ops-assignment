@@ -1,0 +1,62 @@
+{
+  "pass": 3,
+  "apps": 100,
+  "wall_clock_s": 4.0,
+  "concurrency": 8,
+  "needs_human": 47,
+  "fields_filled_by_step": {
+    "demoted_contradicted": 0,
+    "policy_restore": 119,
+    "composio_metadata": 61,
+    "mcp_registry": 10,
+    "reresearch": 0,
+    "derived_rule": 27
+  },
+  "unknown_pass1": {
+    "self_serve": 61,
+    "gate_type": 56,
+    "buildability": 69,
+    "main_blocker": 68,
+    "auth_methods": 35,
+    "existing_mcp": 61,
+    "composio_has_toolkit": 100,
+    "one_liner": 88,
+    "api_surface.rest": 44
+  },
+  "unknown_pass2": {
+    "self_serve": 76,
+    "gate_type": 76,
+    "buildability": 77,
+    "main_blocker": 79,
+    "auth_methods": 58,
+    "existing_mcp": 37,
+    "composio_has_toolkit": 37,
+    "one_liner": 88,
+    "api_surface.rest": 66
+  },
+  "unknown_pass3": {
+    "self_serve": 58,
+    "gate_type": 71,
+    "buildability": 64,
+    "main_blocker": 65,
+    "auth_methods": 12,
+    "existing_mcp": 0,
+    "composio_has_toolkit": 0,
+    "one_liner": 85,
+    "api_surface.rest": 42
+  },
+  "confidence_tags": {
+    "quote-verified": 235,
+    "composio_metadata": 124,
+    "mcp_registry": 63,
+    "derived_rule": 61,
+    "verifier-supported": 50,
+    "quote-not-rechecked": 26
+  },
+  "usage": {
+    "models": {},
+    "cost_usd_known": 0.0,
+    "unpriced_models": [],
+    "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
+  }
+}

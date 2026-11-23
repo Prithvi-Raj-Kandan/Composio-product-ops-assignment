@@ -548,6 +548,15 @@ def now() -> float:
     return time.monotonic()
 
 
+class _ShortClient:
+    """httpx GET with a short timeout, so dead probe paths do not stall the run."""
+
+    def get(self, url: str) -> Any:
+        import httpx
+
+        return httpx.get(url, follow_redirects=True, timeout=10, headers={"User-Agent": "opsresearch/0.1"})
+
+
 class LiveResearcher:
     """Probe official doc paths, extract only still-unknown fields, then a second model checks them."""
 
@@ -559,23 +568,29 @@ class LiveResearcher:
         self.log = log
 
     def _probe(self, urls: list[str]) -> int:
+        from concurrent.futures import ThreadPoolExecutor
+
         from opsresearch.fetch import HttpxFetchClient, fetch_url
 
         fails_path = self.cache_dir / "probe_failures" / f"{app_slug(self.seed.app)}.json"
         failed = set(json.loads(fails_path.read_text())) if fails_path.exists() else set()
-        client = HttpxFetchClient()
-        fetched = 0
-        for url in urls:
-            if url in failed or cache_path(self.cache_dir, self.seed.app, url).exists():
-                continue
+        client = HttpxFetchClient(_ShortClient())
+        todo = [u for u in urls if u not in failed and not cache_path(self.cache_dir, self.seed.app, u).exists()]
+
+        def get(url: str) -> bool:
             try:
                 doc = fetch_url(url, self.seed.app, self.cache_dir, client)
-                fetched += 1
-                if len(doc.text) < 200:
-                    Path(doc.path).unlink(missing_ok=True)
-                    failed.add(url)
             except Exception:
                 failed.add(url)
+                return False
+            if len(doc.text) < 200:
+                Path(doc.path).unlink(missing_ok=True)
+                failed.add(url)
+                return False
+            return True
+
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            fetched = sum(pool.map(get, todo))
         write_json(fails_path, sorted(failed))
         return fetched
 
@@ -586,7 +601,7 @@ class LiveResearcher:
         from opsresearch.seed import url_is_official
 
         sources = [record.get("official_domain") or "", self.resolved.display_domain, *self.extra_sources]
-        urls = [u for u in probe_targets(sources) if url_is_official(u, self.resolved)][:24]
+        urls = [u for u in probe_targets(sources) if url_is_official(u, self.resolved)][:14]
         fetched = self._probe(urls)
         docs = [d for d in load_docs(self.cache_dir, self.seed.app) if url_is_official(d.url, self.resolved)]
         docs = [d for d in docs if len(d.text) >= 200]
@@ -605,7 +620,8 @@ class LiveResearcher:
         update = None
         attempts = [
             (GeminiJsonClient("gemini-3.5-flash-lite"), ranked[:5], 8000),
-            (GroqJsonClient("openai/gpt-oss-120b"), ranked[:2], 3500),
+            (GeminiJsonClient("gemini-3.5-flash"), ranked[:5], 8000),
+            (GroqJsonClient("openai/gpt-oss-20b"), ranked[:2], 3500),
         ]
         for client, chosen, clip in attempts:
             clipped = [CachedDoc(url=d.url, text=d.text[:clip], path=d.path, cache_hit=True) for d in chosen]
@@ -633,7 +649,11 @@ class LiveResearcher:
         pages = {d.url: d.text for d in docs}
         prompt = cross_model_prompt(AppRecord.model_validate(temp), pages)
         extractor = entry.get("model")
-        chain = [GeminiJsonClient("gemini-3.5-flash"), GroqJsonClient("openai/gpt-oss-120b")]
+        chain = [
+            GeminiJsonClient("gemini-3.5-flash"),
+            GroqJsonClient("openai/gpt-oss-20b"),
+            GeminiJsonClient("gemini-3.5-flash-lite"),
+        ]
         chain = [c for c in chain if c.model_name != extractor]
         verdicts: dict[str, str] = {}
         for client in chain:

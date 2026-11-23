@@ -269,7 +269,7 @@ def test_readme_has_calm_verification_section() -> None:
 
 def test_reviewed_gold_labels_are_described_as_confirmed(tmp_path) -> None:
     repo = _repo(tmp_path, with_eval=True)
-    _gold(repo, "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human")
+    _gold(repo, '"AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human"')
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
     assert "reviewed and confirmed by a human" in html
     assert "review is pending" not in html and "review pending" not in html

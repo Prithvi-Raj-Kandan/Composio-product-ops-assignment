@@ -92,6 +92,9 @@ class ResearchDeps:
     overrides: dict[str, DomainOverride]
     cache_dir: Path
     cross_model: LlmClient | None
+    # Pass-1 records by lower-case app name. Pass 2 starts from them, so the pass-1 -> pass-2 delta
+    # comes only from the verification loops, and the free-tier quota is not spent re-extracting.
+    prior: dict[str, dict[str, Any]] | None = None
 
 
 def _resolved_from_state(state: ResearchState) -> ResolvedDomain:
@@ -195,13 +198,19 @@ def build_graph(deps: ResearchDeps):
         }
 
     def extract_node(state: ResearchState) -> dict[str, Any]:
-        record = extract_record(
-            state["app_name"],
-            state["category"],
-            _docs_from_state(state["docs"]),
-            deps.llm_clients,
-            deps.limiter,
-        )
+        prior = (deps.prior or {}).get(state["app_name"].lower()) if state["pass_num"] == 2 else None
+        reused = None
+        if prior and prior.get("extraction_model"):
+            record = AppRecord.model_validate(prior)
+            reused = "pass1"
+        else:
+            record = extract_record(
+                state["app_name"],
+                state["category"],
+                _docs_from_state(state["docs"]),
+                deps.llm_clients,
+                deps.limiter,
+            )
         data = record.model_dump(mode="json")
         data["hint_url"] = state["hint"]
         data["official_domain"] = state["display_domain"]
@@ -221,7 +230,7 @@ def build_graph(deps: ResearchDeps):
             "record": record.model_dump(mode="json"),
             "needs_human": needs,
             "needs_human_reasons": reasons,
-            "run_log": _log(state, "extract", model=record.extraction_model),
+            "run_log": _log(state, "extract", model=record.extraction_model, reused=reused),
         }
 
     def verify_node(state: ResearchState) -> dict[str, Any]:
@@ -551,8 +560,14 @@ def append_record(path: Path, record: AppRecord) -> None:
     path.write_text(json.dumps(write_pass_payload, indent=2) + "\n", encoding="utf-8")
 
 
-def build_deps(cache_dir: Path, overrides_path: Path, env: dict[str, str] | None = None) -> ResearchDeps:
+def build_deps(
+    cache_dir: Path,
+    overrides_path: Path,
+    env: dict[str, str] | None = None,
+    prior: dict[str, dict[str, Any]] | None = None,
+) -> ResearchDeps:
     return ResearchDeps(
+        prior=prior,
         search=CachedSearch(select_search_backend(env), cache_dir),
         fetch=HttpxFetchClient(),
         llm_clients=extraction_clients(env),

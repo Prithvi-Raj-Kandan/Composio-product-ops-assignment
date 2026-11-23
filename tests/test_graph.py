@@ -188,3 +188,25 @@ def test_an_app_that_crashes_becomes_an_unknown_needs_human_row(tmp_path) -> Non
     assert record.self_serve.value == "unknown"
     assert any("pipeline error" in reason for reason in record.needs_human_reasons)
     assert "error" in log
+
+
+def test_pass2_starts_from_the_pass1_extraction(tmp_path) -> None:
+    class Counting(Extractor):
+        calls = 0
+
+        def complete_json(self, prompt, schema):
+            Counting.calls += 1
+            return super().complete_json(prompt, schema)
+
+    first, _ = run_app(_app(), 1, _deps(tmp_path, Judge()))
+    deps = _deps(tmp_path, Judge())
+    counting = Counting()
+    deps.llm_clients = [counting]
+    deps.prior = {"acme": first.model_dump(mode="json")}
+    record, log = run_app(_app(), 2, deps)
+    extract = next(n for n in log["nodes"] if n["node"] == "extract")
+    assert extract["reused"] == "pass1"
+    # one re-extraction for the contradicted field, none for the initial extract
+    assert Counting.calls == 1
+    assert record.pass_id == 2
+    assert record.self_serve.value == "self_serve_free"

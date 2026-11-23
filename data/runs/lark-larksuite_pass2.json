@@ -1,0 +1,217 @@
+{
+  "app": "Lark (Larksuite)",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "larksuite.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://open.larksuite.com",
+        "https://open.larksuite.com/document/ukTMukTMukTM/uMTNz4yM1MjLzUzM",
+        "https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/mcp_integration/install-and-use-document-search-mcp",
+        "https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/tenant-v2",
+        "https://open.larksuite.com/document/ukTMukTMukTM/uITNz4iM1MjLyUzM",
+        "https://open.larksuite.com/document/ukTMukTMukTM/ucDN3UjL3QzN14yN0cTN"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from lark"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No excerpt provided to verify claim."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://open.larksuite.com",
+        "https://larksuite.com/docs/authentication",
+        "https://larksuite.com/docs/api/authentication",
+        "https://larksuite.com/developers",
+        "https://larksuite.com/pricing",
+        "https://larksuite.com/docs/getting-started",
+        "https://larksuite.com/partners"
+      ],
+      "failed": [
+        "https://larksuite.com/docs/authentication",
+        "https://larksuite.com/docs/api/authentication",
+        "https://larksuite.com/developers",
+        "https://larksuite.com/docs/getting-started",
+        "https://larksuite.com/partners"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches lark"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

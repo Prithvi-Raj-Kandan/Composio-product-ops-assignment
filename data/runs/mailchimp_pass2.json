@@ -1,0 +1,93 @@
+{
+  "app": "Mailchimp",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "mailchimp.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://mailchimp.com/developer",
+        "https://mailchimp.com/developer/marketing/api/root/list",
+        "https://mailchimp.com/help/about-api-keys",
+        "https://mailchimp.com/developer/marketing/api-concepts/api-structure",
+        "https://mailchimp.com/developer/marketing/api-concepts/methods-and-parameters",
+        "https://mailchimp.com/resources/rest-api"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from mailchimp"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth api_key, bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The documentation explicitly lists API key (Bearer token) and OAuth as authentication methods."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "The documentation states that the Mailchimp Marketing API largely follows RESTful API conventions."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

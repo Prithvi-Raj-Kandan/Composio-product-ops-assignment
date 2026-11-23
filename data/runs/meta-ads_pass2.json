@@ -1,0 +1,87 @@
+{
+  "app": "Meta Ads",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "facebook.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.facebook.com/docs/marketing-apis",
+        "https://developers.facebook.com/documentation/ads-commerce/marketing-api/get-started/authentication",
+        "https://developers.facebook.com/documentation/ads-commerce/marketing-api/reference",
+        "https://developers.facebook.com/documentation/ads-commerce/marketing-api",
+        "https://developers.facebook.com/documentation/ads-commerce/marketing-api/get-started",
+        "https://developers.facebook.com/documentation/ads-commerce/ads-ai-connectors/ads-mcp-server/ads-mcp-server-overview"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from metaads"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

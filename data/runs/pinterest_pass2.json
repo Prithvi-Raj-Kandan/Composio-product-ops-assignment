@@ -1,0 +1,97 @@
+{
+  "app": "Pinterest",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "pinterest.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developers.pinterest.com",
+        "https://developers.pinterest.com/docs/api/v5/pins-create",
+        "https://developers.pinterest.com/docs/getting-started/set-up-authentication-and-authorization",
+        "https://developers.pinterest.com/docs/key-concepts/access-tiers"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from pinterest"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "The excerpt confirms that apps receive Trial access upon approval, which is described as a self-serve starting point for exploring API features."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "The excerpt explicitly states that apps must be approved for Trial access and then undergo a review process to upgrade to Standard access, confirming an admin approval gate."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "The documentation refers to the API reference, which is standard for RESTful API documentation, and the context of the Pinterest API v5 confirms the existence of a REST API."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "app": "Jira",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "atlassian.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.atlassian.com",
+        "https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis",
+        "https://community.atlassian.com/forums/discussion/2955396/use-rest-api-with-jira-instance-on-free-plan",
+        "https://community.atlassian.com/forums/discussion/3119645/jira-api-with-basic-auth-and-service-account",
+        "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account",
+        "https://community.atlassian.com/forums/discussion/814987/how-to-authenticate-to-jira-rest-api"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "auth_methods"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "insufficient",
+          "detail": "https://community.developer.atlassian.com/t/creating-jira-issues-oauth-access-token-vs-api-key/75151 is not in the fetched pages"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from jira"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth basic, bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "Composio also lists api_key"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "auth_methods"
+      ],
+      "urls": [
+        "https://developer.atlassian.com",
+        "https://community.developer.atlassian.com/t/creating-jira-issues-oauth-access-token-vs-api-key/75151",
+        "https://atlassian.com/docs/authentication",
+        "https://atlassian.com/docs/api/authentication",
+        "https://atlassian.com/developers"
+      ],
+      "failed": [
+        "https://atlassian.com/docs/authentication",
+        "https://atlassian.com/docs/api/authentication"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "auth_methods"
+      ],
+      "model": "gemma-4-31b-it"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches jira"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth basic, bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "agent community matches the registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

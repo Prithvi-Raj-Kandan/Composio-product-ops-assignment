@@ -1,0 +1,90 @@
+{
+  "app": "LinkedIn Ads",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "microsoft.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://learn.microsoft.com/linkedin/marketing",
+        "https://learn.microsoft.com/en-us/linkedin/shared/authentication/getting-access",
+        "https://learn.microsoft.com/en-us/linkedin/marketing/integrations/ads-reporting/ads-reporting?view=li-lms-2026-11"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 2
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 3,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from linkedin"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "record",
+          "status": "insufficient",
+          "detail": "verifier error RuntimeError"
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

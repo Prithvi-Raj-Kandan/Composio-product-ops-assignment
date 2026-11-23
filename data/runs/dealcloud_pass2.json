@@ -1,0 +1,247 @@
+{
+  "app": "DealCloud",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 1,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "dealcloud.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://api.docs.dealcloud.com",
+        "https://api.docs.dealcloud.com/mcp",
+        "https://api.docs.dealcloud.com/sdk/csharp/authentication",
+        "https://api.docs.dealcloud.com/sdk/python/authentication",
+        "https://api.docs.dealcloud.com/docs/apikeys",
+        "https://api.docs.dealcloud.com/releases"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "api_surface.rest",
+        "existing_mcp",
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "insufficient",
+          "detail": "https://api.docs.dealcloud.com/docs is not in the fetched pages"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=no from a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "contradicted",
+          "detail": "Evidence only shows OAuth2 client_id/client_secret authentication; no mention of API key support, so the claim of both methods is not supported."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No excerpt addresses self\u2011service availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No information about any gating mechanism is provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "Excerpt explicitly states the site provides an overview of REST APIs and their endpoints."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No mention of GraphQL support in the provided material."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "The breadth of the API surface is not described in the excerpts."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No details about API styles are given."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Excerpt describes the DealCloud MCP Server, indicating an official MCP offering."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No information on buildability is present."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No evidence regarding any main blocker is provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No one\u2011liner description is found in the excerpts."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "api_surface.rest",
+        "existing_mcp",
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://api.docs.dealcloud.com",
+        "https://api.docs.dealcloud.com/docs",
+        "https://dealcloud.com/docs/api/authentication",
+        "https://dealcloud.com/partners",
+        "https://dealcloud.com/docs/getting-started",
+        "https://dealcloud.com/developers",
+        "https://dealcloud.com/mcp"
+      ],
+      "failed": []
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "api_surface.rest",
+        "existing_mcp",
+        "auth_methods",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent no matches a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "The page excerpt explicitly states the site provides a comprehensive overview of REST APIs, confirming the presence of a REST API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "The excerpt contains the exact phrasing of the one\u2011liner, verifying the described AI\u2011powered platform description."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

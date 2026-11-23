@@ -1,0 +1,440 @@
+{
+  "app": "Salesforce",
+  "pass": 2,
+  "needs_human": true,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "salesforce.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://salesforce.com",
+        "https://developer.salesforce.com/docs/platform/api-rest/guide/intro-rest.html",
+        "https://developer.salesforce.com/docs/platform/connect-rest-api/guide/intro_using_oauth.html",
+        "https://www.salesforce.com/sales/pricing",
+        "https://developer.salesforce.com/docs/marketing/pardot/guide/authentication.html",
+        "https://developer.salesforce.com/docs/platform/api-rest/guide/quickstart-oauth.html"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from salesforce"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Quotes confirm use of OAuth\u202f2.0 flows and a bearer token (access token) for authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "Quote states Salesforce provides a free 30\u2011day trial, matching a self\u2011serve trial offering."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No excerpt addresses whether a paid plan is required."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "No excerpt provides information on REST, GraphQL, breadth, or styles."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "No excerpt mentions an existing community MCP."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No excerpt discusses buildability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No excerpt identifies a main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No excerpt provides a one\u2011liner description."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://salesforce.com",
+        "https://www.salesforce.com",
+        "https://salesforce.com/developers",
+        "https://salesforce.com/partners",
+        "https://salesforce.com/pricing",
+        "https://salesforce.com/pricing",
+        "https://salesforce.com/partners"
+      ],
+      "failed": []
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "gate_type",
+        "api_surface",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "existing_mcp",
+        "api_surface",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches salesforce"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is community, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Quotes confirm use of OAuth 2.0 and bearer (access) tokens for authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "Pricing page states a free 30\u2011day trial is available, indicating self\u2011serve trial capability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "Excerpt notes that after the trial you must purchase licenses, implying a paid\u2011plan gate."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "Evidence shows REST and SOAP APIs exist, but does not explicitly confirm overall breadth or the presence/absence of GraphQL."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Developer Edition page mentions Hosted MCP Servers as an official, free offering."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "Open\u2011source sample app and Headless Toolkit demonstrate that building agentic experiences is possible."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No excerpt addresses any blockers; cannot confirm or deny."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No information provided about a one\u2011liner description; claim remains unverified."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "existing_mcp",
+        "api_surface",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://salesforce.com",
+        "https://salesforce.com/mcp",
+        "https://salesforce.com/docs/mcp",
+        "https://salesforce.com/docs/api",
+        "https://salesforce.com/api",
+        "https://salesforce.com/developers/docs"
+      ],
+      "failed": [
+        "https://salesforce.com/mcp",
+        "https://salesforce.com/docs/mcp",
+        "https://salesforce.com/docs/api",
+        "https://salesforce.com/api",
+        "https://salesforce.com/developers/docs"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp",
+        "api_surface",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [
+        "existing_mcp",
+        "api_surface",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent yes matches salesforce"
+        },
+        {
+          "verifier": "oracle",
+          "field": "auth_methods",
+          "status": "flag",
+          "detail": "agent auth bearer_token is not in the Composio toolkit. Composio lists what it supports, not every vendor mode, so this is a flag."
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is community, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Quotes mention using a bearer token and OAuth 2.0 authorization flows for the REST API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "Quote states Salesforce offers a free 30\u2011day trial for all Sales Cloud editions."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "Quote indicates that after the trial you must click \u201cBuy Now\u201d to purchase licenses, implying a paid\u2011plan gate."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface",
+          "status": "insufficient",
+          "detail": "Excerpt only confirms a REST API exists; it provides no information about GraphQL, overall breadth, or styles, so the unknown values are not settled."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Quote says Salesforce Developer Edition includes Hosted MCP Servers, indicating an official MCP offering."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "Quote highlights an open\u2011source sample app and toolkit for building agentic experiences, showing that building is possible."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No evidence provided to confirm or refute the main blocker claim."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No evidence provided to confirm or refute the one\u2011liner claim."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": true,
+      "failing": [
+        "existing_mcp",
+        "api_surface",
+        "main_blocker",
+        "one_liner"
+      ]
+    }
+  ]
+}

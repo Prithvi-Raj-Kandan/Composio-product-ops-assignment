@@ -1,0 +1,109 @@
+{
+  "app": "Magento (Adobe Commerce)",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "adobe.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.adobe.com/commerce",
+        "https://developer.adobe.com/commerce/webapi/rest",
+        "https://developer.adobe.com/commerce/webapi",
+        "https://developer.adobe.com/commerce/webapi/graphql/reference"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.graphql",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=no from a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The provided excerpts confirm support for OAuth 1.0a, token-based authentication, login credentials, and Adobe IMS access tokens."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "The documentation explicitly mentions the availability of REST APIs for Adobe Commerce."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "supported",
+          "detail": "The documentation explicitly mentions the availability of a GraphQL API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "supported",
+          "detail": "The excerpt explicitly lists REST, SOAP, and GraphQL as web API styles for Adobe Commerce."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

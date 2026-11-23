@@ -1,0 +1,459 @@
+{
+  "app": "LiveAgent",
+  "pass": 2,
+  "needs_human": true,
+  "loops": 2,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "liveagent.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://liveagent.com",
+        "https://support.liveagent.com/567924-Documentation",
+        "https://support.liveagent.com/150554-AI-features",
+        "https://www.liveagent.com",
+        "https://support.liveagent.com/802463-REST-API",
+        "https://support.liveagent.com/466386-AI-Agents-feature-overview"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=no from a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Quote mentions generating an API key for APIv3, confirming API key authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about self\u2011service availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about gate type."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about REST API availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about GraphQL API availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about the breadth of the API surface."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about API styles."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about existing MCP."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about buildability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "Excerpt provides no information about a one\u2011liner description."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 1,
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://liveagent.com",
+        "https://www.liveagent.com/pricing",
+        "https://liveagent.com/pricing",
+        "https://liveagent.com/pricing",
+        "https://liveagent.com/developers",
+        "https://liveagent.com/docs/getting-started",
+        "https://liveagent.com/partners"
+      ],
+      "failed": [
+        "https://liveagent.com/developers",
+        "https://liveagent.com/docs/getting-started",
+        "https://liveagent.com/partners"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "api_surface.rest",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "existing_mcp",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "verify",
+      "loop": 1,
+      "failing": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent no matches a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "contradicted",
+          "detail": "registry classification is none, not official"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Evidence shows generation of an API key for APIv3, indicating API key authentication."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "insufficient",
+          "detail": "No excerpt addresses self\u2011service availability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "insufficient",
+          "detail": "No information about gate type is provided."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "Pricing page mentions API keys and third\u2011party apps retrieving/pushing data, implying a REST API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.graphql",
+          "status": "insufficient",
+          "detail": "No mention of GraphQL in the excerpts."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "insufficient",
+          "detail": "Breadth of API surface is not described."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.styles",
+          "status": "insufficient",
+          "detail": "No details on API styles are given."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "Excerpt confirms MCP (Model Context Protocol) is offered as a built\u2011in feature."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "insufficient",
+          "detail": "No evidence regarding buildability."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No excerpt discusses any main blocker."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "insufficient",
+          "detail": "No one\u2011liner description is provided."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "reresearch",
+      "loop": 2,
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "urls": [
+        "https://liveagent.com",
+        "https://liveagent.com/mcp",
+        "https://liveagent.com/docs/mcp",
+        "https://liveagent.com/developers",
+        "https://liveagent.com/docs/getting-started",
+        "https://liveagent.com/partners"
+      ],
+      "failed": [
+        "https://liveagent.com/mcp",
+        "https://liveagent.com/docs/mcp",
+        "https://liveagent.com/developers",
+        "https://liveagent.com/docs/getting-started",
+        "https://liveagent.com/partners"
+      ]
+    },
+    {
+      "node": "reextract",
+      "fields": [
+        "existing_mcp",
+        "self_serve",
+        "gate_type",
+        "api_surface.graphql",
+        "api_surface.breadth",
+        "api_surface.styles",
+        "buildability",
+        "main_blocker",
+        "one_liner"
+      ],
+      "model": "gemma-4-31b-it"
+    },
+    {
+      "node": "verify",
+      "loop": 2,
+      "failing": [
+        "main_blocker"
+      ],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "main_blocker",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "agent no matches a not-found lookup"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=none from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "Documentation shows generation of an API key for API v3, confirming API key as an authentication method."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "Marketing text states a 30\u2011day trial with no credit card or setup fee, matching a self\u2011serve trial offering."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "The same text indicates no credit card or setup fee, implying no gating before use."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "Pages describe an API key and API v3 documentation, confirming a REST API is available."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "buildability",
+          "status": "supported",
+          "detail": "The source says the full API documentation is accessible within the account, enabling custom integration building."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "main_blocker",
+          "status": "insufficient",
+          "detail": "No information is provided about any blockers; absence of evidence does not confirm none exist."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "one_liner",
+          "status": "supported",
+          "detail": "Quote matches the claimed one\u2011liner exactly, describing LiveAgent as cloud help desk software for small and growing support teams."
+        }
+      ],
+      "verifier_model": "openai/gpt-oss-120b"
+    },
+    {
+      "node": "accept",
+      "needs_human": true,
+      "failing": [
+        "main_blocker"
+      ]
+    }
+  ]
+}

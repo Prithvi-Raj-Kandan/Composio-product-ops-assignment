@@ -1,0 +1,123 @@
+{
+  "app": "Pipedrive",
+  "pass": 2,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "pipedrive.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://pipedrive.com",
+        "https://developers.pipedrive.com/docs/api/v1/Oauth",
+        "https://devcommunity.pipedrive.com/t/pipedrive-graphql-apis/4795",
+        "https://developers.pipedrive.com/docs/api/v1",
+        "https://www.pipedrive.com/en/features/crm-api",
+        "https://devcommunity.pipedrive.com/t/queries-around-api-authentication-current-baseurl-tokens/5662"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite",
+      "reused": "pass1"
+    },
+    {
+      "node": "verify",
+      "loop": 0,
+      "failing": [],
+      "findings": [
+        {
+          "verifier": "quote",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "quote",
+          "field": "api_surface.breadth",
+          "status": "supported",
+          "detail": "quote appears in the fetched page"
+        },
+        {
+          "verifier": "oracle",
+          "field": "composio_has_toolkit",
+          "status": "supported",
+          "detail": "filled composio_has_toolkit=yes from pipedrive"
+        },
+        {
+          "verifier": "registry",
+          "field": "existing_mcp",
+          "status": "supported",
+          "detail": "filled existing_mcp=community from the MCP registry"
+        },
+        {
+          "verifier": "cross_model",
+          "field": "auth_methods",
+          "status": "supported",
+          "detail": "The provided evidence confirms that both API keys and OAuth 2.0 are valid methods for accessing the Pipedrive API."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "self_serve",
+          "status": "supported",
+          "detail": "The evidence confirms a 14-day free trial is available without a credit card."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "gate_type",
+          "status": "supported",
+          "detail": "The evidence states there is free API access with every plan, indicating no specific gate."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.rest",
+          "status": "supported",
+          "detail": "The evidence explicitly mentions the RESTful Pipedrive API v1."
+        },
+        {
+          "verifier": "cross_model",
+          "field": "api_surface.breadth",
+          "status": "supported",
+          "detail": "The evidence describes the API as having hundreds of endpoints, which supports the 'broad' classification."
+        }
+      ],
+      "verifier_model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

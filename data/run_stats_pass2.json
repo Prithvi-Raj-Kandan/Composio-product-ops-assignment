@@ -1,0 +1,35 @@
+{
+  "pass": 2,
+  "apps": 100,
+  "wall_clock_s": 2449.2,
+  "concurrency": 6,
+  "needs_human": 47,
+  "usage": {
+    "models": {
+      "openai/gpt-oss-120b": {
+        "calls": 47,
+        "input_tokens": 47599,
+        "output_tokens": 32390,
+        "cost_usd": 0.026574
+      },
+      "gemini-3.1-flash-lite": {
+        "calls": 43,
+        "input_tokens": 136023,
+        "output_tokens": 13072,
+        "cost_usd": null
+      },
+      "gemma-4-31b-it": {
+        "calls": 18,
+        "input_tokens": 75266,
+        "output_tokens": 6943,
+        "cost_usd": null
+      }
+    },
+    "cost_usd_known": 0.026574,
+    "unpriced_models": [
+      "gemini-3.1-flash-lite",
+      "gemma-4-31b-it"
+    ],
+    "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
+  }
+}

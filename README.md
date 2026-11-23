@@ -65,9 +65,20 @@ Tools: `query_apps` (filter by category, self_serve, gate_type, existing_mcp, co
 
 ## Where a human is needed
 
-See [HUMAN_IN_THE_LOOP.md](HUMAN_IN_THE_LOOP.md). In short: provide keys (and repo secrets for the Action), connect Composio's Tavily toolkit once, confirm ambiguous domains (`data/domain_overrides.csv`, already done for 6 apps and marked `human_override` on those rows), read the `needs_human` rows, and approve publishing. The 20-app gold set ships in `data/gold/`; replicators do not label.
+The workflow stops for human judgement at fixed points on every run. [HUMAN_IN_THE_LOOP.md](HUMAN_IN_THE_LOOP.md) lists each point with its trigger in the code, what the human decides, what file they edit, and how the decision flows back (rerun or `--resume`). The page's section "Where the agent stops and a human decides" shows the same points with counts from this run. One-time setup is separate: API keys, `connect-tavily`, and approving merges and the Pages publish.
 
-**About the accuracy numbers:** the gold labels were made by an AI assistant (Grok Bot) working independently from official docs, not by a human. It did not look at the pipeline's output. So the dev/test accuracy measures agreement between two AI processes and is not ground truth. **Human intervention needed:** a human should audit the 20 labels (`data/gold/gold_labels.csv`, one evidence URL per field, doubts in `notes`) before the numbers are trusted. See step 4 in HUMAN_IN_THE_LOOP.md.
+## Verification
+
+Gold labels were drafted by an AI model from official docs, independently of this pipeline (each row has an evidence URL per field). Human review is pending, so treat these as agreement scores until it is done. The sample is 20 apps, stratified 2 per category, with dev 10 and test 10 (`data/gold/gold_sample.csv`). Reports are in `data/eval/report_dev.json` and `report_test.json`. Re-run with `python -m opsresearch eval`.
+
+| Split | Pass 1 | Pass 2 | Pass 3 |
+|---|---|---|---|
+| dev (80 labelled cells) | 13.75% (11) | 13.75% (11) | 21.25% (17) |
+| test (80 labelled cells) | 27.5% (22) | 15.0% (12) | 31.25% (25) |
+
+Most misses are the agent answering `unknown` where the label has a value (underclaim). Pass 2 fell on test mainly because 37 apps crashed in pass 2 when the model quota ran out. API breadth agreed on only 1 of 20 apps, which is why it is left off the page; it stays in the data and in these scores.
+
+Automated checks on all 100 apps (pass 2 loops): 535 supported, 242 insufficient, 55 flagged, 29 contradicted findings. 80 apps needed no re-research loop, 8 needed one and 12 needed two, and 110 fields were settled by re-research. These are consistency checks, not accuracy.
 
 ## Tests
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Which of 100 apps can become agent toolkits today? | Composio Product Ops take-home</title>
-<meta name="description" content="Docs-grounded agent research on 100 apps: auth, self-serve vs gated, API surface, MCP, buildability, with verification loops and an honest accuracy check.">
+<meta name="description" content="Docs-grounded agent research on 100 apps: auth, self-serve vs gated, API surface, MCP, buildability, with verification loops and honest limits.">
 <link rel="alternate" type="application/json" href="results.json" title="All records (JSON)">
 <link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
 <script type="application/ld+json">{{ json_ld | safe }}</script>
@@ -54,7 +54,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 </head>
 <body>
 <nav><span class="logo">Product Ops · 100 apps</span>
-<a href="#headline">Headline</a><a href="#patterns">Patterns</a><a href="#matrix">Matrix</a><a href="#agent">The agent</a><a href="#verification">Verification</a>{% if pass3 %}<a href="#pass3">Pass 3</a>{% endif %}<a href="#try">Try it</a><a href="#honesty">Honesty</a><a href="#for-agents">For agents</a></nav>
+<a href="#headline">Headline</a><a href="#patterns">Patterns</a><a href="#matrix">Matrix</a><a href="#agent">The agent</a>{% if pass3 %}<a href="#pass3">Pass 3</a>{% endif %}<a href="#try">Try it</a><a href="#honesty">Honesty</a><a href="#for-agents">For agents</a></nav>
 
 {% set t = patterns.totals %}
 <header class="hero"><div class="wrap">
@@ -68,8 +68,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <div class="tile"><b>{{ t.buildable }}</b><span>buildable today (incl. caveats)</span></div>
 <div class="tile"><b>{{ t.easy_wins }}</b><span>easy wins not yet in Composio</span></div>
 <div class="tile"><b>{{ t.needs_human }}</b><span>rows flagged needs human</span></div>
-{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}{% if evals.test.comparison.get('pass3_accuracy') is not none %} → {{ pct(evals.test.comparison.pass3_accuracy) }}{% endif %}</b><span>held-out test accuracy, pass 1 → pass 2{% if evals.test.comparison.get('pass3_accuracy') is not none %} → pass 3{% endif %}{% if gold_by_ai %} (agreement with AI-made labels, not ground truth){% endif %}</span></div>
-{% else %}<div class="tile"><b>pending</b><span>gold-label accuracy (see Verification)</span></div>{% endif %}
+
 </div>
 </div></header>
 
@@ -108,7 +107,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <p class="sub">Search or sort any column. Links under a cell are the docs pages quoted for it. <span class="pill human">human override</span> = a human confirmed the official domain. <span class="pill warn">needs human</span> = loops could not settle a field.</p>
 <div class="card" style="overflow:auto">
 <table id="matrix-table" class="display compact">
-<thead><tr><th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>REST / GraphQL</th><th>Breadth</th><th>MCP</th><th>In Composio</th><th>Buildable</th><th>Blocker</th><th>Flags</th></tr></thead>
+<thead><tr><th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>REST / GraphQL</th><th>MCP</th><th>In Composio</th><th>Buildable</th><th>Blocker</th><th>Flags</th></tr></thead>
 <tbody>
 {% macro evl(r, f) %}{% for e in r.ev.get(f, [])[:2] %}<a href="{{ e.url }}" title="{{ e.quote }}" target="_blank" rel="noopener">[{{ loop.index }}]</a>{% endfor %}{% endmacro %}
 {% macro vp(v) %}{% set cls = 'unk' if v in ['unknown', None] else ('ok' if v in ['yes','self_serve_free','self_serve_trial','official','none'] else ('bad' if v in ['no','partner_gated','contact_sales','no_public_api'] else 'brand')) %}<span class="pill {{ cls }}">{{ v }}</span>{% endmacro %}
@@ -119,7 +118,6 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <td>{% for a in r.auth_methods %}{{ vp(a) }} {% endfor %}<div class="ev">{{ evl(r,'auth_methods') }}</div></td>
 <td>{{ vp(r.self_serve) }}{% if r.gate_type not in ['none','unknown'] %}<div class="small">{{ r.gate_type }}</div>{% endif %}<div class="ev">{{ evl(r,'self_serve') }}{{ evl(r,'gate_type') }}</div></td>
 <td>{{ r.api_surface.rest }} / {{ r.api_surface.graphql }}<div class="ev">{{ evl(r,'api_surface') }}</div></td>
-<td>{{ r.api_surface.breadth }}</td>
 <td>{{ vp(r.existing_mcp) }}{% if r.mcp_url %}<div class="ev"><a href="{{ r.mcp_url }}" target="_blank" rel="noopener">link</a></div>{% endif %}</td>
 <td>{{ vp(r.composio_has_toolkit) }}{% if r.composio_slug %}<div class="small mono">{{ r.composio_slug }}</div>{% endif %}</td>
 <td>{{ vp(r.buildability) }}{% if r.derived %} <span class="pill unk" title="Derived by the fixed rule from evidenced access and API fields">rule</span>{% endif %}<div class="ev">{{ evl(r,'buildability') }}</div></td>
@@ -171,45 +169,11 @@ flowchart TD
 </table>
 <p class="small">Cost is tokens × published list price per 1M tokens; on a free tier the bill may be $0. Search credits (Tavily) are not included.</p>
 </div></div>
-<div class="card" style="margin-top:16px"><h3>Where a human was needed</h3>
-<table><tr><th>Step</th><th>Who</th><th>When</th><th>What</th></tr>
-{% for h in human_points %}<tr><td><b>{{ h[0] }}</b></td><td>{{ h[1] }}</td><td>{{ h[2] }}</td><td>{{ h[3] }}</td></tr>{% endfor %}</table></div>
-</section>
-
-<section id="verification">
-<h2>Verification: how we know it's right (and where it isn't)</h2>
-{% if evals %}
-{% if gold_by_ai %}<div class="warnbox"><b>These gold labels were made by an AI assistant, not a human.</b> An AI assistant (Grok Bot) labelled the 20 apps independently from official docs, without looking at this pipeline's output. So the numbers below measure agreement between two AI processes; they are not ground truth. A human should audit the labels (<code>data/gold/gold_labels.csv</code>, every row has an evidence URL per field) before these numbers are trusted.</div>
-<p class="sub">20 apps, stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities. Dev (10) is for reading errors; test (10) is held out. A miss of type <i>underclaim</i> means the agent said <code>unknown</code> where the label has a value.</p>
-{% else %}<p class="sub">20 apps were hand-labelled from official docs (stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities). Dev (10) was used to tune; test (10) was held out and scored once.</p>{% endif %}
-<div class="grid2">
-{% for split, rep in evals.items() %}
-<div class="card"><h3>{{ split }} split</h3>
-{% set p3 = rep.pass3 if rep.pass3 is defined else None %}<table><tr><th></th><th>Pass 1 (extract only)</th><th>Pass 2 (with loops)</th>{% if p3 %}<th>Pass 3 (policy fix + re-research)</th>{% endif %}</tr>
-<tr><td>Accuracy</td><td><b>{{ pct(rep.comparison.pass1_accuracy) }}</b></td><td><b>{{ pct(rep.comparison.pass2_accuracy) }}</b></td>{% if p3 %}<td><b>{{ pct(rep.comparison.pass3_accuracy) }}</b></td>{% endif %}</tr>
-<tr><td>Cells correct</td><td>{{ rep.pass1.correct_cells }} / {{ rep.pass1.labelled_cells }}</td><td>{{ rep.pass2.correct_cells }} / {{ rep.pass2.labelled_cells }}</td>{% if p3 %}<td>{{ p3.correct_cells }} / {{ p3.labelled_cells }}</td>{% endif %}</tr>
-{% for f, v in rep.comparison.fields.items() %}<tr><td class="small">{{ f }}</td><td class="small">{{ pct(v.pass1) }}</td><td class="small">{{ pct(v.pass2) }}</td>{% if p3 %}<td class="small">{{ pct(v.pass3) }}</td>{% endif %}</tr>{% endfor %}
-</table>
-<p class="small">Pass 2 misses by type: {% for k, v in rep.pass2.get('taxonomy', {}).items() %}{{ k }} {{ v }}{{ ", " if not loop.last }}{% endfor %}.</p>
-<details><summary>Misses in pass 2 ({{ rep.pass2.errors|length }})</summary><table><tr><th>App</th><th>Field</th><th>Agent</th><th>Gold</th><th>Type</th></tr>
-{% for e in rep.pass2.errors %}<tr><td>{{ e.app }}</td><td>{{ e.field }}</td><td>{{ e.predicted }}</td><td>{{ e.gold }}</td><td>{{ e.taxonomy }}</td></tr>{% endfor %}</table></details>
-</div>
-{% endfor %}
-</div>
-{% else %}
-<div class="warnbox"><b>Gold labels not scored yet.</b> The 20-app gold sample (dev 10 / test 10) is in <code>data/gold/</code>; accuracy appears here only after the hand labels are filled. No accuracy number is shown until then.</div>
-{% endif %}
-<div class="grid2" style="margin-top:16px">
-<div class="card"><h3>What the loops did (all {{ verification.apps }} apps, pass 2)</h3>
-<table><tr><th>Verifier</th>{% for s in ['supported','contradicted','insufficient','flag'] %}<th>{{ s }}</th>{% endfor %}</tr>
-{% for v, c in verification.by_verifier.items() %}<tr><td>{{ v }}</td>{% for s in ['supported','contradicted','insufficient','flag'] %}<td>{{ c.get(s, 0) }}</td>{% endfor %}</tr>{% endfor %}</table>
-<p class="small">Apps by loops used: {% for k, v in verification.loops.items() %}{{ k }} loop{{ '' if k=='1' else 's' }}: {{ v }}{{ ', ' if not loop.last }}{% endfor %}. Fields settled by re-research: {{ verification.fields_settled_total }}.</p>
-{% if delta %}<p class="small">Unknown cells pass 1 → pass 2: {% for f, v in delta.unknown_pass1.items() %}{{ f }} {{ v }}→{{ delta.unknown_pass2[f] }}{{ ', ' if not loop.last }}{% endfor %}. Cells that changed value: {{ delta.cells_changed }}. (Coverage, not accuracy.)</p>{% endif %}
-</div>
-<div class="card"><h3>Rows that still need a human ({{ needs_human|length }})</h3>
-<div style="max-height:360px;overflow:auto"><table><tr><th>App</th><th>Why</th></tr>
-{% for r in needs_human %}<tr><td>{{ r.app }}</td><td class="small">{{ r.needs_human_reasons|join('; ') }}</td></tr>{% endfor %}</table></div></div>
-</div>
+<div class="card" style="margin-top:16px"><h3>Where the agent stops and a human decides</h3>
+<p class="small">These handoffs happen on every run. Counts are measured from this run's data.</p>
+<div style="overflow:auto"><table><tr><th>Handoff</th><th>This run</th><th>Trigger (in the code)</th><th>Human decides</th><th>Edits</th><th>Flows back via</th></tr>
+{% for h in handoffs %}<tr><td><b>{{ h.name }}</b></td><td><b data-count="{{ h.key }}">{{ h.count }}</b> <span class="small">{{ h.count_label|safe }}</span></td><td class="small">{{ h.trigger|safe }}</td><td class="small">{{ h.decides }}</td><td class="small">{{ h.edits|safe }}</td><td class="small">{{ h.flows_back|safe }}</td></tr>{% endfor %}</table></div>
+<p class="small"><b>One-time setup</b> (not part of each run): {{ one_time_setup|safe }}</p></div>
 </section>
 
 {% if pass3 %}<section id="pass3">
@@ -256,8 +220,7 @@ python -m opsresearch research-one "https://acme.dev" --append</pre></div>
 <div class="card"><ul>
 <li><b>Unknown is an answer.</b> A field without a verbatim quote from an official page is <code>unknown</code>, not a guess. Unknown counts are shown in every chart and table.</li>
 <li><b>Human-touched rows are marked.</b> {{ overrides|length }} rows used a human-confirmed domain ({% for r in overrides %}{{ r.app }}{{ ', ' if not loop.last }}{% endfor %}). No answer was hand-edited into the agent output.</li>
-{% if gold_by_ai %}<li><b>The gold labels are AI-made.</b> They were made by an AI assistant working independently from official docs, not by a human, so the accuracy figures are agreement between two AI processes, not ground truth. A human should audit the labels.</li>{% endif %}
-<li><b>Accuracy only on the gold sample.</b> The other 80 apps get the automated checks (coverage and consistency), not an accuracy claim.</li>
+<li><b>Accuracy is not claimed on this page.</b> Agreement with a 20-app gold sample is reported in the README (Verification).{% if gold_by_ai %} Those labels were drafted by an AI model from official docs, independently of this pipeline, and human review is pending.{% endif %}</li>
 <li><b>Gated is a finding.</b> Partner-only or contact-sales APIs are reported as such when a page says so.</li>
 </ul></div>
 <div class="card"><ul>
@@ -265,7 +228,7 @@ python -m opsresearch research-one "https://acme.dev" --append</pre></div>
 <li><b>Search credits ran out mid-build.</b> Tavily's free 1,000 monthly credits (shared by the Composio Tavily toolkit and the direct fallback) were used up by the early runs. The final runs reused the official pages already fetched and cached, and re-research could only probe common doc paths. Fresh credits would let the loops find more new pages.</li>
 <li><b>Verdicts by rule.</b> {{ derived_count }} buildability verdicts were derived by a fixed rule from evidenced access and API fields (tagged "rule"), not quoted from a page.</li>
 <li><b>Docs behind JS or logins</b> are thin to a plain HTTP fetch, so those apps lean to unknown.</li>
-<li><b>Breadth</b> (endpoint count) is a rough bucket from what the docs show, not a crawl of every endpoint.</li>
+<li><b>API breadth is kept in the data but left off the page:</b> it is hard to judge consistently from docs and agreed with the gold labels on only 1 of 20 apps.</li>
 <li><b>The second model can be wrong too.</b> It flags disagreement; it is not ground truth. Composio's API is ground truth only for Composio coverage.</li>
 <li><b>Point in time.</b> Docs were cached on {{ generated[:10] }}; pages change.</li>
 </ul></div></div>

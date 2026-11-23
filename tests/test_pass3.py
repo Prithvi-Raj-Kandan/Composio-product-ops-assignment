@@ -234,3 +234,11 @@ def test_tidy_output_fixes_shape_without_inventing():
     assert out["evidence"] == [
         {"field": "auth_methods", "url": "https://a.com", "quote": "Use an API key.", "source": "doc"}
     ]
+
+
+def test_human_override_provenance_survives_a_pass2_crash(tmp_path):
+    p1 = _p1()
+    p1["provenance"] = {"source": "human_override"}
+    p2 = AppRecord(app="Acme", category="CRM").model_dump(mode="json")
+    out, _ = restore_from_prior(p2, p1, {}, tmp_path)
+    assert out["provenance"]["source"] == "human_override"

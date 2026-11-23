@@ -254,6 +254,9 @@ def restore_from_prior(
     for key in ("official_domain", "extraction_model"):
         if not out.get(key) and prior.get(key):
             out[key] = prior[key]
+    if (prior.get("provenance") or {}).get("source") == "human_override":
+        # A crashed pass-2 record was rebuilt from defaults; the human's domain decision still applies.
+        out["provenance"] = dict(prior["provenance"])
     return out, filled
 
 

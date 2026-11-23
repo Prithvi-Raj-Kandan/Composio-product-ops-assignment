@@ -17,52 +17,132 @@ from opsresearch.patterns import compute_patterns, headline, records_frame
 REPO_URL = "https://github.com/Prithvi-Raj-Kandan/Composio-product-ops-assignment"
 PAGES_URL = "https://prithvi-raj-kandan.github.io/Composio-product-ops-assignment/"
 
-HUMAN_POINTS = [
-    (
-        "API keys",
-        "Replicator",
-        "Before any run",
-        "Set COMPOSIO_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, TAVILY_API_KEY (env or repo secrets).",
-    ),
-    (
-        "Composio Tavily connection",
-        "Replicator, once",
-        "Before the first run",
-        "Run `python -m opsresearch connect-tavily` so search goes through Composio's Tavily toolkit.",
-    ),
-    (
-        "Ambiguous domains",
-        "Owner (done for 6 apps)",
-        "Before pass 1",
-        "Confirm the official site for entities the agent cannot pin down; stored in data/domain_overrides.csv "
-        "and marked 'human override' on every affected row.",
-    ),
-    (
-        "Gold labels (audit)",
-        "Owner / reviewer (not done yet)",
-        "Before accuracy is trusted",
-        "The 20 gold labels were made by an AI assistant from official docs, not by a human. A human should audit "
-        "them (evidence URL per field in data/gold/gold_labels.csv), fix any wrong cell, and re-run eval.",
-    ),
-    (
-        "needs_human rows",
-        "Owner / reviewer",
-        "After pass 2",
-        "Read rows where the verification loops could not settle a field, plus their run logs in data/runs/.",
-    ),
-    (
-        "Gated edge cases",
-        "Owner",
-        "While reading results",
-        "Judge cases the rubric cannot see: a trial that needs a card, a sandbox that still needs sales.",
-    ),
-    (
-        "Publish",
-        "Owner",
-        "Before submit",
-        "Approve merges and the GitHub Pages publish. The agent does not publish itself.",
-    ),
-]
+GATED_ACCESS = {"partner_gated", "contact_sales", "admin_approval", "paid_plan_required"}
+GATED_TYPES = {"partner", "contact_sales", "admin_approval", "platform_review", "paid_plan", "login_wall"}
+HIGH_STAKES = ("self_serve", "gate_type", "auth_methods")
+
+ONE_TIME_SETUP = (
+    "Set COMPOSIO_API_KEY, GEMINI_API_KEY, GROQ_API_KEY and TAVILY_API_KEY (shell or repo secrets); run "
+    "<code>python -m opsresearch connect-tavily</code> once; approve merges and the GitHub Pages publish "
+    "(the agent does not publish on its own)."
+)
+
+
+def _csv_rows(path: Path) -> int:
+    if not path.exists():
+        return 0
+    with path.open(newline="", encoding="utf-8") as handle:
+        return sum(1 for row in csv.DictReader(handle) if (row.get("app") or "").strip())
+
+
+def human_handoffs(repo: Path, records: list[dict[str, Any]], verification: dict[str, Any]) -> list[dict[str, Any]]:
+    """Per-run points where the workflow stops for a human, with counts measured from this run's data."""
+    data = repo / "data"
+    exhausted = sum(
+        1
+        for r in records
+        if any(x.startswith("verification loops exhausted") for x in r.get("needs_human_reasons") or [])
+    )
+    crashed = sum(
+        1 for r in records if any("crashed" in x or "pipeline error" in x for x in r.get("needs_human_reasons") or [])
+    )
+    contradicted_now = sum(
+        1 for r in records for v in (r.get("verifier_verdicts") or {}).values() if v == "contradicted"
+    )
+    gated = sum(1 for r in records if r.get("self_serve") in GATED_ACCESS or r.get("gate_type") in GATED_TYPES)
+    quote_only = sum(
+        1
+        for r in records
+        for f, tag in (r.get("field_confidence") or {}).items()
+        if tag == "quote-verified" and f in HIGH_STAKES
+    )
+    quote_only_apps = sum(
+        1
+        for r in records
+        if any(tag == "quote-verified" and f in HIGH_STAKES for f, tag in (r.get("field_confidence") or {}).items())
+    )
+    gold_rows = _csv_rows(data / "gold" / "gold_sample.csv")
+    return [
+        {
+            "name": "Which company is this?",
+            "key": "domain_overrides",
+            "count": _csv_rows(data / "domain_overrides.csv"),
+            "count_label": "overrides in use",
+            "trigger": "The agent only accepts pages on hosts derived from the task's hint "
+            "(<code>url_is_official</code>). "
+            "There is no automatic confidence score: when the hint is ambiguous (a rebrand, a generic name, "
+            "or a hinted host with no API docs) the row comes back mostly <code>unknown</code>.",
+            "decides": "The official homepage and docs URL for the entity.",
+            "edits": "<code>data/domain_overrides.csv</code> (app, homepage, docs_url, extra_source, note)",
+            "flows_back": "Rerun that app (<code>research-one</code> or <code>run --pass 1 --only APP</code>). "
+            'The record gets <code>provenance.source = human_override</code> and the tag "human override".',
+        },
+        {
+            "name": "Verification loops could not settle a field",
+            "key": "loops_exhausted",
+            "count": exhausted,
+            "count_label": f"rows ({crashed} more are pass-2 crash rows; needs_human total: "
+            f'<b data-count="needs_human">{sum(1 for r in records if r.get("needs_human"))}</b>)',
+            "trigger": "In pass 2 a field is still <i>contradicted</i> or <i>insufficient</i> after "
+            "<code>MAX_LOOPS = 2</code> re-research loops, so <code>needs_human = true</code> with the reason "
+            '"verification loops exhausted: FIELDS". Rows whose pass 2 crashed also stay needs_human.',
+            "decides": "Whether a quoted page really settles the field, or it should stay <code>unknown</code>.",
+            "edits": "Reads <code>needs_human_reasons</code> in <code>data/results.json</code> and the findings in "
+            "<code>data/runs/APP_pass2.json</code>. A better source goes into "
+            "<code>domain_overrides.csv</code> (extra_source); cells are never hand-edited.",
+            "flows_back": "Delete that app's checkpoint and rerun <code>run --pass 2 --resume</code> "
+            "or <code>pass3 --resume</code>.",
+        },
+        {
+            "name": "The verifier contradicted a claim",
+            "key": "contradicted",
+            "count": contradicted_now,
+            "count_label": f"cells demoted now ({verification.get('status', {}).get('contradicted', 0)} "
+            "contradicted findings across the pass-2 loops)",
+            "trigger": "The second model or the MCP registry returned <i>contradicted</i>. Only this verdict demotes "
+            "a claim to <code>unknown</code>; the verdict is stored per field in <code>verifier_verdicts</code>.",
+            "decides": "Who is right: the quoted doc or the verifier.",
+            "edits": "The run log for that app (<code>data/runs/</code>); a better doc URL goes in "
+            "<code>domain_overrides.csv</code>.",
+            "flows_back": "Rerun with <code>--resume</code> after deleting the app's checkpoint.",
+        },
+        {
+            "name": "Access is gated",
+            "key": "gated",
+            "count": gated,
+            "count_label": "rows with a gate",
+            "trigger": "<code>self_serve</code> is partner_gated, contact_sales, admin_approval or paid_plan_required, "
+            "or <code>gate_type</code> is not none/unknown. The fixed rule then sets buildability to no or "
+            "yes_with_caveats.",
+            "decides": "Whether the gate is real for Composio (apply to the partner program, talk to sales, "
+            "a trial that needs a card).",
+            "edits": "Nothing in the data: the rule's verdict stays agent output; the decision goes in the "
+            "review notes or the PR.",
+            "flows_back": "If the docs moved, add the new URL to <code>domain_overrides.csv</code> and rerun.",
+        },
+        {
+            "name": "High-stakes field backed by a quote only",
+            "key": "quote_only_high_stakes",
+            "count": quote_only,
+            "count_label": f"cells in {quote_only_apps} apps (self_serve, gate_type, auth_methods)",
+            "trigger": "<code>field_confidence = quote-verified</code>: the quote is on the official page, "
+            "but no second model said <i>supported</i> (quota-limited, or it judged insufficient).",
+            "decides": "Spot-check the linked quote before relying on the cell.",
+            "edits": "Nothing; the tag stays until a second model confirms it.",
+            "flows_back": "<code>pass3 --resume</code> after deleting the checkpoint, once model quotas allow.",
+        },
+        {
+            "name": "Gold-label audit (evaluation time)",
+            "key": "gold_audit",
+            "count": gold_rows,
+            "count_label": "apps in the gold sample, AI-drafted, human review pending",
+            "trigger": "Before an accuracy number is trusted. The labels' notes say they were AI-drafted.",
+            "decides": "Whether each gold cell is right, using the evidence URL per field.",
+            "edits": "The labelling Google Sheet, then <code>import-gold</code> into "
+            "<code>data/gold/gold_labels.csv</code>.",
+            "flows_back": "<code>python -m opsresearch eval</code>, then re-render the page.",
+        },
+    ]
 
 
 def _gold_labelled_by_ai(path: Path) -> bool:
@@ -70,7 +150,11 @@ def _gold_labelled_by_ai(path: Path) -> bool:
     if not path.exists():
         return False
     with path.open(newline="", encoding="utf-8") as handle:
-        return any("assistant-labelled" in (row.get("notes") or "").lower() for row in csv.DictReader(handle))
+        return any(
+            marker in (row.get("notes") or "").lower()
+            for row in csv.DictReader(handle)
+            for marker in ("ai-drafted", "assistant-labelled")
+        )
 
 
 def _load(path: Path, default: Any = None) -> Any:
@@ -224,6 +308,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
             }
         )
     stats = {p: _load(data / f"run_stats_pass{p}.json") for p in (1, 2, 3)}
+    verification = verification_stats(data / "runs")
     pass2 = _records(_load(data / "results_pass2.json"))
     return {
         "generated": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
@@ -233,14 +318,15 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "patterns_json": json.dumps(patterns, default=str),
         "evals": evals,
         "gold_by_ai": gold_by_ai,
-        "verification": verification_stats(data / "runs"),
+        "verification": verification,
+        "handoffs": human_handoffs(repo, records, verification),
         "delta": pass_delta(pass1, records) if pass1 else None,
         "pass3": pass3_summary(pass1, pass2, records, stats.get(3), data / "runs"),
         "needs_human": [r for r in rows if r.get("needs_human")],
         "derived_count": sum(1 for r in rows if r["derived"]),
         "overrides": [r for r in rows if r["human_override"]],
         "stats": stats,
-        "human_points": HUMAN_POINTS,
+        "one_time_setup": ONE_TIME_SETUP,
         "repo_url": REPO_URL,
         "pages_url": PAGES_URL,
         "pct": _pct,

@@ -216,3 +216,21 @@ def test_one_liner_alone_does_not_trigger_research(tmp_path):
     ]
     pass3_record(rec, None, {}, tmp_path, researcher=researcher)
     assert calls == []
+
+
+def test_tidy_output_fixes_shape_without_inventing():
+    from opsresearch.pass3 import tidy_output
+
+    out = tidy_output(
+        {
+            "auth_methods": "api_key",
+            "evidence": [
+                {"url": "https://a.com", "quote": "no field here at all", "confidence": 1},
+                {"field": "auth_methods", "url": "https://a.com", "quote": "Use an API key.", "confidence": 1},
+            ],
+        }
+    )
+    assert out["auth_methods"] == ["api_key"]
+    assert out["evidence"] == [
+        {"field": "auth_methods", "url": "https://a.com", "quote": "Use an API key.", "source": "doc"}
+    ]

@@ -143,6 +143,28 @@ def pass_delta(pass1: list[dict[str, Any]], pass2: list[dict[str, Any]]) -> dict
     return {"unknown_pass1": a, "unknown_pass2": b, "cells_changed": changed}
 
 
+def pass3_summary(
+    pass1: list[dict[str, Any]],
+    pass2: list[dict[str, Any]],
+    pass3: list[dict[str, Any]],
+    stats: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    """Unknown counts pass 1 -> 2 -> 3 plus confidence tags, only when pass 3 is the published data."""
+    if not stats or not pass3 or not any(r.get("field_confidence") for r in pass3):
+        return None
+    from opsresearch.pass3 import COUNTED, count_unknowns
+
+    a, b, c = count_unknowns(pass1), count_unknowns(pass2), count_unknowns(pass3)
+    tags: Counter = Counter()
+    for r in pass3:
+        tags.update((r.get("field_confidence") or {}).values())
+    return {
+        "rows": [{"field": f, "p1": a[f], "p2": b[f], "p3": c[f]} for f in COUNTED],
+        "tags": dict(tags.most_common()),
+        "steps": stats.get("fields_filled_by_step") or {},
+    }
+
+
 def _evidence_by_field(record: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
     out: dict[str, list[dict[str, str]]] = {}
     for ev in record.get("evidence") or []:
@@ -183,7 +205,8 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
                 "human_override": (r.get("provenance") or {}).get("source") == "human_override",
             }
         )
-    stats = {p: _load(data / f"run_stats_pass{p}.json") for p in (1, 2)}
+    stats = {p: _load(data / f"run_stats_pass{p}.json") for p in (1, 2, 3)}
+    pass2 = _records(_load(data / "results_pass2.json"))
     return {
         "generated": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
         "records": rows,
@@ -194,6 +217,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "gold_by_ai": gold_by_ai,
         "verification": verification_stats(data / "runs"),
         "delta": pass_delta(pass1, records) if pass1 else None,
+        "pass3": pass3_summary(pass1, pass2, records, stats.get(3)),
         "needs_human": [r for r in rows if r.get("needs_human")],
         "derived_count": sum(1 for r in rows if r["derived"]),
         "overrides": [r for r in rows if r["human_override"]],

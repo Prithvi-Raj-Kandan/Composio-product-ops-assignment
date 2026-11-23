@@ -54,7 +54,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 </head>
 <body>
 <nav><span class="logo">Product Ops · 100 apps</span>
-<a href="#headline">Headline</a><a href="#patterns">Patterns</a><a href="#matrix">Matrix</a><a href="#agent">The agent</a><a href="#verification">Verification</a><a href="#try">Try it</a><a href="#honesty">Honesty</a><a href="#for-agents">For agents</a></nav>
+<a href="#headline">Headline</a><a href="#patterns">Patterns</a><a href="#matrix">Matrix</a><a href="#agent">The agent</a><a href="#verification">Verification</a>{% if pass3 %}<a href="#pass3">Pass 3</a>{% endif %}<a href="#try">Try it</a><a href="#honesty">Honesty</a><a href="#for-agents">For agents</a></nav>
 
 {% set t = patterns.totals %}
 <header class="hero"><div class="wrap">
@@ -68,7 +68,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <div class="tile"><b>{{ t.buildable }}</b><span>buildable today (incl. caveats)</span></div>
 <div class="tile"><b>{{ t.easy_wins }}</b><span>easy wins not yet in Composio</span></div>
 <div class="tile"><b>{{ t.needs_human }}</b><span>rows flagged needs human</span></div>
-{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}</b><span>held-out test accuracy, pass 1 → pass 2{% if gold_by_ai %} (agreement with AI-made labels, not ground truth){% endif %}</span></div>
+{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}{% if evals.test.comparison.get('pass3_accuracy') is not none %} → {{ pct(evals.test.comparison.pass3_accuracy) }}{% endif %}</b><span>held-out test accuracy, pass 1 → pass 2{% if evals.test.comparison.get('pass3_accuracy') is not none %} → pass 3{% endif %}{% if gold_by_ai %} (agreement with AI-made labels, not ground truth){% endif %}</span></div>
 {% else %}<div class="tile"><b>pending</b><span>gold-label accuracy (see Verification)</span></div>{% endif %}
 </div>
 </div></header>
@@ -167,7 +167,7 @@ flowchart TD
 </table>
 <h3>Run cost and time</h3>
 <table><tr><th>Pass</th><th>Apps</th><th>Wall clock</th><th>LLM calls</th><th>Est. LLM cost</th></tr>
-{% for p in [1,2] %}{% set s = stats[p] %}{% if s %}<tr><td>{{ p }}</td><td>{{ s.apps }}</td><td>{{ (s.wall_clock_s/60)|round(1) }} min</td><td>{{ s.usage.models.values()|map(attribute='calls')|sum }}</td><td>${{ '%.2f'|format(s.usage.cost_usd_known) }}</td></tr>{% endif %}{% else %}{% endfor %}
+{% for p in [1,2,3] %}{% set s = stats[p] %}{% if s %}<tr><td>{{ p }}</td><td>{{ s.apps }}</td><td>{{ (s.wall_clock_s/60)|round(1) }} min</td><td>{{ s.usage.models.values()|map(attribute='calls')|sum }}</td><td>${{ '%.2f'|format(s.usage.cost_usd_known) }}</td></tr>{% endif %}{% else %}{% endfor %}
 </table>
 <p class="small">Cost is tokens × published list price per 1M tokens; on a free tier the bill may be $0. Search credits (Tavily) are not included.</p>
 </div></div>
@@ -185,10 +185,10 @@ flowchart TD
 <div class="grid2">
 {% for split, rep in evals.items() %}
 <div class="card"><h3>{{ split }} split</h3>
-<table><tr><th></th><th>Pass 1 (extract only)</th><th>Pass 2 (with loops)</th></tr>
-<tr><td>Accuracy</td><td><b>{{ pct(rep.comparison.pass1_accuracy) }}</b></td><td><b>{{ pct(rep.comparison.pass2_accuracy) }}</b></td></tr>
-<tr><td>Cells correct</td><td>{{ rep.pass1.correct_cells }} / {{ rep.pass1.labelled_cells }}</td><td>{{ rep.pass2.correct_cells }} / {{ rep.pass2.labelled_cells }}</td></tr>
-{% for f, v in rep.comparison.fields.items() %}<tr><td class="small">{{ f }}</td><td class="small">{{ pct(v.pass1) }}</td><td class="small">{{ pct(v.pass2) }}</td></tr>{% endfor %}
+{% set p3 = rep.pass3 if rep.pass3 is defined else None %}<table><tr><th></th><th>Pass 1 (extract only)</th><th>Pass 2 (with loops)</th>{% if p3 %}<th>Pass 3 (policy fix + re-research)</th>{% endif %}</tr>
+<tr><td>Accuracy</td><td><b>{{ pct(rep.comparison.pass1_accuracy) }}</b></td><td><b>{{ pct(rep.comparison.pass2_accuracy) }}</b></td>{% if p3 %}<td><b>{{ pct(rep.comparison.pass3_accuracy) }}</b></td>{% endif %}</tr>
+<tr><td>Cells correct</td><td>{{ rep.pass1.correct_cells }} / {{ rep.pass1.labelled_cells }}</td><td>{{ rep.pass2.correct_cells }} / {{ rep.pass2.labelled_cells }}</td>{% if p3 %}<td>{{ p3.correct_cells }} / {{ p3.labelled_cells }}</td>{% endif %}</tr>
+{% for f, v in rep.comparison.fields.items() %}<tr><td class="small">{{ f }}</td><td class="small">{{ pct(v.pass1) }}</td><td class="small">{{ pct(v.pass2) }}</td>{% if p3 %}<td class="small">{{ pct(v.pass3) }}</td>{% endif %}</tr>{% endfor %}
 </table>
 <p class="small">Pass 2 misses by type: {% for k, v in rep.pass2.get('taxonomy', {}).items() %}{{ k }} {{ v }}{{ ", " if not loop.last }}{% endfor %}.</p>
 <details><summary>Misses in pass 2 ({{ rep.pass2.errors|length }})</summary><table><tr><th>App</th><th>Field</th><th>Agent</th><th>Gold</th><th>Type</th></tr>
@@ -211,6 +211,29 @@ flowchart TD
 {% for r in needs_human %}<tr><td>{{ r.app }}</td><td class="small">{{ r.needs_human_reasons|join('; ') }}</td></tr>{% endfor %}</table></div></div>
 </div>
 </section>
+
+{% if pass3 %}<section id="pass3">
+<h2>Pass 3: fewer unknowns, same evidence rule</h2>
+<p class="sub">Pass 2's verifiers left many cells <code>unknown</code>. Pass 3 asks which of those unknowns had evidence all along, and finds new evidence without web search.</p>
+<div class="grid2">
+<div class="card"><h3>Unknown cells: Pass 1 → pass 2 → pass 3</h3>
+<table><tr><th>Field</th><th>Pass 1</th><th>Pass 2</th><th>Pass 3</th></tr>
+{% for r in pass3.rows %}<tr><td>{{ r.field }}</td><td>{{ r.p1 }}</td><td>{{ r.p2 }}</td><td><b>{{ r.p3 }}</b></td></tr>{% endfor %}</table>
+<p class="small">Out of {{ n }} apps. This is coverage, not accuracy.</p></div>
+<div class="card"><h3>What filled the cells</h3>
+<table><tr><th>Step</th><th>Fields</th></tr>{% for k, v in pass3.steps.items() %}<tr><td class="mono">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+<h3>Confidence tags on filled cells</h3>
+<table><tr><th>Tag</th><th>Cells</th></tr>{% for k, v in pass3.tags.items() %}<tr><td class="mono">{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>What changed and why</h3><ul>
+<li><b>Policy fix.</b> In pass 2, a second model that said <i>insufficient</i> sent the field back for re-extraction, and the re-extraction often came back empty, so a claim with a verbatim quote from the official page was lost. Only <b>contradicted</b> demotes a claim now. A claim whose exact quote is found again on the cached official page is kept and tagged <code>quote-verified</code>. If the second model agreed, it's tagged <code>verifier-supported</code>. The second model's verdict is stored per field (<code>verifier_verdicts</code>).</li>
+<li><b>Pass 2 crashes.</b> 37 apps crashed in pass 2 (the model's daily quota ran out), leaving every field empty. Pass 3 restored their pass-1 claims only where the quote is still on the page. These rows stay <i>needs human</i>, because no second model checked them.</li>
+<li><b>Composio metadata.</b> Every app was looked up in Composio's toolkit API by slug and by exact name. That sets <code>composio_has_toolkit</code> for all apps. For covered apps, the toolkit's auth schemes fill <code>auth_methods</code>, tagged <code>composio_metadata</code>. That tag means what Composio supports, which may be a subset of what the vendor offers.</li>
+<li><b>Re-research without search.</b> For fields still unknown, common doc paths (/docs, /api, /developers, /authentication, /pricing, …) were fetched on the official host only. A model then extracted just those fields with strict verbatim quotes, and a second model checked them. A contradicted claim was dropped.</li>
+<li><b>Rule verdicts.</b> buildability and main_blocker are still derived by the fixed rule from the evidenced fields (<code>derived_rule</code>). No value is filled by default. A cell with no evidence stays <code>unknown</code>.</li>
+</ul></div>
+</section>
+{% endif %}
 
 <section id="try">
 <h2>Try it: research a new company</h2>

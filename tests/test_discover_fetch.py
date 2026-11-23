@@ -9,6 +9,38 @@ from opsresearch.fetch import fetch_url
 from opsresearch.seed import AppSeed, load_apps, load_overrides, resolve_domain
 
 
+def test_override_urls_are_used_before_search_and_the_hint_loses() -> None:
+    from opsresearch.discover import SearchHit, discover
+
+    apps = {app.app: app for app in load_apps("data/apps.csv")}
+    overrides = load_overrides("data/domain_overrides.csv")
+    resolved = resolve_domain(apps["fanbasis"], overrides)
+    assert resolved.source == "human_override"
+
+    class Search:
+        name = "fake"
+
+        def __init__(self) -> None:
+            self.queries: list[str] = []
+
+        def search(self, query: str, *, max_results: int = 5) -> list[SearchHit]:
+            self.queries.append(query)
+            return [
+                SearchHit(url="https://fanbasis.com/api", title="hint"),
+                SearchHit(url="https://medium.com/fanbasis-api", title="blog"),
+                SearchHit(url="https://commasdocs.com/api", title="docs"),
+            ]
+
+    search = Search()
+    hits = discover(apps["fanbasis"], resolved, search)
+    assert search.queries, "search still runs after the override is resolved"
+    assert hits[0].url == "https://commas.com"
+    assert "https://commasdocs.com/" in [hit.url for hit in hits]
+    assert "https://commas.com/fanbasis-is-now-commas" in [hit.url for hit in hits]
+    assert all("fanbasis.com" not in hit.url for hit in hits)
+    assert all("medium.com" not in hit.url for hit in hits)
+
+
 def test_filter_drops_blogs_and_keeps_official_docs() -> None:
     apps = {app.app: app for app in load_apps("data/apps.csv")}
     overrides = load_overrides("data/domain_overrides.csv")

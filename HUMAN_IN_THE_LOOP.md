@@ -6,8 +6,8 @@ Time spent is for the owner to fill in. This file does not invent those numbers.
 
 | # | Who | When | What | Time spent |
 |---|---|---|---|---|
-| 1 | Owner, and anyone replicating | Before a live run | Set `COMPOSIO_API_KEY` and `GEMINI_API_KEY`. `GROQ_API_KEY`, `TAVILY_API_KEY`, and `EXA_API_KEY` are optional. | owner to record |
-| 2 | Owner | Before pass 2 is treated as final | Confirm the official domain for every row in `data/domain_overrides.csv`. Each of those rows is a best-guess pre-fill with status `needs human confirm`. | owner to record |
+| 1 | Owner, and anyone replicating | Before a live run | Set `COMPOSIO_API_KEY` and `GEMINI_API_KEY`. `TAVILY_API_KEY` is available and is the direct search fallback after Composio's Tavily toolkit. `GROQ_API_KEY` and `EXA_API_KEY` stay optional. | owner to record |
+| 2 | Owner, and anyone replicating | Before a full run | Resolve ambiguous entities in `data/domain_overrides.csv` (`app`, `homepage`, `docs_url`, `extra_source`, `note`). Those rows win over the hint. The shipped rows cover iPayX, fanbasis (rebranded to Commas), Paygent Connect, Waterfall.io, higgsfield, and YouTube Transcript. A replicator confirms or edits them before the run. Each affected record stores `provenance.source` = `human_override`. | owner to record |
 | 3 | Owner, once, at build time | Before accuracy is quoted | Label the 20 gold apps in `data/gold/gold_labels.csv`. This is a one-time build-time effort. The finished file ships in the repo. Anyone replicating the run uses that file and does not label again. Label again only if the schema changes or a new category needs an audit. | owner to record |
 | 4 | Owner | While reading pass 2 | Judge gated edge cases the rubric cannot see (a free trial that requires a card, a sandbox that still needs sales). | owner to record |
 | 5 | Owner | After pass 2 | Read `needs_human` on each record and the per-app log in `data/runs/`. Those are the rows the loops could not settle. | owner to record |

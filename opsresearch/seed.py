@@ -44,15 +44,16 @@ class AppSeed:
 
 @dataclass(frozen=True)
 class DomainOverride:
-    app: str
-    official_domain: str
-    path_prefix: str
-    notes: str
-    status: str
+    """A human's resolution of an ambiguous app. These URLs win over the hint."""
 
-    @property
-    def needs_human(self) -> bool:
-        return "needs human confirm" in self.status.lower()
+    app: str
+    homepage: str
+    docs_url: str
+    extra_source: str
+    note: str
+
+    def urls(self) -> list[str]:
+        return [url.strip() for url in (self.homepage, self.docs_url, self.extra_source) if url.strip()]
 
 
 @dataclass(frozen=True)
@@ -72,6 +73,8 @@ class ResolvedDomain:
     note: str
     source: str
     display_domain: str
+    seed_urls: tuple[str, ...] = ()
+    path_scopes: tuple[tuple[str, str], ...] = ()
 
 
 @dataclass
@@ -108,10 +111,10 @@ def load_overrides(path: Path) -> dict[str, DomainOverride]:
     for row in rows:
         item = DomainOverride(
             app=row["app"].strip(),
-            official_domain=row["official_domain"].strip().lower().removeprefix("www."),
-            path_prefix=row.get("path_prefix", "").strip(),
-            notes=row.get("notes", "").strip(),
-            status=row.get("status", "").strip(),
+            homepage=row.get("homepage", "").strip(),
+            docs_url=row.get("docs_url", "").strip(),
+            extra_source=row.get("extra_source", "").strip(),
+            note=row.get("note", "").strip(),
         )
         found[item.app.lower()] = item
     return found
@@ -148,22 +151,43 @@ def _hint_tokens(hint: str) -> list[tuple[str, str]]:
     return found
 
 
+def _url_host_path(url: str) -> tuple[str, str]:
+    raw = url if "://" in url else f"https://{url}"
+    parsed = urlparse(raw)
+    host = _strip_www(parsed.hostname or "")
+    path = parsed.path or ""
+    if path in {"", "/"}:
+        path = ""
+    return host, path
+
+
 def resolve_domain(app: AppSeed, overrides: dict[str, DomainOverride]) -> ResolvedDomain:
     override = overrides.get(app.app.lower())
     if override is not None:
-        hosts = registrable_hosts(override.official_domain)
-        prefix = override.path_prefix if override.path_prefix.startswith("/") else (
-            f"/{override.path_prefix}" if override.path_prefix else ""
-        )
-        scoped = override.official_domain if prefix else ""
+        hosts: set[str] = set()
+        scopes: list[tuple[str, str]] = []
+        for url in override.urls():
+            host, path = _url_host_path(url)
+            if not host:
+                continue
+            if host in PATH_SCOPED_HOSTS and path:
+                hosts.add(host)
+                scopes.append((host, path))
+            else:
+                hosts |= registrable_hosts(host)
+        homepage_host, _ = _url_host_path(override.homepage) if override.homepage else ("", "")
+        prefix = scopes[0][1] if scopes else ""
+        scoped = scopes[0][0] if scopes else ""
         return ResolvedDomain(
             allowed_hosts=frozenset(hosts),
             path_prefix=prefix,
             path_scoped_host=scoped,
-            needs_human=override.needs_human,
-            note=override.notes,
-            source="override",
-            display_domain=override.official_domain,
+            path_scopes=tuple(scopes),
+            needs_human=False,
+            note=override.note,
+            source="human_override",
+            display_domain=homepage_host or (sorted(hosts, key=len)[0] if hosts else ""),
+            seed_urls=tuple(override.urls()),
         )
     tokens = _hint_tokens(app.hint)
     hosts: set[str] = set()
@@ -178,14 +202,17 @@ def resolve_domain(app: AppSeed, overrides: dict[str, DomainOverride]) -> Resolv
     if not hosts:
         raise ValueError(f"no domain in hint for {app.app!r}: {app.hint!r}")
     display = sorted(hosts, key=len)[0]
+    scopes = ((scoped, prefix),) if prefix and scoped else ()
     return ResolvedDomain(
         allowed_hosts=frozenset(hosts),
         path_prefix=prefix,
         path_scoped_host=scoped,
+        path_scopes=scopes,
         needs_human=False,
         note="",
         source="hint",
         display_domain=display,
+        seed_urls=(),
     )
 
 
@@ -204,12 +231,15 @@ def url_is_official(url: str, resolved: ResolvedDomain) -> bool:
     host = parsed.hostname or ""
     if not host_allowed(host, resolved.allowed_hosts):
         return False
-    if resolved.path_prefix and resolved.path_scoped_host:
-        if _strip_www(host) == _strip_www(resolved.path_scoped_host) or _strip_www(
-            host
-        ).endswith("." + _strip_www(resolved.path_scoped_host)):
-            path = parsed.path or "/"
-            return path == resolved.path_prefix or path.startswith(resolved.path_prefix.rstrip("/") + "/")
+    scopes = resolved.path_scopes
+    if not scopes and resolved.path_prefix and resolved.path_scoped_host:
+        scopes = ((resolved.path_scoped_host, resolved.path_prefix),)
+    bare = _strip_www(host)
+    path = parsed.path or "/"
+    for scoped_host, prefix in scopes:
+        scoped = _strip_www(scoped_host)
+        if bare == scoped or bare.endswith("." + scoped):
+            return path == prefix or path.startswith(prefix.rstrip("/") + "/")
     return True
 
 

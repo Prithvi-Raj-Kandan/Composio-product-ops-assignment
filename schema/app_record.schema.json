@@ -160,6 +160,20 @@
       "title": "GateType",
       "type": "string"
     },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Where the official domain came from. human_override means a person set the row.",
+      "properties": {
+        "source": {
+          "default": "hint",
+          "description": "human_override when data/domain_overrides.csv supplied the domain, otherwise hint.",
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "title": "Provenance",
+      "type": "object"
+    },
     "SelfServe": {
       "enum": [
         "self_serve_free",
@@ -354,6 +368,9 @@
       ],
       "default": null,
       "title": "Official Domain"
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
     },
     "source_id": {
       "anyOf": [

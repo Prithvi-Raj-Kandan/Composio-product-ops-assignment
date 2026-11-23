@@ -87,6 +87,19 @@ def _app() -> AppSeed:
     return AppSeed(1, "CRM and Sales", "Acme", "acme.dev")
 
 
+def test_human_override_is_stored_on_the_record(tmp_path) -> None:
+    from opsresearch.seed import load_apps, load_overrides
+
+    apps = {app.app: app for app in load_apps("data/apps.csv")}
+    deps = _deps(tmp_path, Judge())
+    deps.overrides = load_overrides("data/domain_overrides.csv")
+    record, log = run_app(apps["fanbasis"], 1, deps)
+    assert record.provenance.source == "human_override"
+    assert log["nodes"][0]["node"] == "resolve_domain"
+    assert log["nodes"][0]["source"] == "human_override"
+    assert record.official_domain == "commas.com"
+
+
 def test_contradicted_field_is_reresearched_and_fixed(tmp_path) -> None:
     judge = Judge()
     record, log = run_app(_app(), 2, _deps(tmp_path, judge))

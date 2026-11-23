@@ -84,14 +84,16 @@ def discover(
     fields: list[str] | None = None,
     max_pages: int = 6,
 ) -> list[SearchHit]:
-    hits: list[SearchHit] = []
+    hits: list[SearchHit] = [
+        SearchHit(url=url, title=app.app, snippet="human override") for url in resolved.seed_urls
+    ]
     for query in discovery_queries(app.app, fields):
         try:
             hits.extend(search.search(query, max_results=5))
         except Exception as exc:
             logger.warning("search failed for %s: %s", app.app, type(exc).__name__)
     official = filter_official(hits, resolved)
-    if not official:
+    if not official and resolved.source != "human_override":
         seed = hint_url(app, resolved)
         if seed:
             official = [SearchHit(url=seed, title=app.app, snippet="hint url")]

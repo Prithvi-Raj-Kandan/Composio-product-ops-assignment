@@ -56,6 +56,9 @@ class ResearchState(TypedDict):
     path_prefix: str
     path_scoped_host: str
     display_domain: str
+    domain_source: str
+    seed_urls: list[str]
+    path_scopes: list[list[str]]
     domain_needs_human: bool
     domain_note: str
     hits: list[dict[str, str]]
@@ -88,10 +91,12 @@ def _resolved_from_state(state: ResearchState) -> ResolvedDomain:
         allowed_hosts=frozenset(state["allowed_hosts"]),
         path_prefix=state["path_prefix"],
         path_scoped_host=state["path_scoped_host"],
+        path_scopes=tuple((pair[0], pair[1]) for pair in state["path_scopes"]),
         needs_human=state["domain_needs_human"],
         note=state["domain_note"],
-        source="state",
+        source=state["domain_source"],
         display_domain=state["display_domain"],
+        seed_urls=tuple(state["seed_urls"]),
     )
 
 
@@ -124,6 +129,7 @@ def build_graph(deps: ResearchDeps):
                 state,
                 "resolve_domain",
                 domain=state["display_domain"],
+                source=state["domain_source"],
                 needs_human=state["domain_needs_human"],
             )
         }
@@ -156,6 +162,7 @@ def build_graph(deps: ResearchDeps):
         data = record.model_dump(mode="json")
         data["hint_url"] = state["hint"]
         data["official_domain"] = state["display_domain"]
+        data["provenance"] = {"source": state["domain_source"]}
         data["source_id"] = state["source_id"] or None
         reasons = list(state["needs_human_reasons"])
         needs = state["domain_needs_human"]
@@ -363,6 +370,9 @@ def initial_state(app: AppSeed, resolved: ResolvedDomain, pass_num: int, backend
         "path_prefix": resolved.path_prefix,
         "path_scoped_host": resolved.path_scoped_host,
         "display_domain": resolved.display_domain,
+        "domain_source": resolved.source,
+        "seed_urls": list(resolved.seed_urls),
+        "path_scopes": [[host, prefix] for host, prefix in resolved.path_scopes],
         "domain_needs_human": resolved.needs_human,
         "domain_note": resolved.note,
         "hits": [],

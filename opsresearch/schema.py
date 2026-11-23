@@ -114,6 +114,17 @@ class EvidenceSource(StrEnum):
     mcp_registry = "mcp_registry"
 
 
+class Provenance(BaseModel):
+    """Where the official domain came from. human_override means a person set the row."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    source: str = Field(
+        default="hint",
+        description="human_override when data/domain_overrides.csv supplied the domain, otherwise hint.",
+    )
+
+
 class Evidence(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -189,6 +200,7 @@ class AppRecord(BaseModel):
     needs_human_reasons: list[str] = Field(default_factory=list)
     hint_url: str | None = None
     official_domain: str | None = None
+    provenance: Provenance = Field(default_factory=Provenance)
     source_id: int | None = None
     extraction_model: str | None = None
     verifier_model: str | None = None

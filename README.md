@@ -16,11 +16,11 @@ Python 3.11. CI runs 3.11. Python 3.12 works locally. No API key is stored in th
 | `GEMINI_API_KEY` | yes | Extraction with `gemini-2.5-flash`. Also the verifier when Groq is unset |
 | `GROQ_API_KEY` | no | Cross-model verifier. If missing, the verifier uses `gemini-2.5-pro` and logs that |
 | `GROQ_MODEL` | no | Defaults to `llama-3.3-70b-versatile` |
-| `TAVILY_API_KEY` | no | Direct Tavily search when Composio search is unavailable |
+| `TAVILY_API_KEY` | no, and it is available for live runs | Direct Tavily fallback. Composio's Tavily toolkit is tried first |
 | `EXA_API_KEY` | no | Direct Exa search when Composio and Tavily are unavailable |
 | `OPSRESEARCH_MIN_INTERVAL_S` | no | Shared gap between model calls. Default `0.4` |
 
-Search order is Composio session (`TAVILY_SEARCH`, then `EXA_SEARCH`), then direct Tavily, then direct Exa, then the hint URL only. Fetched pages are cached as markdown under `cache/<app>/`, which is gitignored.
+Search order is Composio's Tavily toolkit first (`TAVILY_SEARCH` on a session whose toolkits include `tavily`), then Exa through the same session, then direct Tavily with `TAVILY_API_KEY`, then direct Exa, then the hint URL only. `TAVILY_API_KEY` is available for live runs and is the fallback when the Composio Tavily toolkit returns nothing. Fetched pages are cached as markdown under `cache/<app>/`, which is gitignored.
 
 ## Install
 
@@ -72,6 +72,7 @@ Schema version `1.0.0`. The JSON file is the contract an agent should read. The 
 | `composio_has_toolkit` | `yes`, `no`, `unknown` |
 | `buildability` | `yes`, `yes_with_caveats`, `no`, `unknown` |
 | `main_blocker` | `none`, `partner_program`, `contact_sales`, `no_public_api`, `login_walled_docs`, `unclear_entity`, `platform_review`, `enterprise_only`, `unknown` |
+| `provenance.source` | `human_override` when `data/domain_overrides.csv` named the site, otherwise `hint` |
 
 A concrete value with no usable evidence (http(s) URL and a verbatim quote of at least 8 characters) is rewritten to `unknown`, and `unknown_reasons` says why. Quotes from the Composio toolkit API and the MCP registry use `evidence.source` of `composio_oracle` or `mcp_registry`. Doc quotes are checked against the fetched page.
 
@@ -80,7 +81,7 @@ A concrete value with no usable evidence (http(s) URL and a verbatim quote of at
 ## How to replicate
 
 1. Install, and export the keys you have.
-2. Read `data/domain_overrides.csv`. Those eight names are best guesses marked `needs human confirm`. Change a domain before you trust that app's pages.
+2. Resolve ambiguous entities in `data/domain_overrides.csv` before a full run. Columns are `app`, `homepage`, `docs_url`, `extra_source`, `note`. A row there wins over the hint URL, and the record stores `provenance.source` = `human_override`. Replicators should confirm those rows (fanbasis is now Commas, iPayX, Paygent Connect, Waterfall.io, higgsfield, YouTube Transcript) before trusting the pages.
 3. Run pass 1, then pass 2. The cache makes the second run cheaper.
 4. Run `export`, then `eval --split dev` and `eval --split test`.
 5. The gold sample and, once filled, the gold labels ship in `data/gold/`. Replicators do not label again. See `HUMAN_IN_THE_LOOP.md`.

@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opsresearch"
+version = "0.1.0"
+description = "Docs-grounded research agent for the Composio product-ops take-home."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "composio>=0.34",
+    "composio-langchain>=0.34",
+    "google-genai>=1.0",
+    "groq>=0.11",
+    "httpx>=0.27",
+    "langgraph>=0.2",
+    "pydantic>=2.6",
+    "trafilatura>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+opsresearch = "opsresearch.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["opsresearch*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["opsresearch", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]

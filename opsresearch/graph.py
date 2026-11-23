@@ -253,6 +253,7 @@ def build_graph(deps: ResearchDeps):
                         detail=f"verifier error {type(exc).__name__}",
                     )
                 )
+            model_name = deps.cross_model.model_name
             data = record.model_dump(mode="json")
             data["verifier_model"] = model_name
             record = AppRecord.model_validate(data)

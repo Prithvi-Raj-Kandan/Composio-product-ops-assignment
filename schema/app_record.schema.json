@@ -430,6 +430,14 @@
       "title": "Field Confidence",
       "type": "object"
     },
+    "unknown_reason": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Per-field short reason a cell is unknown, derived from run data (e.g. 'no pricing page').",
+      "title": "Unknown Reason",
+      "type": "object"
+    },
     "verifier_verdicts": {
       "additionalProperties": {
         "type": "string"

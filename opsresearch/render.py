@@ -28,6 +28,13 @@ ONE_TIME_SETUP = (
 )
 
 
+def _unknown_tally(records: list[dict[str, Any]]) -> list[tuple[str, int]]:
+    counts: Counter = Counter()
+    for r in records:
+        counts.update((r.get("unknown_reason") or {}).values())
+    return counts.most_common()
+
+
 def _csv_rows(path: Path) -> int:
     if not path.exists():
         return 0
@@ -340,6 +347,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "overrides": [r for r in rows if r["human_override"]],
         "stats": stats,
         "one_time_setup": ONE_TIME_SETUP,
+        "unknown_tally": _unknown_tally(records),
         "repo_url": REPO_URL,
         "pages_url": PAGES_URL,
         "pct": _pct,

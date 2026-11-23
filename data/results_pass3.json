@@ -99,6 +99,13 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "gate_type": "not_run",
@@ -210,6 +217,13 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "gate_type": "not_run",
@@ -302,6 +316,14 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -375,6 +397,15 @@
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -455,6 +486,14 @@
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
@@ -564,6 +603,13 @@
         "api_surface.breadth": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -711,6 +757,11 @@
         "api_surface.breadth": "verifier-supported",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "self_serve": "supported",
@@ -840,6 +891,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -910,6 +965,16 @@
       "field_confidence": {
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "one_liner": "no docs page found",
+        "auth_methods": "no docs page found",
+        "self_serve": "no docs page found",
+        "gate_type": "no docs page found",
+        "api_surface.rest": "no docs page found",
+        "api_surface.graphql": "no docs page found",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "composio_has_toolkit": "not_run",
@@ -1034,6 +1099,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -1111,6 +1180,15 @@
         "auth_methods": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -1193,6 +1271,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -1281,6 +1368,13 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -1372,6 +1466,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "api_surface.rest": "supported",
@@ -1499,6 +1601,9 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -1585,6 +1690,14 @@
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.rest": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -1706,6 +1819,11 @@
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -1832,6 +1950,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -1915,6 +2037,14 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -2029,6 +2159,11 @@
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -2159,6 +2294,9 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "one_liner": "supported",
         "api_surface.rest": "supported",
@@ -2235,6 +2373,15 @@
         "self_serve": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -2358,6 +2505,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -2484,6 +2635,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -2563,6 +2718,16 @@
         "api_surface.styles": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
@@ -2684,6 +2849,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -2807,6 +2976,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -2884,6 +3057,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -2965,6 +3147,14 @@
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.rest": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -3061,6 +3251,13 @@
         "auth_methods": "composio_metadata",
         "api_surface.rest": "quote-verified"
       },
+      "unknown_reason": {
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "existing_mcp": "not_run",
@@ -3142,6 +3339,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "api_surface.rest": "supported",
         "existing_mcp": "not_run",
@@ -3212,6 +3418,15 @@
         "one_liner": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -3333,6 +3548,11 @@
         "api_surface.rest": "quote-verified",
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -3462,6 +3682,9 @@
         "main_blocker": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "auth_methods": "not_run",
@@ -3541,6 +3764,15 @@
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -3635,6 +3867,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -3723,6 +3963,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -3818,6 +4067,13 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "quote not on page",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -3934,6 +4190,11 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "self_serve": "not_run",
         "api_surface.rest": "not_run",
@@ -4031,6 +4292,13 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "auth_methods": "not_run",
@@ -4107,6 +4375,15 @@
         "auth_methods": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -4188,6 +4465,16 @@
         "api_surface.styles": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
@@ -4322,6 +4609,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -4430,6 +4721,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "api_surface.rest": "supported",
@@ -4504,6 +4803,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no docs page found",
+        "self_serve": "no docs page found",
+        "gate_type": "no docs page found",
+        "api_surface.rest": "no docs page found",
+        "api_surface.graphql": "no docs page found",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -4620,6 +4928,11 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.rest": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -4734,6 +5047,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -4858,6 +5175,9 @@
         "buildability": "verifier-supported",
         "main_blocker": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "supported",
@@ -5017,6 +5337,9 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "gate_type": "verifier contradicted"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "api_surface.rest": "supported",
@@ -5155,6 +5478,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "gate_type": "verifier contradicted",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "api_surface.rest": "supported",
@@ -5231,6 +5558,15 @@
         "one_liner": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -5318,6 +5654,13 @@
         "api_surface.styles": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -5450,6 +5793,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -5535,6 +5882,15 @@
         "api_surface.breadth": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
@@ -5653,6 +6009,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -5740,6 +6100,14 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -5872,6 +6240,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -5959,6 +6331,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -6048,6 +6429,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -6123,6 +6512,15 @@
         "main_blocker": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
         "main_blocker": "not_run",
@@ -6193,6 +6591,15 @@
         "one_liner": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "auth_methods": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -6317,6 +6724,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "supported",
@@ -6461,6 +6872,10 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "self_serve": "supported",
@@ -6546,6 +6961,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no docs page found",
+        "self_serve": "no docs page found",
+        "gate_type": "no docs page found",
+        "api_surface.rest": "no docs page found",
+        "api_surface.graphql": "no docs page found",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -6693,6 +7117,7 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "gate_type": "not_run",
         "api_surface.rest": "not_run",
@@ -6813,6 +7238,11 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "api_surface.graphql": "not_run",
         "existing_mcp": "not_run",
@@ -6932,6 +7362,11 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "self_serve": "supported",
@@ -7044,6 +7479,14 @@
         "buildability": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
@@ -7125,6 +7568,14 @@
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -7205,6 +7656,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no docs page found",
+        "self_serve": "no docs page found",
+        "gate_type": "no docs page found",
+        "api_surface.rest": "no docs page found",
+        "api_surface.graphql": "no docs page found",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -7289,6 +7749,13 @@
         "gate_type": "quote-not-rechecked",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7406,6 +7873,11 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -7518,6 +7990,12 @@
         "existing_mcp": "verifier-supported",
         "buildability": "verifier-supported",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -7637,6 +8115,11 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -7729,6 +8212,14 @@
         "api_surface.breadth": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck",
+        "api_surface.rest": "quote not on page",
+        "api_surface.graphql": "pass-2 quota crash, no recheck",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7823,6 +8314,13 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -7921,6 +8419,13 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8040,6 +8545,7 @@
         "gate_type": "quote-verified",
         "one_liner": "quote-verified"
       },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -8185,6 +8691,12 @@
         "composio_has_toolkit": "composio_metadata",
         "api_surface.rest": "verifier-supported"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
@@ -8260,6 +8772,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8341,6 +8862,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8437,6 +8967,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -8518,6 +9056,15 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8623,6 +9170,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -8706,6 +9261,14 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8823,6 +9386,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -8916,6 +9483,13 @@
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
+      },
       "verifier_verdicts": {
         "self_serve": "supported",
         "gate_type": "not_run",
@@ -9001,6 +9575,15 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
@@ -9085,6 +9668,14 @@
         "self_serve": "verifier-supported",
         "existing_mcp": "verifier-supported",
         "composio_has_toolkit": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -9222,6 +9813,9 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "gate_type": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "self_serve": "not_run",
@@ -9328,6 +9922,13 @@
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
       },
+      "unknown_reason": {
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "api_surface.rest": "not_run",
@@ -9430,6 +10031,14 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "self_serve": "quote-verified"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -9539,6 +10148,11 @@
         "main_blocker": "derived_rule",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "auth_methods": "re-research skipped (time)",
+        "api_surface.rest": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)"
+      },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "self_serve": "not_run",
@@ -9629,6 +10243,13 @@
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
         "api_surface.rest": "verifier-supported"
+      },
+      "unknown_reason": {
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -9761,6 +10382,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -9850,6 +10475,13 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown api_surface",
+        "main_blocker": "depends on unknown api_surface"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -9968,6 +10600,10 @@
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
+      },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "gate_type": "pass-2 quota crash, no recheck"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -10104,6 +10740,10 @@
         "buildability": "derived_rule",
         "main_blocker": "derived_rule"
       },
+      "unknown_reason": {
+        "one_liner": "pass-2 quota crash, no recheck",
+        "api_surface.rest": "pass-2 quota crash, no recheck"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -10188,6 +10828,14 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata"
       },
+      "unknown_reason": {
+        "one_liner": "re-research skipped (time)",
+        "self_serve": "re-research skipped (time)",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.graphql": "re-research skipped (time)",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
+      },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
@@ -10270,6 +10918,15 @@
         "existing_mcp": "verifier-supported",
         "composio_has_toolkit": "composio_metadata",
         "auth_methods": "composio_metadata"
+      },
+      "unknown_reason": {
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "depends on unknown self_serve",
+        "main_blocker": "depends on unknown self_serve"
       },
       "verifier_verdicts": {
         "existing_mcp": "supported",

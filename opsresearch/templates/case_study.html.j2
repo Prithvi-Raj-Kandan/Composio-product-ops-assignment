@@ -50,6 +50,7 @@ details summary{cursor:pointer;font-weight:600}
 pre{background:#0f0f0f;color:#e5e5e5;border-radius:8px;padding:12px;overflow:auto;font-size:12.5px}
 footer{padding:30px 0;color:var(--muted);font-size:13px}
 #matrix-table td{font-size:12.5px}
+.ur{color:#8a8a8a;font-size:11px;line-height:1.2;margin-top:2px}
 </style>
 </head>
 <body>
@@ -111,21 +112,25 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <tbody>
 {% macro evl(r, f) %}{% for e in r.ev.get(f, [])[:2] %}<a href="{{ e.url }}" title="{{ e.quote }}" target="_blank" rel="noopener">[{{ loop.index }}]</a>{% endfor %}{% endmacro %}
 {% macro vp(v) %}{% set cls = 'unk' if v in ['unknown', None] else ('ok' if v in ['yes','self_serve_free','self_serve_trial','official','none'] else ('bad' if v in ['no','partner_gated','contact_sales','no_public_api'] else 'brand')) %}<span class="pill {{ cls }}">{{ v }}</span>{% endmacro %}
+{% macro ur(r, f) %}{% set why = (r.unknown_reason or {}).get(f) %}{% if why %}<div class="ur">{{ why }}</div>{% endif %}{% endmacro %}
 {% for r in records %}
 <tr>
-<td><b>{{ r.app }}</b><div class="small">{{ r.one_liner }}</div></td>
+<td><b>{{ r.app }}</b><div class="small">{{ r.one_liner }}</div>{{ ur(r,'one_liner') }}</td>
 <td>{{ r.category }}</td>
-<td>{% for a in r.auth_methods %}{{ vp(a) }} {% endfor %}<div class="ev">{{ evl(r,'auth_methods') }}</div></td>
-<td>{{ vp(r.self_serve) }}{% if r.gate_type not in ['none','unknown'] %}<div class="small">{{ r.gate_type }}</div>{% endif %}<div class="ev">{{ evl(r,'self_serve') }}{{ evl(r,'gate_type') }}</div></td>
-<td>{{ r.api_surface.rest }} / {{ r.api_surface.graphql }}<div class="ev">{{ evl(r,'api_surface') }}</div></td>
-<td>{{ vp(r.existing_mcp) }}{% if r.mcp_url %}<div class="ev"><a href="{{ r.mcp_url }}" target="_blank" rel="noopener">link</a></div>{% endif %}</td>
-<td>{{ vp(r.composio_has_toolkit) }}{% if r.composio_slug %}<div class="small mono">{{ r.composio_slug }}</div>{% endif %}</td>
-<td>{{ vp(r.buildability) }}{% if r.derived %} <span class="pill unk" title="Derived by the fixed rule from evidenced access and API fields">rule</span>{% endif %}<div class="ev">{{ evl(r,'buildability') }}</div></td>
-<td>{{ r.main_blocker }}{% if r.blocker_detail and r.blocker_detail != 'unknown' %}<div class="small">{{ r.blocker_detail }}</div>{% endif %}</td>
+<td>{% for a in r.auth_methods %}{{ vp(a) }} {% endfor %}{{ ur(r,'auth_methods') }}<div class="ev">{{ evl(r,'auth_methods') }}</div></td>
+<td>{{ vp(r.self_serve) }}{{ ur(r,'self_serve') }}{% if r.gate_type not in ['none','unknown'] %}<div class="small">{{ r.gate_type }}</div>{% endif %}<div class="ev">{{ evl(r,'self_serve') }}{{ evl(r,'gate_type') }}</div></td>
+<td>{{ r.api_surface.rest }} / {{ r.api_surface.graphql }}{{ ur(r,'api_surface.rest') }}<div class="ev">{{ evl(r,'api_surface') }}</div></td>
+<td>{{ vp(r.existing_mcp) }}{{ ur(r,'existing_mcp') }}{% if r.mcp_url %}<div class="ev"><a href="{{ r.mcp_url }}" target="_blank" rel="noopener">link</a></div>{% endif %}</td>
+<td>{{ vp(r.composio_has_toolkit) }}{{ ur(r,'composio_has_toolkit') }}{% if r.composio_slug %}<div class="small mono">{{ r.composio_slug }}</div>{% endif %}</td>
+<td>{{ vp(r.buildability) }}{{ ur(r,'buildability') }}{% if r.derived %} <span class="pill unk" title="Derived by the fixed rule from evidenced access and API fields">rule</span>{% endif %}<div class="ev">{{ evl(r,'buildability') }}</div></td>
+<td>{{ r.main_blocker }}{{ ur(r,'main_blocker') }}{% if r.blocker_detail and r.blocker_detail != 'unknown' %}<div class="small">{{ r.blocker_detail }}</div>{% endif %}</td>
 <td>{% if r.human_override %}<span class="pill human">human override</span> {% endif %}{% if r.needs_human %}<span class="pill warn" title="{{ r.needs_human_reasons|join('; ') }}">needs human</span>{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody></table></div>
+{% if unknown_tally %}<div class="card" id="unknown-reasons" style="margin-top:16px"><h3>Why cells are unknown (top reasons)</h3>
+<p class="small">Each reason is derived from the run data for that cell (verifier verdicts, run logs, the page cache). It is shown in grey under each <code>unknown</code>.</p>
+<table><tr><th>Reason</th><th>Cells</th></tr>{% for k, v in unknown_tally[:8] %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table></div>{% endif %}
 </section>
 
 <section id="agent">

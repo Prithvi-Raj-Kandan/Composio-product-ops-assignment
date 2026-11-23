@@ -71,10 +71,10 @@ The workflow stops for human judgement at fixed points on every run. [HUMAN_IN_T
 
 Gold labels: AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human. Each row has an evidence URL per field. The sample is 20 apps, stratified 2 per category, with dev 10 and test 10 (`data/gold/gold_sample.csv`). Reports are in `data/eval/report_dev.json` and `report_test.json`. Re-run with `python -m opsresearch eval`.
 
-| Split | Pass 1 | Pass 2 | Pass 3 |
+| Split | Pass 1 | Pass 2 | Pass 3 (incl. targeted rerun) |
 |---|---|---|---|
-| dev (80 labelled cells) | 13.75% (11) | 13.75% (11) | 21.25% (17) |
-| test (80 labelled cells) | 27.5% (22) | 15.0% (12) | 31.25% (25) |
+| dev (80 labelled cells) | 13.75% (11) | 13.75% (11) | 23.75% (19) |
+| test (80 labelled cells) | 27.5% (22) | 15.0% (12) | 35.0% (28) |
 
 Most misses are the agent answering `unknown` where the label has a value (underclaim). Pass 2 fell on test mainly because 37 apps crashed in pass 2 when the model quota ran out. API breadth agreed on only 1 of 20 apps, which is why it is left off the page; it stays in the data and in these scores.
 

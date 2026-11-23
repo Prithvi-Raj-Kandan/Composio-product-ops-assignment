@@ -7,12 +7,12 @@
     {
       "app": "Ahrefs",
       "category": "Data, SEO and Scraping",
-      "one_liner": "unknown",
+      "one_liner": "One SEO API to power all apps, agents, and workflows",
       "auth_methods": [
         "api_key",
         "oauth2"
       ],
-      "self_serve": "unknown",
+      "self_serve": "paid_plan_required",
       "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
@@ -29,8 +29,8 @@
       "composio_slug": "ahrefs",
       "composio_toolkit_type": "api",
       "composio_tools_count": 46,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes_with_caveats",
+      "main_blocker": "enterprise_only",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -74,6 +74,42 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/ahrefs",
           "quote": "slug=ahrefs toolkit_type=api tools_count=46 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "Ahrefs API is available on eligible paid plans.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "One SEO API to power all apps, agents, and workflows",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "The REST API is for developers building that integration themselves",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "13 endpoint groups, all under one key. The reach goes well past backlinks and keywords.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "The REST API is for developers building that integration themselves",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://ahrefs.com/seo-api",
+          "quote": "13 endpoint groups, all under one key. The reach goes well past backlinks and keywords.",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -97,14 +133,14 @@
         "api_surface.rest": "quote-verified",
         "api_surface.breadth": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -112,19 +148,21 @@
         "api_surface.rest": "not_run",
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "one_liner": "supported"
       }
     },
     {
       "app": "Aircall",
       "category": "Communications and Messaging",
-      "one_liner": "unknown",
+      "one_liner": "Aircall Public API is a classic REST API.",
       "auth_methods": [
         "oauth2",
         "basic",
         "bearer_token"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
@@ -141,8 +179,8 @@
       "composio_slug": "aircall",
       "composio_toolkit_type": "api",
       "composio_tools_count": 48,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -186,17 +224,49 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/aircall",
           "quote": "slug=aircall toolkit_type=api tools_count=48 auth_schemes=OAUTH2,BASIC",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://developers.aircall.io/api-references",
+          "quote": "We are maintaining a **Public API**. This service allows any developers to retrieve and manage Aircall data with HTTP requests.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developers.aircall.io/api-references",
+          "quote": "Aircall Public API is a classic REST API.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developers.aircall.io/api-references",
+          "quote": "Aircall Public API is a classic REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developer.aircall.io/docs/introduction",
+          "quote": "Manage calls, messages, AI agents, users, numbers, and more \u2014 fully documented with detailed schemas",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developers.aircall.io/api-references",
+          "quote": "Aircall Public API is a classic REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developer.aircall.io/docs/introduction",
+          "quote": "Manage calls, messages, AI agents, users, numbers, and more \u2014 fully documented with detailed schemas",
+          "source": "derived_rule"
         }
       ],
       "confidence": 1.0,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
-        "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "api_surface.styles": "no evidence quote and url"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -215,14 +285,14 @@
         "api_surface.rest": "quote-verified",
         "api_surface.breadth": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -230,7 +300,9 @@
         "api_surface.rest": "not_run",
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -241,12 +313,12 @@
         "oauth2",
         "bearer_token"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "unknown",
         "styles": [
           "unknown"
@@ -258,8 +330,8 @@
       "composio_slug": "airtable",
       "composio_toolkit_type": "api",
       "composio_tools_count": 26,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -285,18 +357,55 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/airtable",
           "quote": "slug=airtable toolkit_type=api tools_count=26 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://www.airtable.com/pricing",
+          "quote": "Our Free plan is available to teams for no charge",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://www.airtable.com/pricing",
+          "quote": "Our Free plan is available to teams for no charge",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://support.airtable.com/articles/6292134965-getting-started-with-airtable-s-web-api",
+          "quote": "Getting started with Airtable's Web API",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://support.airtable.com/articles/6292134965-getting-started-with-airtable-s-web-api",
+          "quote": "Getting started with Airtable's Web API",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://www.airtable.com/pricing",
+          "quote": "Our Free plan is available to teams for no charge",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://support.airtable.com/articles/6292134965-getting-started-with-airtable-s-web-api",
+          "quote": "Getting started with Airtable's Web API",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://www.airtable.com/pricing",
+          "quote": "Our Free plan is available to teams for no charge",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.95,
       "unknown_reasons": {
         "one_liner": "no evidence quote and url",
-        "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url"
       },
       "needs_human": false,
@@ -314,21 +423,24 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "quote-verified",
+        "api_surface.graphql": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "insufficient",
+        "api_surface.graphql": "insufficient"
       }
     },
     {
@@ -416,16 +528,16 @@
     {
       "app": "Apify",
       "category": "Data, SEO and Scraping",
-      "one_liner": "unknown",
+      "one_liner": "Turn any website into an API with web scraping and automation tools.",
       "auth_methods": [
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "unknown",
         "styles": [
           "unknown"
@@ -437,8 +549,8 @@
       "composio_slug": "apify",
       "composio_toolkit_type": "api",
       "composio_tools_count": 184,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -464,6 +576,54 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/apify",
           "quote": "auth_config_details / composio_managed_auth_schemes: API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://apify.com/pricing",
+          "quote": "We offer a free plan that lets you use most of the features of the Apify platform",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://apify.com/pricing",
+          "quote": "No credit card required.",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://apify.com/api",
+          "quote": "The Apify API is your control plane for web automation. Start Actors, monitor runs, and fetch results over clean REST.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://apify.com/api",
+          "quote": "Turn any website into an API",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://docs.apify.com/api/v2",
+          "quote": "The Apify API (version 2) provides programmatic access to the Apify platform. The API is organized around RESTful HTTP endpoints.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://apify.com/pricing",
+          "quote": "We offer a free plan that lets you use most of the features of the Apify platform",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://docs.apify.com/api/v2",
+          "quote": "The Apify API (version 2) provides programmatic access to the Apify platform. The API is organized around RESTful HTTP endpoints.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://apify.com/pricing",
+          "quote": "We offer a free plan that lets you use most of the features of the Apify platform",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -485,21 +645,24 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "verifier-supported",
+        "api_surface.graphql": "verifier-supported",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
-      "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
         "auth_methods": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "supported",
+        "api_surface.graphql": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -775,14 +938,14 @@
     {
       "app": "BigCommerce",
       "category": "Ecommerce",
-      "one_liner": "unknown",
+      "one_liner": "BigCommerce is a commerce-centric platform and set of retailer-facing SaaS products used to scale ecommerce businesses, providing store-level APIs and developer-focused tools.",
       "auth_methods": [
         "oauth2",
         "api_key",
         "jwt"
       ],
       "self_serve": "self_serve_trial",
-      "gate_type": "unknown",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -840,6 +1003,18 @@
           "source": "mcp_registry"
         },
         {
+          "field": "gate_type",
+          "url": "https://bigcommerce.com/pricing",
+          "quote": "Purchase a Core, Growth, or Scale annual plan by Dec 31",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developer.bigcommerce.com",
+          "quote": "We\u2019re a commerce-centric company, platform, and set of retailer-facing SaaS products used to scale ecommerce businesses",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://developer.bigcommerce.com",
           "quote": "Sign up for a free BigCommerce trial store to test API calls and build integrations without affecting live data.",
@@ -889,12 +1064,11 @@
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported",
+        "one_liner": "quote-verified"
       },
-      "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -903,7 +1077,9 @@
         "api_surface.breadth": "not_run",
         "api_surface.styles": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "gate_type": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -1121,11 +1297,11 @@
       "auth_methods": [
         "api_key"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -1138,8 +1314,8 @@
       "composio_slug": "brightdata",
       "composio_toolkit_type": "api",
       "composio_tools_count": 167,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -1159,6 +1335,42 @@
           "url": "https://registry.modelcontextprotocol.io/v0/servers?search=Bright%20Data",
           "quote": "servers: []",
           "source": "mcp_registry"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://brightdata.com/blog/comparison/bright-data-vs-parallel",
+          "quote": "The free tier needs no credit card.",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://docs.brightdata.com/api-reference/rest-api/serp/serp-api",
+          "quote": "curl --request POST",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://brightdata.com/blog/comparison/bright-data-vs-parallel",
+          "quote": "The free tier needs no credit card.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://docs.brightdata.com/api-reference/rest-api/serp/serp-api",
+          "quote": "curl --request POST",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://brightdata.com/blog/comparison/bright-data-vs-parallel",
+          "quote": "The free tier needs no credit card.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://docs.brightdata.com/api-reference/rest-api/serp/serp-api",
+          "quote": "curl --request POST",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -1179,21 +1391,23 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
-        "existing_mcp": "mcp_registry"
+        "existing_mcp": "mcp_registry",
+        "self_serve": "verifier-supported",
+        "api_surface.rest": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "self_serve": "supported",
+        "api_surface.rest": "supported"
       }
     },
     {
@@ -1207,7 +1421,7 @@
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -1241,11 +1455,16 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/clay",
           "quote": "auth_config_details / composio_managed_auth_schemes: API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://university.clay.com/docs/http-api-integration-overview",
+          "quote": "HTTP API lets you send or retrieve data from any tool or database using an API endpoint",
+          "source": "doc"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "api_surface.rest": "Documentation discusses using HTTP API to connect to external APIs rather than detailing Clay's own outbound API endpoints comprehensively.",
         "api_surface.graphql": "No mention of GraphQL support for Clay's API.",
         "api_surface.breadth": "Exact endpoint count for Clay API is not specified.",
         "one_liner": "no evidence quote and url",
@@ -1270,21 +1489,22 @@
       "field_confidence": {
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
-        "auth_methods": "composio_metadata"
+        "auth_methods": "composio_metadata",
+        "api_surface.rest": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "auth_methods": "not_run"
+        "auth_methods": "not_run",
+        "api_surface.rest": "supported"
       }
     },
     {
@@ -1441,14 +1661,14 @@
       "unknown_reasons": {
         "one_liner": "no evidence quote and url",
         "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
         "buildability": "no evidence quote and url",
         "main_blocker": "no evidence quote and url",
-        "blocker_detail": "no evidence quote and url"
+        "blocker_detail": "no evidence quote and url",
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -1468,18 +1688,19 @@
         "auth_methods": "composio_metadata"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "verifier contradicted",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "api_surface.rest": "supported",
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "auth_methods": "not_run"
+        "auth_methods": "not_run",
+        "gate_type": "contradicted"
       }
     },
     {
@@ -1692,12 +1913,12 @@
         "composio_has_toolkit": "composio_metadata"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.rest": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck",
-        "buildability": "api_surface unknown: pass-2 quota crash, no recheck",
-        "main_blocker": "api_surface unknown: pass-2 quota crash, no recheck"
+        "one_liner": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "api_surface unknown: re-research hit model quota",
+        "main_blocker": "api_surface unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -1709,12 +1930,12 @@
     {
       "app": "Consensus",
       "category": "AI, Research and Media-native",
-      "one_liner": "unknown",
+      "one_liner": "Search academic papers and manage research threads via a self\u2011serve REST API.",
       "auth_methods": [
         "api_key"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -1771,6 +1992,18 @@
           "source": "composio_metadata"
         },
         {
+          "field": "gate_type",
+          "url": "https://docs.consensus.app/api-plans-and-access",
+          "quote": "The API is self-serve on every Consensus plan",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://help.consensus.app/en/articles/16516328-the-consensus-api",
+          "quote": "The Consensus API lets you integrate Consensus search directly into your own applications",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://docs.consensus.app/api-plans-and-access",
           "quote": "The API is self-serve on every Consensus plan.",
@@ -1818,12 +2051,12 @@
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported",
+        "one_liner": "quote-verified"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -1831,7 +2064,9 @@
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
         "auth_methods": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -1951,8 +2186,8 @@
         "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -1966,17 +2201,17 @@
     {
       "app": "Datadog",
       "category": "Developer, Infra and Data platforms",
-      "one_liner": "unknown",
+      "one_liner": "Datadog is a monitoring and security platform for cloud-scale applications, providing observability of servers, databases, tools, and services through a SaaS-based data analytics platform.",
       "auth_methods": [
         "api_key",
         "oauth2"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_trial",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "unknown",
         "styles": [
           "unknown"
@@ -1988,8 +2223,8 @@
       "composio_slug": "datadog",
       "composio_toolkit_type": "api",
       "composio_tools_count": 255,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -2015,6 +2250,54 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/datadog",
           "quote": "slug=datadog toolkit_type=api tools_count=255 auth_schemes=OAUTH2,BEARER_TOKEN,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://datadoghq.com/pricing",
+          "quote": "Start Free Trial",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://datadoghq.com/pricing",
+          "quote": "Billed annually",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://www.datadoghq.com/blog/datadog-api-authentication",
+          "quote": "For years, authenticating to Datadog APIs meant managing two separate credentials: an API key and an application key.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://docs.datadoghq.com/developers",
+          "quote": "This section contains reference materials for extending Datadog.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://docs.datadoghq.com/api",
+          "quote": "The Datadog API is an HTTP REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://datadoghq.com/pricing",
+          "quote": "Start Free Trial",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://docs.datadoghq.com/api",
+          "quote": "The Datadog API is an HTTP REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://datadoghq.com/pricing",
+          "quote": "Start Free Trial",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -2036,21 +2319,24 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "verifier-supported",
+        "api_surface.graphql": "quote-verified",
+        "one_liner": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
-      "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "supported",
+        "api_surface.graphql": "insufficient",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -2137,7 +2423,9 @@
         }
       ],
       "confidence": null,
-      "unknown_reasons": {},
+      "unknown_reasons": {
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
+      },
       "needs_human": true,
       "needs_human_reasons": [
         "pass 2 extraction crashed (model quota); pass 3 kept only pass-1 claims whose quotes are on the cached page, with no second-model check"
@@ -2161,16 +2449,17 @@
         "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "one_liner": "no quote found in docs",
+        "gate_type": "verifier contradicted",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "contradicted"
       }
     },
     {
@@ -2507,8 +2796,8 @@
         "auth_methods": "composio_metadata"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -2654,7 +2943,7 @@
     {
       "app": "fanbasis",
       "category": "Ecommerce",
-      "one_liner": "unknown",
+      "one_liner": "The first webinar platform with checkout and payments built in.",
       "auth_methods": [
         "unknown"
       ],
@@ -2662,7 +2951,7 @@
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -2697,6 +2986,18 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/fanbasis",
           "quote": "no toolkit for slugs fanbasis and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://commas.com",
+          "quote": "Embedded checkouts, multi-rail payouts, APIs and SDKs.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://commas.com",
+          "quote": "The first webinar platform with checkout and payments built in.",
+          "source": "doc"
         }
       ],
       "confidence": null,
@@ -2717,22 +3018,24 @@
       "field_confidence": {
         "api_surface.styles": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "api_surface.rest": "quote-verified",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "auth_methods": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "auth_methods": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "api_surface.rest": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -2994,12 +3297,12 @@
     {
       "app": "Freshdesk",
       "category": "Support and Helpdesk",
-      "one_liner": "unknown",
+      "one_liner": "Freshdesk is a cloud-based customer support platform that enables companies of all sizes to provide great customer service.",
       "auth_methods": [
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_trial",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "unknown",
@@ -3036,6 +3339,24 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/freshdesk",
           "quote": "slug=freshdesk toolkit_type=api tools_count=184 auth_schemes=API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://developers.freshdesk.com/api",
+          "quote": "For all trial users, there is a default API limit of 50 calls/minute.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://developers.freshdesk.com/api",
+          "quote": "The number of API calls per minute is based on your plan.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developers.freshdesk.com/api",
+          "quote": "Freshdesk is a cloud-based customer support platform that was founded with the mission of enabling companies of all sizes to provide great customer service.",
+          "source": "doc"
         }
       ],
       "confidence": null,
@@ -3056,21 +3377,24 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "quote-verified",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -3085,7 +3409,7 @@
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -3098,8 +3422,8 @@
       "composio_slug": "front",
       "composio_toolkit_type": "api",
       "composio_tools_count": 180,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -3125,6 +3449,36 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/front",
           "quote": "auth_config_details / composio_managed_auth_schemes: OAUTH2, API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://front.com/api",
+          "quote": "Through our flexible, robust REST API and 160+ integrations, Front connects your CRM",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://front.com/pricing",
+          "quote": "Our free 14-day trial offers all the features available in our Professional plan.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://front.com/api",
+          "quote": "Through our flexible, robust REST API and 160+ integrations, Front connects your CRM",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://front.com/pricing",
+          "quote": "Our free 14-day trial offers all the features available in our Professional plan.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://front.com/api",
+          "quote": "Through our flexible, robust REST API and 160+ integrations, Front connects your CRM",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -3146,21 +3500,22 @@
         "self_serve": "quote-verified",
         "existing_mcp": "quote-verified",
         "auth_methods": "composio_metadata",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "api_surface.rest": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.rest": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck",
-        "buildability": "api_surface unknown: pass-2 quota crash, no recheck",
-        "main_blocker": "api_surface unknown: pass-2 quota crash, no recheck"
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
         "existing_mcp": "not_run",
         "auth_methods": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "api_surface.rest": "supported"
       }
     },
     {
@@ -3788,8 +4143,8 @@
         "oauth2",
         "bearer_token"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -3805,8 +4160,8 @@
       "composio_slug": "gumroad",
       "composio_toolkit_type": "api",
       "composio_tools_count": 13,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -3838,17 +4193,49 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/gumroad",
           "quote": "slug=gumroad toolkit_type=api tools_count=13 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://gumroad.com/pricing",
+          "quote": "Unlike other platforms, Gumroad doesn't charge you a monthly fee. Instead, our fees are deducted as a small percentage of every sale, so we only make money when you do.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://gumroad.com/pricing",
+          "quote": "Unlike other platforms, Gumroad doesn't charge you a monthly fee.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://gumroad.com/help/article/280-create-application-api",
+          "quote": "curl https://api.gumroad.com/v2/products",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://gumroad.com/pricing",
+          "quote": "Unlike other platforms, Gumroad doesn't charge you a monthly fee. Instead, our fees are deducted as a small percentage of every sale, so we only make money when you do.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://gumroad.com/help/article/280-create-application-api",
+          "quote": "curl https://api.gumroad.com/v2/products",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://gumroad.com/pricing",
+          "quote": "Unlike other platforms, Gumroad doesn't charge you a monthly fee. Instead, our fees are deducted as a small percentage of every sale, so we only make money when you do.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.8,
       "unknown_reasons": {
         "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
-        "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "api_surface.styles": "no evidence quote and url"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -3865,27 +4252,29 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "insufficient"
       }
     },
     {
       "app": "Harvest",
       "category": "Productivity and Project Management",
-      "one_liner": "unknown",
+      "one_liner": "Harvest V2 API provides authenticated access to time\u2011tracking data via REST endpoints.",
       "auth_methods": [
         "oauth2",
         "bearer_token"
@@ -3934,19 +4323,24 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/harvest",
           "quote": "slug=harvest toolkit_type=api tools_count=60 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://help.getharvest.com/api-v2/authentication-api/authentication/authentication",
+          "quote": "The V2 API requires an access token to authenticate requests.",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
         "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "buildability": "no evidence quote and url",
         "main_blocker": "no evidence quote and url",
         "api_surface.rest": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
-        "api_surface.styles": "no evidence quote and url"
+        "api_surface.styles": "no evidence quote and url",
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -3962,21 +4356,23 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "one_liner": "quote-verified"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "self_serve": "no quote found in docs",
+        "gate_type": "verifier contradicted",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "contradicted",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -4069,9 +4465,9 @@
         "composio_has_toolkit": "composio_metadata"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
+        "one_liner": "no quote found in docs",
         "self_serve": "quote not on page",
-        "api_surface.graphql": "re-research skipped (time)",
+        "api_surface.graphql": "no quote found in docs",
         "buildability": "self_serve unknown: quote not on page",
         "main_blocker": "self_serve unknown: quote not on page"
       },
@@ -4086,12 +4482,12 @@
     {
       "app": "higgsfield",
       "category": "AI, Research and Media-native",
-      "one_liner": "unknown",
+      "one_liner": "The Higgsfield API is a self-serve API for developers that provides direct access to more than 50 current video and image generation models.",
       "auth_methods": [
         "api_key"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -4142,6 +4538,18 @@
           "source": "composio_metadata"
         },
         {
+          "field": "gate_type",
+          "url": "https://higgsfield.ai/blog/higgsfield-api",
+          "quote": "self-serve API for developers",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://higgsfield.ai/blog/higgsfield-api",
+          "quote": "The Higgsfield API is a self-serve API for developers that provides direct access to more than 50 current video and image generation models",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://higgsfield.ai/blog/higgsfield-api",
           "quote": "The Higgsfield API is a self-serve API for developers",
@@ -4188,19 +4596,21 @@
         "auth_methods": "composio_metadata",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
         "auth_methods": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -4212,11 +4622,11 @@
         "bearer_token",
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "yes",
         "breadth": "unknown",
         "styles": [
@@ -4229,8 +4639,8 @@
       "composio_slug": "hubspot",
       "composio_toolkit_type": "api",
       "composio_tools_count": 354,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -4262,17 +4672,54 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/hubspot",
           "quote": "slug=hubspot toolkit_type=api tools_count=354 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+          "quote": "While building apps on the developer platform, you can configure authentication based on how you plan to install your app.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+          "quote": "While building apps on the developer platform, you can configure authentication based on how you plan to install your app.",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://developers.hubspot.com/docs/api-reference/latest/crm/understanding-the-crm",
+          "quote": "You use the object APIs to create and manage an object\u2019s records.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developers.hubspot.com/blog/reducing-hubspot-requests-utilizing-batch-api-and-graphql-for-better-optimization",
+          "quote": "HubSpot announced its support for GraphQL in late 2022",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+          "quote": "While building apps on the developer platform, you can configure authentication based on how you plan to install your app.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developers.hubspot.com/blog/reducing-hubspot-requests-utilizing-batch-api-and-graphql-for-better-optimization",
+          "quote": "HubSpot announced its support for GraphQL in late 2022",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+          "quote": "While building apps on the developer platform, you can configure authentication based on how you plan to install your app.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
-        "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
-        "api_surface.rest": "no evidence quote and url"
+        "api_surface.styles": "no evidence quote and url"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -4290,21 +4737,23 @@
         "auth_methods": "quote-verified",
         "api_surface.graphql": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "gate_type": "quote-verified",
+        "api_surface.rest": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
-      "unknown_reason": {
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "one_liner": "not_run",
         "auth_methods": "not_run",
         "api_surface.graphql": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "gate_type": "insufficient",
+        "api_surface.rest": "supported"
       }
     },
     {
@@ -4316,8 +4765,8 @@
         "bearer_token",
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "unknown",
@@ -4354,6 +4803,18 @@
           "url": "https://registry.modelcontextprotocol.io/v0/servers?search=Intercom",
           "quote": "registry server io.github.MuhammadTalhaMT/intercom",
           "source": "mcp_registry"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://developers.intercom.com/docs",
+          "quote": "sign up here to create your free account",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://developers.intercom.com/docs",
+          "quote": "no review is required for a private app",
+          "source": "doc"
         }
       ],
       "confidence": null,
@@ -4374,31 +4835,33 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
-        "existing_mcp": "mcp_registry"
+        "existing_mcp": "mcp_registry",
+        "self_serve": "verifier-supported",
+        "gate_type": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "self_serve": "supported",
+        "gate_type": "supported"
       }
     },
     {
       "app": "iPayX",
       "category": "Finance and Fintech",
-      "one_liner": "unknown",
+      "one_liner": "A Model Context Protocol server for foreign exchange forensic auditing.",
       "auth_methods": [
         "unknown"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -4436,12 +4899,22 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/ipayx",
           "quote": "no toolkit for slugs ipayx and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://github.com/iPAYX-Technologies/mcp-fx-audit",
+          "quote": "Expose hidden bank FX fees in 30 seconds. No signup required.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://github.com/iPAYX-Technologies/mcp-fx-audit",
+          "quote": "A Model Context Protocol server for foreign exchange forensic auditing.",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
         "gate_type": "no evidence quote and url",
         "api_surface.rest": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
@@ -4464,22 +4937,24 @@
       "field_confidence": {
         "api_surface.styles": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "auth_methods": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "auth_methods": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -4638,7 +5113,7 @@
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "broad",
         "styles": [
           "unknown"
@@ -4689,6 +5164,12 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/klaviyo",
           "quote": "slug=klaviyo toolkit_type=api tools_count=233 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://developers.klaviyo.com/en/reference/api_overview",
+          "quote": "Every endpoint in the Klaviyo REST API",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
@@ -4697,7 +5178,6 @@
         "self_serve": "no evidence quote and url",
         "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
-        "api_surface.graphql": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
         "buildability": "no evidence quote and url",
         "main_blocker": "no evidence quote and url",
@@ -4719,22 +5199,23 @@
         "api_surface.rest": "verifier-supported",
         "api_surface.breadth": "verifier-supported",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "api_surface.graphql": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
         "api_surface.rest": "supported",
         "api_surface.breadth": "supported",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "api_surface.graphql": "supported"
       }
     },
     {
@@ -4822,14 +5303,14 @@
     {
       "app": "Linear",
       "category": "Productivity and Project Management",
-      "one_liner": "unknown",
+      "one_liner": "Linear\u2019s public API is built using GraphQL.",
       "auth_methods": [
         "oauth2",
         "api_key",
         "bearer_token"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "unknown",
@@ -4880,6 +5361,18 @@
           "source": "composio_metadata"
         },
         {
+          "field": "gate_type",
+          "url": "https://linear.app/developers/graphql",
+          "quote": "Linear\u2019s public API is built using GraphQL.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://linear.app/developers/graphql",
+          "quote": "Linear\u2019s public API is built using GraphQL.",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://linear.app/pricing",
           "quote": "API and webhook access Included Included Included Included",
@@ -4926,19 +5419,21 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "quote-verified",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.rest": "pass-2 quota crash, no recheck"
+        "api_surface.rest": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
         "api_surface.graphql": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -5814,9 +6309,10 @@
       "category": "Developer, Infra and Data platforms",
       "one_liner": "unknown",
       "auth_methods": [
-        "unknown"
+        "oauth2",
+        "api_key"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -5833,8 +6329,8 @@
       "composio_slug": "mongodb",
       "composio_toolkit_type": "api",
       "composio_tools_count": 496,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -5860,6 +6356,42 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/mongodb",
           "quote": "slug=mongodb toolkit_type=api tools_count=496 auth_schemes=none listed",
           "source": "composio_metadata"
+        },
+        {
+          "field": "auth_methods",
+          "url": "https://www.mongodb.com/docs/atlas/api/api-authentication",
+          "quote": "- Service account access tokens (OAuth 2.0)\n- API keys (HTTP Digest Authentication)",
+          "source": "doc"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://www.mongodb.com/pricing",
+          "quote": "Yes, MongoDB Atlas offers a free-forever tier, the M0.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://www.mongodb.com/docs/atlas/api/atlas-admin-api-ref",
+          "quote": "The Atlas Administration API follows the principles of the REST architectural style",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://www.mongodb.com/docs/atlas/api/atlas-admin-api-ref",
+          "quote": "To view the full list of available Atlas Administration API endpoints, see the Atlas Administration API Specification.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://www.mongodb.com/docs/atlas/api/atlas-admin-api-ref",
+          "quote": "The Atlas Administration API follows the principles of the REST architectural style",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://www.mongodb.com/docs/atlas/api/atlas-admin-api-ref",
+          "quote": "To view the full list of available Atlas Administration API endpoints, see the Atlas Administration API Specification.",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -5881,22 +6413,24 @@
         "api_surface.rest": "quote-verified",
         "api_surface.breadth": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "auth_methods": "verifier-supported",
+        "self_serve": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "auth_methods": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "auth_methods": "supported",
+        "self_serve": "supported"
       }
     },
     {
@@ -6027,14 +6561,14 @@
     {
       "app": "Neo4j",
       "category": "Developer, Infra and Data platforms",
-      "one_liner": "unknown",
+      "one_liner": "Deploy Neo4j AuraDB on any cloud provider of your choice.",
       "auth_methods": [
         "basic",
         "bearer_token",
         "oauth2",
         "jwt"
       ],
-      "self_serve": "unknown",
+      "self_serve": "paid_plan_required",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -6051,8 +6585,8 @@
       "composio_slug": "neo4j",
       "composio_toolkit_type": "api",
       "composio_tools_count": 21,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes_with_caveats",
+      "main_blocker": "enterprise_only",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -6078,6 +6612,42 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/neo4j",
           "quote": "slug=neo4j toolkit_type=api tools_count=21 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://neo4j.com/pricing",
+          "quote": "Pay for provisioned database capacity \u2014 no extras for storage, compute, IO, network, or backups.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://neo4j.com/pricing",
+          "quote": "Deploy Neo4j AuraDB on any cloud provider of your choice.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://neo4j.com/docs/http-api/current/authentication-authorization",
+          "quote": "The process for authorizing requests to the Neo4j HTTP API is not deprecated",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://neo4j.com/pricing",
+          "quote": "Pay for provisioned database capacity \u2014 no extras for storage, compute, IO, network, or backups.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://neo4j.com/docs/http-api/current/authentication-authorization",
+          "quote": "The process for authorizing requests to the Neo4j HTTP API is not deprecated",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://neo4j.com/pricing",
+          "quote": "Pay for provisioned database capacity \u2014 no extras for storage, compute, IO, network, or backups.",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -6099,21 +6669,23 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
@@ -6259,12 +6831,12 @@
     {
       "app": "NotebookLM",
       "category": "AI, Research and Media-native",
-      "one_liner": "unknown",
+      "one_liner": "Programmatic notebook management via REST API for Gemini Notebook Enterprise.",
       "auth_methods": [
         "bearer_token"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "paid_plan_required",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "unknown",
@@ -6301,15 +6873,30 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/notebook_lm",
           "quote": "slug=notebook_lm toolkit_type=api tools_count=11 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks",
+          "quote": "Get licenses for Gemini Notebook Enterprise and assign a license to your user account.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks",
+          "quote": "Get licenses for Gemini Notebook Enterprise and assign a license to your user account.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks",
+          "quote": "This page describes the APIs that let you perform the following notebook management tasks programmatically:",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
         "buildability": "no evidence quote and url",
         "main_blocker": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.rest": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
@@ -6330,21 +6917,24 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "verifier-supported",
+        "one_liner": "quote-verified"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -6447,7 +7037,7 @@
     {
       "app": "Otter AI",
       "category": "AI, Research and Media-native",
-      "one_liner": "unknown",
+      "one_liner": "Real-time annotation (highlights, text notes, comments, and images)",
       "auth_methods": [
         "unknown"
       ],
@@ -6489,11 +7079,16 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/otter-ai",
           "quote": "no toolkit for slugs otter-ai, otterai, otter and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://otter.ai/pricing",
+          "quote": "Real-time annotation (highlights, text notes, comments, and images)",
+          "source": "doc"
         }
       ],
       "confidence": 0.7,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
         "buildability": "no evidence quote and url"
       },
       "needs_human": false,
@@ -6510,21 +7105,22 @@
       "field_confidence": {
         "existing_mcp": "mcp_registry",
         "main_blocker": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "auth_methods": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota"
+        "auth_methods": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
         "main_blocker": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "one_liner": "supported"
       }
     },
     {
@@ -6593,13 +7189,13 @@
         "composio_has_toolkit": "composio_metadata"
       },
       "unknown_reason": {
-        "auth_methods": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "auth_methods": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -7389,7 +7985,7 @@
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -7453,6 +8049,12 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/pumble",
           "quote": "slug=pumble toolkit_type=api tools_count=9 auth_schemes=API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://pumble.com/learn/pumble/ai-automation-guide",
+          "quote": "The Pumble API addon provides simple HTTP endpoints",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
@@ -7477,21 +8079,22 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
         "buildability": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "api_surface.rest": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
         "buildability": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "api_surface.rest": "supported"
       }
     },
     {
@@ -7768,13 +8371,13 @@
     {
       "app": "Reducto",
       "category": "AI, Research and Media-native",
-      "one_liner": "unknown",
+      "one_liner": "Turn documents into data.",
       "auth_methods": [
         "api_key",
         "jwt"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -7825,6 +8428,18 @@
           "source": "composio_metadata"
         },
         {
+          "field": "gate_type",
+          "url": "https://reducto.ai/pricing",
+          "quote": "Standard Pay-as-you-go for early-stage teams",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://reducto.ai",
+          "quote": "Turn documents into data.",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://docs.reducto.ai/quickstart",
           "quote": "Sign up for a free account without leaving the docs.",
@@ -7871,19 +8486,21 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -8134,13 +8751,13 @@
     {
       "app": "SE Ranking",
       "category": "Data, SEO and Scraping",
-      "one_liner": "unknown",
+      "one_liner": "Programmatic access to real-time SEO & GEO data via SE Ranking\u2019s standalone API plan",
       "auth_methods": [
         "api_key",
         "oauth2"
       ],
       "self_serve": "self_serve_trial",
-      "gate_type": "unknown",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "unknown",
@@ -8189,6 +8806,18 @@
           "url": "https://registry.modelcontextprotocol.io/v0/servers?search=SE%20Ranking",
           "quote": "servers: []",
           "source": "mcp_registry"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://seranking.com/pricing",
+          "quote": "Programmatic access to real-time SEO & GEO data via SE Ranking\u2019s standalone API plan",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://seranking.com/pricing",
+          "quote": "Programmatic access to real-time SEO & GEO data via SE Ranking\u2019s standalone API plan",
+          "source": "doc"
         }
       ],
       "confidence": null,
@@ -8211,13 +8840,13 @@
         "self_serve": "quote-verified",
         "api_surface.breadth": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
-        "existing_mcp": "mcp_registry"
+        "existing_mcp": "mcp_registry",
+        "gate_type": "verifier-supported",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck",
         "api_surface.rest": "quote not on page",
-        "api_surface.graphql": "pass-2 quota crash, no recheck",
+        "api_surface.graphql": "no quote found in docs",
         "buildability": "api_surface unknown: quote not on page",
         "main_blocker": "api_surface unknown: quote not on page"
       },
@@ -8226,7 +8855,9 @@
         "self_serve": "not_run",
         "api_surface.breadth": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "gate_type": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -8316,11 +8947,11 @@
         "auth_methods": "composio_metadata"
       },
       "unknown_reason": {
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -8333,13 +8964,13 @@
     {
       "app": "Sentry",
       "category": "Developer, Infra and Data platforms",
-      "one_liner": "unknown",
+      "one_liner": "Everything you need to catch errors, trace performance, and fix broken agents.",
       "auth_methods": [
         "oauth2",
         "api_key",
         "bearer_token"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
@@ -8356,8 +8987,8 @@
       "composio_slug": "sentry",
       "composio_toolkit_type": "api",
       "composio_tools_count": 210,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -8389,17 +9020,49 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/sentry",
           "quote": "slug=sentry toolkit_type=api tools_count=210 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://sentry.io/pricing",
+          "quote": "developer\n\nFor solo devs working on small projects\n\n$0\n\n- One user\n- Error Monitoring and Tracing\n- Alerts and notifications via email\n- 10 custom dashboards\n- MCP access",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://sentry.io/docs",
+          "quote": "Everything you need to catch errors, trace performance, and fix broken agents.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://docs.sentry.io/api",
+          "quote": "The Sentry web API is used to access the Sentry platform programmatically.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://sentry.io/pricing",
+          "quote": "developer\n\nFor solo devs working on small projects\n\n$0\n\n- One user\n- Error Monitoring and Tracing\n- Alerts and notifications via email\n- 10 custom dashboards\n- MCP access",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://docs.sentry.io/api",
+          "quote": "The Sentry web API is used to access the Sentry platform programmatically.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://sentry.io/pricing",
+          "quote": "developer\n\nFor solo devs working on small projects\n\n$0\n\n- One user\n- Error Monitoring and Tracing\n- Alerts and notifications via email\n- 10 custom dashboards\n- MCP access",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url"
       },
       "needs_human": false,
@@ -8418,21 +9081,23 @@
         "gate_type": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "gate_type": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "one_liner": "supported"
       }
     },
     {
@@ -8564,7 +9229,7 @@
     {
       "app": "Shopify",
       "category": "Ecommerce",
-      "one_liner": "unknown",
+      "one_liner": "Shopify APIs, libraries, and tools for building apps and commerce experiences.",
       "auth_methods": [
         "oauth2",
         "api_key",
@@ -8575,7 +9240,7 @@
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "yes",
         "breadth": "unknown",
         "styles": [
           "unknown"
@@ -8662,13 +9327,24 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/shopify",
           "quote": "slug=shopify toolkit_type=api tools_count=386 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://shopify.dev/docs/api/admin-graphql/latest",
+          "quote": "This page will help you get up and running with Shopify\u2019s GraphQL API.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://shopify.dev/api",
+          "quote": "Reference documentation for Shopify's APIs, libraries, and developer tools",
+          "source": "doc"
         }
       ],
       "confidence": 0.95,
       "unknown_reasons": {
         "gate_detail": "no evidence quote and url",
-        "blocker_detail": "no evidence quote and url",
-        "one_liner": "no evidence quote and url"
+        "blocker_detail": "no evidence quote and url"
       },
       "needs_human": true,
       "needs_human_reasons": [
@@ -8689,13 +9365,13 @@
         "buildability": "quote-verified",
         "main_blocker": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
-        "api_surface.rest": "verifier-supported"
+        "api_surface.rest": "verifier-supported",
+        "api_surface.graphql": "verifier-supported",
+        "one_liner": "quote-verified"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)"
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8703,7 +9379,9 @@
         "buildability": "not_run",
         "main_blocker": "not_run",
         "composio_has_toolkit": "not_run",
-        "api_surface.rest": "supported"
+        "api_surface.rest": "supported",
+        "api_surface.graphql": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -8713,7 +9391,7 @@
       "auth_methods": [
         "oauth2"
       ],
-      "self_serve": "unknown",
+      "self_serve": "self_serve_free",
       "gate_type": "unknown",
       "gate_detail": "unknown",
       "api_surface": {
@@ -8751,10 +9429,18 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/slack",
           "quote": "slug=slack toolkit_type=api tools_count=165 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://slack.com/pricing",
+          "quote": "Free, always-on resources and essential support",
+          "source": "doc"
         }
       ],
       "confidence": null,
-      "unknown_reasons": {},
+      "unknown_reasons": {
+        "gate_type": "pass 3 claim contradicted by the second-model verifier"
+      },
       "needs_human": true,
       "needs_human_reasons": [
         "pass 2 extraction crashed (model quota); pass 3 kept only pass-1 claims whose quotes are on the cached page, with no second-model check"
@@ -8771,21 +9457,23 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "gate_type": "verifier contradicted",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "contradicted"
       }
     },
     {
@@ -8881,7 +9569,7 @@
     {
       "app": "Snowflake",
       "category": "Developer, Infra and Data platforms",
-      "one_liner": "unknown",
+      "one_liner": "Create a security integration for external API authentication",
       "auth_methods": [
         "oauth2",
         "basic",
@@ -8938,6 +9626,12 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/snowflake",
           "quote": "slug=snowflake toolkit_type=api tools_count=16 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://docs.snowflake.com/en/sql-reference/sql/create-security-integration-api-auth",
+          "quote": "CREATE SECURITY INTEGRATION (External API Authentication)",
+          "source": "doc"
         }
       ],
       "confidence": 0.8,
@@ -8945,7 +9639,6 @@
         "self_serve": "Documentation does not explicitly describe self-serve signup options or tiers.",
         "gate_type": "Documentation does not specify if a specific paywall or approval gate is required to use the APIs.",
         "api_surface.breadth": "Number of endpoints is not documented.",
-        "one_liner": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
         "buildability": "no evidence quote and url",
         "main_blocker": "no evidence quote and url"
@@ -8965,21 +9658,22 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "one_liner": "supported"
       }
     },
     {
@@ -8990,11 +9684,11 @@
         "oauth2",
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_trial",
+      "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "unknown",
         "breadth": "unknown",
         "styles": [
@@ -9007,8 +9701,8 @@
       "composio_slug": null,
       "composio_toolkit_type": null,
       "composio_tools_count": null,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -9028,17 +9722,54 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/squarespace",
           "quote": "no toolkit for slugs squarespace and no exact name match in toolkit search",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://squarespace.com/pricing",
+          "quote": "Start selling with a foundation for service businesses.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://squarespace.com/pricing",
+          "quote": "Start selling with a foundation for service businesses.",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.rest",
+          "url": "https://developers.squarespace.com/commerce-apis/oauth",
+          "quote": "Squarespace uses OAuth 2.0 to authorize third-party applications to integrate with Squarespace and consume Squarespace APIs.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://squarespace.com/pricing",
+          "quote": "Start selling with a foundation for service businesses.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://developers.squarespace.com/commerce-apis/oauth",
+          "quote": "Squarespace uses OAuth 2.0 to authorize third-party applications to integrate with Squarespace and consume Squarespace APIs.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://squarespace.com/pricing",
+          "quote": "Start selling with a foundation for service businesses.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://developers.squarespace.com/commerce-apis/oauth",
+          "quote": "Squarespace uses OAuth 2.0 to authorize third-party applications to integrate with Squarespace and consume Squarespace APIs.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 1.0,
       "unknown_reasons": {
         "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
-        "api_surface.rest": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url"
       },
       "needs_human": false,
@@ -9055,35 +9786,38 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "gate_type": "verifier-supported",
+        "api_surface.rest": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "one_liner": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "gate_type": "supported",
+        "api_surface.rest": "insufficient"
       }
     },
     {
       "app": "Stripe",
       "category": "Finance and Fintech",
-      "one_liner": "unknown",
+      "one_liner": "Let your AI agents interact with the Stripe API by using our MCP server.",
       "auth_methods": [
         "api_key",
         "basic",
         "bearer_token",
         "oauth2"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -9099,8 +9833,8 @@
       "composio_slug": "stripe",
       "composio_toolkit_type": "api",
       "composio_tools_count": 428,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -9138,20 +9872,57 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/stripe",
           "quote": "slug=stripe toolkit_type=api tools_count=428 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://docs.stripe.com/mcp",
+          "quote": "Install the Stripe CLI using the installation script for your operating system.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://docs.stripe.com/mcp",
+          "quote": "If your MCP client doesn\u2019t support agent plugins for Stripe, or you prefer to configure the Stripe MCP server and install the skills manually, follow these instructions:",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://docs.stripe.com/mcp",
+          "quote": "Let your AI agents interact with the Stripe API by using our MCP server.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://stripe.com/docs/api",
+          "quote": "The Stripe API is organized around REST.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://docs.stripe.com/mcp",
+          "quote": "Install the Stripe CLI using the installation script for your operating system.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://stripe.com/docs/api",
+          "quote": "The Stripe API is organized around REST.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://docs.stripe.com/mcp",
+          "quote": "Install the Stripe CLI using the installation script for your operating system.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.95,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
-        "composio_toolkit_type": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url"
+        "composio_toolkit_type": "no evidence quote and url"
       },
       "needs_human": false,
       "needs_human_reasons": [],
@@ -9168,35 +9939,38 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "quote-verified",
+        "gate_type": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "insufficient",
+        "gate_type": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
       "app": "Supabase",
       "category": "Developer, Infra and Data platforms",
-      "one_liner": "unknown",
+      "one_liner": "Start building for free, collaborate with your team, then scale to millions of users",
       "auth_methods": [
         "oauth2",
         "api_key",
         "bearer_token",
         "jwt"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -9212,8 +9986,8 @@
       "composio_slug": "supabase",
       "composio_toolkit_type": "api",
       "composio_tools_count": 230,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -9239,6 +10013,48 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/supabase",
           "quote": "slug=supabase toolkit_type=api tools_count=230 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://supabase.com/pricing",
+          "quote": "Start building for free, collaborate with your team, then scale to millions of users",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://supabase.com/auth",
+          "quote": "APIs that you can understand. With powerful libraries that work on client and server-side applications.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://supabase.com/pricing",
+          "quote": "Start building for free, collaborate with your team, then scale to millions of users",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://supabase.com/docs/guides/auth",
+          "quote": "Auth also enables access control to your database's automatically generated REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://supabase.com/pricing",
+          "quote": "Start building for free, collaborate with your team, then scale to millions of users",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://supabase.com/docs/guides/auth",
+          "quote": "Auth also enables access control to your database's automatically generated REST API.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://supabase.com/pricing",
+          "quote": "Start building for free, collaborate with your team, then scale to millions of users",
+          "source": "derived_rule"
         }
       ],
       "confidence": null,
@@ -9260,32 +10076,35 @@
         "auth_methods": "quote-verified",
         "api_surface.rest": "quote-verified",
         "existing_mcp": "quote-verified",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "quote-verified",
+        "one_liner": "verifier-supported",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "self_serve": "supported",
+        "gate_type": "insufficient",
+        "one_liner": "supported"
       }
     },
     {
       "app": "systeme.io",
       "category": "Marketing, Ads, Email and Social",
-      "one_liner": "unknown",
+      "one_liner": "systeme.io offers an MCP API for contact and email management.",
       "auth_methods": [
         "api_key"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -9336,6 +10155,18 @@
           "source": "composio_metadata"
         },
         {
+          "field": "gate_type",
+          "url": "https://systeme.io/pricing",
+          "quote": "No credit card required",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://help.systeme.io/article/9489-how-to-use-systeme-ios-mcp",
+          "quote": "The new MCP server feature gives users, partners, and developers a powerful new way to interact with systeme.io using AI tools.",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://systeme.io/pricing",
           "quote": "The free plan never expires and does not require a credit card.",
@@ -9384,12 +10215,11 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported",
+        "one_liner": "quote-verified"
       },
-      "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
@@ -9397,7 +10227,9 @@
         "api_surface.graphql": "not_run",
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "gate_type": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -9502,7 +10334,7 @@
     {
       "app": "Threads (Meta)",
       "category": "Marketing, Ads, Email and Social",
-      "one_liner": "unknown",
+      "one_liner": "Use the Threads API to create and publish posts, retrieve media and profiles, moderate replies, and access insights.",
       "auth_methods": [
         "oauth2"
       ],
@@ -9544,11 +10376,16 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/threads",
           "quote": "slug=threads toolkit_type=api tools_count=24 auth_schemes=OAUTH2",
           "source": "composio_metadata"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developers.facebook.com/documentation/threads",
+          "quote": "Use the Threads API to create and publish posts, retrieve media and profiles, moderate replies, and access insights.",
+          "source": "doc"
         }
       ],
       "confidence": 0.9,
       "unknown_reasons": {
-        "one_liner": "no evidence quote and url",
         "self_serve": "no evidence quote and url",
         "gate_detail": "no evidence quote and url",
         "api_surface.rest": "no evidence quote and url",
@@ -9573,21 +10410,22 @@
       "field_confidence": {
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
-        "composio_has_toolkit": "composio_metadata"
+        "composio_has_toolkit": "composio_metadata",
+        "one_liner": "verifier-supported"
       },
       "unknown_reason": {
-        "one_liner": "re-research hit model quota",
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.rest": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "self_serve": "no quote found in docs",
+        "gate_type": "no quote found in docs",
+        "api_surface.rest": "no quote found in docs",
+        "api_surface.graphql": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "one_liner": "supported"
       }
     },
     {
@@ -9693,7 +10531,7 @@
         "api_key"
       ],
       "self_serve": "self_serve_free",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -9762,6 +10600,12 @@
           "source": "mcp_registry"
         },
         {
+          "field": "gate_type",
+          "url": "https://twilio.com/pricing",
+          "quote": "Sign up for a free trial\u2014no credit card required",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://twilio.com",
           "quote": "Sign up for a free Twilio account and grab one of our official server-side SDKs to get started.",
@@ -9811,11 +10655,10 @@
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "gate_type": "verifier-supported"
       },
-      "unknown_reason": {
-        "gate_type": "pass-2 quota crash, no recheck"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "one_liner": "not_run",
         "self_serve": "not_run",
@@ -9824,7 +10667,8 @@
         "api_surface.breadth": "not_run",
         "auth_methods": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "gate_type": "supported"
       }
     },
     {
@@ -9835,8 +10679,8 @@
         "oauth2",
         "api_key"
       ],
-      "self_serve": "unknown",
-      "gate_type": "unknown",
+      "self_serve": "self_serve_free",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
@@ -9852,8 +10696,8 @@
       "composio_slug": "vercel",
       "composio_toolkit_type": "api",
       "composio_tools_count": 399,
-      "buildability": "unknown",
-      "main_blocker": "unknown",
+      "buildability": "yes",
+      "main_blocker": "none",
       "blocker_detail": "unknown",
       "evidence": [
         {
@@ -9891,17 +10735,49 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/vercel",
           "quote": "auth_config_details / composio_managed_auth_schemes: OAUTH2, API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "self_serve",
+          "url": "https://vercel.com/pricing",
+          "quote": "Our Hobby plan is free and a great way to get started.",
+          "source": "doc"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://vercel.com/pricing",
+          "quote": "Our Hobby plan is free and a great way to get started.",
+          "source": "doc"
+        },
+        {
+          "field": "buildability",
+          "url": "https://vercel.com/docs/rest-api",
+          "quote": "Vercel REST API Reference",
+          "source": "derived_rule"
+        },
+        {
+          "field": "buildability",
+          "url": "https://vercel.com/pricing",
+          "quote": "Our Hobby plan is free and a great way to get started.",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://vercel.com/docs/rest-api",
+          "quote": "Vercel REST API Reference",
+          "source": "derived_rule"
+        },
+        {
+          "field": "main_blocker",
+          "url": "https://vercel.com/pricing",
+          "quote": "Our Hobby plan is free and a great way to get started.",
+          "source": "derived_rule"
         }
       ],
       "confidence": 0.95,
       "unknown_reasons": {
-        "self_serve": "no evidence quote and url",
-        "gate_type": "no evidence quote and url",
         "api_surface.graphql": "no evidence quote and url",
         "api_surface.breadth": "no evidence quote and url",
         "api_surface.styles": "no evidence quote and url",
-        "buildability": "no evidence quote and url",
-        "main_blocker": "no evidence quote and url",
         "blocker_detail": "no evidence quote and url"
       },
       "needs_human": false,
@@ -9920,21 +10796,23 @@
         "api_surface.rest": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
-        "auth_methods": "composio_metadata"
+        "auth_methods": "composio_metadata",
+        "self_serve": "verifier-supported",
+        "gate_type": "quote-verified",
+        "buildability": "derived_rule",
+        "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "self_serve": "re-research hit model quota",
-        "gate_type": "re-research hit model quota",
-        "api_surface.graphql": "re-research hit model quota",
-        "buildability": "self_serve unknown: re-research hit model quota",
-        "main_blocker": "self_serve unknown: re-research hit model quota"
+        "api_surface.graphql": "no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "api_surface.rest": "not_run",
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "auth_methods": "not_run"
+        "auth_methods": "not_run",
+        "self_serve": "supported",
+        "gate_type": "insufficient"
       }
     },
     {
@@ -10149,9 +11027,9 @@
         "composio_has_toolkit": "composio_metadata"
       },
       "unknown_reason": {
-        "auth_methods": "re-research skipped (time)",
-        "api_surface.rest": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)"
+        "auth_methods": "re-research hit model quota",
+        "api_surface.rest": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -10173,11 +11051,11 @@
         "bearer_token"
       ],
       "self_serve": "unknown",
-      "gate_type": "unknown",
+      "gate_type": "none",
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "unknown",
         "styles": [
           "unknown"
@@ -10222,6 +11100,18 @@
           "url": "https://backend.composio.dev/api/v3.1/toolkits/whatsapp",
           "quote": "slug=whatsapp toolkit_type=api tools_count=127 auth_schemes=OAUTH2,API_KEY",
           "source": "composio_metadata"
+        },
+        {
+          "field": "gate_type",
+          "url": "https://developers.facebook.com/docs/whatsapp",
+          "quote": "WhatsApp Business Platform",
+          "source": "doc"
+        },
+        {
+          "field": "api_surface.graphql",
+          "url": "https://developers.facebook.com/docs/whatsapp",
+          "quote": "Cloud API",
+          "source": "doc"
         }
       ],
       "confidence": 1.0,
@@ -10242,21 +11132,23 @@
         "auth_methods": "quote-verified",
         "existing_mcp": "mcp_registry",
         "composio_has_toolkit": "composio_metadata",
-        "api_surface.rest": "verifier-supported"
+        "api_surface.rest": "verifier-supported",
+        "gate_type": "quote-verified",
+        "api_surface.graphql": "verifier-supported"
       },
       "unknown_reason": {
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "self_serve": "no quote found in docs",
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
         "auth_methods": "not_run",
         "existing_mcp": "not_run",
         "composio_has_toolkit": "not_run",
-        "api_surface.rest": "supported"
+        "api_surface.rest": "supported",
+        "gate_type": "insufficient",
+        "api_surface.graphql": "supported"
       }
     },
     {
@@ -10273,7 +11165,7 @@
       "gate_detail": "unknown",
       "api_surface": {
         "rest": "yes",
-        "graphql": "unknown",
+        "graphql": "no",
         "breadth": "broad",
         "styles": [
           "unknown"
@@ -10332,6 +11224,12 @@
           "source": "composio_metadata"
         },
         {
+          "field": "api_surface.graphql",
+          "url": "https://developer.woocommerce.com/docs/apis/rest-api",
+          "quote": "Insomnia - Cross-platform GraphQL and REST client",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://woocommerce.com/document/woocommerce-rest-api",
           "quote": "This documentation is about the free,  core WooCommerce plugin",
@@ -10380,11 +11278,11 @@
         "existing_mcp": "quote-verified",
         "composio_has_toolkit": "composio_metadata",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "api_surface.graphql": "quote-verified"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "api_surface.graphql": "pass-2 quota crash, no recheck"
+        "one_liner": "no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -10393,7 +11291,8 @@
         "api_surface.rest": "not_run",
         "api_surface.breadth": "not_run",
         "existing_mcp": "not_run",
-        "composio_has_toolkit": "not_run"
+        "composio_has_toolkit": "not_run",
+        "api_surface.graphql": "insufficient"
       }
     },
     {
@@ -10602,8 +11501,8 @@
         "main_blocker": "derived_rule"
       },
       "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "gate_type": "pass-2 quota crash, no recheck"
+        "one_liner": "no quote found in docs",
+        "gate_type": "no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -10619,7 +11518,7 @@
     {
       "app": "Zendesk",
       "category": "Support and Helpdesk",
-      "one_liner": "unknown",
+      "one_liner": "Zendesk provides a customer service software and support ticket system with robust REST and GraphQL APIs.",
       "auth_methods": [
         "oauth2",
         "api_key",
@@ -10631,7 +11530,7 @@
       "gate_type": "paid_plan",
       "gate_detail": "unknown",
       "api_surface": {
-        "rest": "unknown",
+        "rest": "yes",
         "graphql": "yes",
         "breadth": "unknown",
         "styles": [
@@ -10691,6 +11590,18 @@
           "source": "mcp_registry"
         },
         {
+          "field": "api_surface.rest",
+          "url": "https://developer.zendesk.com/api-reference/live-chat/real-time-chat-api/rest",
+          "quote": "The Real Time Chat API provides REST endpoints if you want to pull data on demand.",
+          "source": "doc"
+        },
+        {
+          "field": "one_liner",
+          "url": "https://developer.zendesk.com/api-reference/live-chat/real-time-chat-api/rest",
+          "quote": "The Real Time Chat API provides REST endpoints if you want to pull data on demand.",
+          "source": "doc"
+        },
+        {
           "field": "buildability",
           "url": "https://www.zendesk.com/pricing",
           "quote": "The Startups Programme provides early stage startups a 6-month trial of the Zendesk Suite for up to 50 agents.",
@@ -10738,19 +11649,20 @@
         "composio_has_toolkit": "composio_metadata",
         "existing_mcp": "mcp_registry",
         "buildability": "derived_rule",
-        "main_blocker": "derived_rule"
+        "main_blocker": "derived_rule",
+        "api_surface.rest": "verifier-supported",
+        "one_liner": "quote-verified"
       },
-      "unknown_reason": {
-        "one_liner": "pass-2 quota crash, no recheck",
-        "api_surface.rest": "pass-2 quota crash, no recheck"
-      },
+      "unknown_reason": {},
       "verifier_verdicts": {
         "auth_methods": "not_run",
         "self_serve": "not_run",
         "gate_type": "not_run",
         "api_surface.graphql": "not_run",
         "composio_has_toolkit": "not_run",
-        "existing_mcp": "not_run"
+        "existing_mcp": "not_run",
+        "api_surface.rest": "supported",
+        "one_liner": "insufficient"
       }
     },
     {
@@ -10829,12 +11741,12 @@
         "composio_has_toolkit": "composio_metadata"
       },
       "unknown_reason": {
-        "one_liner": "re-research skipped (time)",
-        "self_serve": "re-research skipped (time)",
-        "gate_type": "re-research skipped (time)",
-        "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "self_serve unknown: re-research skipped (time)",
-        "main_blocker": "self_serve unknown: re-research skipped (time)"
+        "one_liner": "re-research hit model quota",
+        "self_serve": "re-research hit model quota",
+        "gate_type": "re-research hit model quota",
+        "api_surface.graphql": "re-research hit model quota",
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",

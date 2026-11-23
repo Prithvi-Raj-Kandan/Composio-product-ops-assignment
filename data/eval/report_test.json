@@ -1141,9 +1141,9 @@
     "pass": 3,
     "missing_results": false,
     "labelled_cells": 80,
-    "correct_cells": 25,
+    "correct_cells": 28,
     "unlabelled_cells": 0,
-    "accuracy": 0.3125,
+    "accuracy": 0.35,
     "per_field": {
       "auth_methods": {
         "labelled": 10,
@@ -1157,13 +1157,13 @@
       },
       "api_rest": {
         "labelled": 10,
-        "correct": 6,
-        "accuracy": 0.6
+        "correct": 7,
+        "accuracy": 0.7
       },
       "api_graphql": {
         "labelled": 10,
-        "correct": 1,
-        "accuracy": 0.1
+        "correct": 3,
+        "accuracy": 0.3
       },
       "api_breadth": {
         "labelled": 10,
@@ -1188,8 +1188,8 @@
     },
     "taxonomy": {
       "partial": 8,
-      "underclaim": 37,
-      "exact_miss": 10
+      "underclaim": 33,
+      "exact_miss": 11
     },
     "errors": [
       {
@@ -1307,8 +1307,8 @@
       {
         "app": "iPayX",
         "field": "self_serve",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
+        "taxonomy": "exact_miss",
+        "predicted": "self_serve_free",
         "gold": "paid_plan_required",
         "pass": 3
       },
@@ -1318,14 +1318,6 @@
         "taxonomy": "underclaim",
         "predicted": "unknown",
         "gold": "self_serve_free",
-        "pass": 3
-      },
-      {
-        "app": "Zendesk",
-        "field": "api_rest",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
-        "gold": "yes",
         "pass": 3
       },
       {
@@ -1369,27 +1361,11 @@
         "pass": 3
       },
       {
-        "app": "WhatsApp Business",
-        "field": "api_graphql",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
-        "gold": "no",
-        "pass": 3
-      },
-      {
         "app": "Mailchimp",
         "field": "api_graphql",
         "taxonomy": "underclaim",
         "predicted": "unknown",
         "gold": "no",
-        "pass": 3
-      },
-      {
-        "app": "Shopify",
-        "field": "api_graphql",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
-        "gold": "yes",
         "pass": 3
       },
       {
@@ -1638,7 +1614,7 @@
     "split": "test",
     "pass1_accuracy": 0.275,
     "pass2_accuracy": 0.15,
-    "pass3_accuracy": 0.3125,
+    "pass3_accuracy": 0.35,
     "delta": -0.12500000000000003,
     "fields": {
       "auth_methods": {
@@ -1657,13 +1633,13 @@
         "pass1": 0.6,
         "pass2": 0.4,
         "delta": -0.19999999999999996,
-        "pass3": 0.6
+        "pass3": 0.7
       },
       "api_graphql": {
         "pass1": 0.1,
         "pass2": 0.0,
         "delta": -0.1,
-        "pass3": 0.1
+        "pass3": 0.3
       },
       "api_breadth": {
         "pass1": 0.0,

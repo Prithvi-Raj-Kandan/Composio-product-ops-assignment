@@ -28,11 +28,10 @@ ONE_TIME_SETUP = (
 )
 
 
-def _unknown_tally(records: list[dict[str, Any]]) -> list[tuple[str, int]]:
-    counts: Counter = Counter()
-    for r in records:
-        counts.update((r.get("unknown_reason") or {}).values())
-    return counts.most_common()
+def _unknown_tally(records: list[dict[str, Any]]) -> list[tuple[str, int, int]]:
+    from opsresearch.unknown_reason import tally
+
+    return tally(records)
 
 
 def _csv_rows(path: Path) -> int:

@@ -103,8 +103,8 @@
         "one_liner": "re-research skipped (time)",
         "self_serve": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -221,8 +221,8 @@
         "one_liner": "re-research skipped (time)",
         "self_serve": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -321,8 +321,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -404,8 +404,8 @@
         "gate_type": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -492,8 +492,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
@@ -608,8 +608,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -973,8 +973,8 @@
         "gate_type": "no docs page found",
         "api_surface.rest": "no docs page found",
         "api_surface.graphql": "no docs page found",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no docs page found",
+        "main_blocker": "self_serve unknown: no docs page found"
       },
       "verifier_verdicts": {
         "composio_has_toolkit": "not_run",
@@ -1187,8 +1187,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -1278,8 +1278,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -1373,8 +1373,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -1472,8 +1472,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.rest": "supported",
@@ -1696,8 +1696,8 @@
         "gate_type": "pass-2 quota crash, no recheck",
         "api_surface.rest": "pass-2 quota crash, no recheck",
         "api_surface.graphql": "pass-2 quota crash, no recheck",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: pass-2 quota crash, no recheck",
+        "main_blocker": "api_surface unknown: pass-2 quota crash, no recheck"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -2043,8 +2043,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -2380,8 +2380,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: re-research hit model quota",
+        "main_blocker": "api_surface unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -2726,8 +2726,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
@@ -3064,8 +3064,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -3153,8 +3153,8 @@
         "gate_type": "pass-2 quota crash, no recheck",
         "api_surface.rest": "pass-2 quota crash, no recheck",
         "api_surface.graphql": "pass-2 quota crash, no recheck",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: pass-2 quota crash, no recheck",
+        "main_blocker": "api_surface unknown: pass-2 quota crash, no recheck"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -3255,8 +3255,8 @@
         "self_serve": "no quote found in docs",
         "gate_type": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -3345,8 +3345,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.rest": "supported",
@@ -3425,8 +3425,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -3771,8 +3771,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -3872,8 +3872,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -3970,8 +3970,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -4072,8 +4072,8 @@
         "one_liner": "re-research skipped (time)",
         "self_serve": "quote not on page",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: quote not on page",
+        "main_blocker": "self_serve unknown: quote not on page"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -4296,8 +4296,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -4382,8 +4382,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -4473,8 +4473,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.styles": "not_run",
@@ -4726,8 +4726,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -4810,8 +4810,8 @@
         "gate_type": "no docs page found",
         "api_surface.rest": "no docs page found",
         "api_surface.graphql": "no docs page found",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no docs page found",
+        "main_blocker": "self_serve unknown: no docs page found"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -5565,8 +5565,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -5659,8 +5659,8 @@
         "one_liner": "no quote found in docs",
         "self_serve": "no quote found in docs",
         "gate_type": "no quote found in docs",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -5889,8 +5889,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "api_surface.rest": "not_run",
@@ -6106,8 +6106,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -6338,8 +6338,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -6434,8 +6434,8 @@
         "self_serve": "no quote found in docs",
         "gate_type": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -6519,7 +6519,7 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -6598,8 +6598,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -6968,8 +6968,8 @@
         "gate_type": "no docs page found",
         "api_surface.rest": "no docs page found",
         "api_surface.graphql": "no docs page found",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no docs page found",
+        "main_blocker": "self_serve unknown: no docs page found"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -7485,7 +7485,7 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "main_blocker": "depends on unknown self_serve"
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7573,8 +7573,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7663,8 +7663,8 @@
         "gate_type": "no docs page found",
         "api_surface.rest": "no docs page found",
         "api_surface.graphql": "no docs page found",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no docs page found",
+        "main_blocker": "self_serve unknown: no docs page found"
       },
       "verifier_verdicts": {
         "existing_mcp": "not_run",
@@ -7754,8 +7754,8 @@
         "one_liner": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -7995,7 +7995,7 @@
         "one_liner": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "main_blocker": "depends on unknown api_surface"
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -8218,8 +8218,8 @@
         "gate_type": "pass-2 quota crash, no recheck",
         "api_surface.rest": "quote not on page",
         "api_surface.graphql": "pass-2 quota crash, no recheck",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: quote not on page",
+        "main_blocker": "api_surface unknown: quote not on page"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8319,8 +8319,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -8424,8 +8424,8 @@
         "one_liner": "re-research skipped (time)",
         "self_serve": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8779,8 +8779,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8869,8 +8869,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -8972,8 +8972,8 @@
         "self_serve": "re-research skipped (time)",
         "gate_type": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -9063,8 +9063,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -9175,8 +9175,8 @@
         "self_serve": "re-research skipped (time)",
         "gate_type": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -9267,8 +9267,8 @@
         "self_serve": "re-research skipped (time)",
         "gate_type": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -9487,8 +9487,8 @@
         "one_liner": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "supported",
@@ -9581,8 +9581,8 @@
         "gate_type": "re-research hit model quota",
         "api_surface.rest": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -9674,8 +9674,8 @@
         "gate_type": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -9926,8 +9926,8 @@
         "self_serve": "re-research hit model quota",
         "gate_type": "re-research hit model quota",
         "api_surface.graphql": "re-research hit model quota",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research hit model quota",
+        "main_blocker": "self_serve unknown: re-research hit model quota"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -10037,8 +10037,8 @@
         "gate_type": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "auth_methods": "supported",
@@ -10248,8 +10248,8 @@
         "self_serve": "re-research skipped (time)",
         "gate_type": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "one_liner": "not_run",
@@ -10480,8 +10480,8 @@
         "one_liner": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown api_surface",
-        "main_blocker": "depends on unknown api_surface"
+        "buildability": "api_surface unknown: no quote found in docs",
+        "main_blocker": "api_surface unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "self_serve": "not_run",
@@ -10833,8 +10833,8 @@
         "self_serve": "re-research skipped (time)",
         "gate_type": "re-research skipped (time)",
         "api_surface.graphql": "re-research skipped (time)",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: re-research skipped (time)",
+        "main_blocker": "self_serve unknown: re-research skipped (time)"
       },
       "verifier_verdicts": {
         "auth_methods": "not_run",
@@ -10925,8 +10925,8 @@
         "gate_type": "no quote found in docs",
         "api_surface.rest": "no quote found in docs",
         "api_surface.graphql": "no quote found in docs",
-        "buildability": "depends on unknown self_serve",
-        "main_blocker": "depends on unknown self_serve"
+        "buildability": "self_serve unknown: no quote found in docs",
+        "main_blocker": "self_serve unknown: no quote found in docs"
       },
       "verifier_verdicts": {
         "existing_mcp": "supported",

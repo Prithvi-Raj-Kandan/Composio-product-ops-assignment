@@ -58,9 +58,9 @@ def derive_unknown_reasons(
         if field in RULE_FIELDS:
             api = record["api_surface"]
             if is_unknown(record["self_serve"]):
-                out[field] = "depends on unknown self_serve"
+                out[field] = "dep:self_serve"
             elif is_unknown(api["rest"]) and is_unknown(api["graphql"]):
-                out[field] = "depends on unknown api_surface"
+                out[field] = "dep:api_surface"
             else:
                 out[field] = "inputs don't fit the rule"
             continue
@@ -85,14 +85,34 @@ def derive_unknown_reasons(
             out[field] = "no pricing page"
             continue
         out[field] = "no quote found in docs"
+    # Rule-derived fields: chain to the input's own reason so the caption names the root cause.
+    for field in RULE_FIELDS:
+        value = out.get(field, "")
+        if value.startswith("dep:"):
+            source = value[4:]
+            root = out.get("self_serve" if source == "self_serve" else "api_surface.rest", "no quote found in docs")
+            out[field] = f"{source} unknown: {root}"
     return out
 
 
-def tally(records: list[dict[str, Any]]) -> list[tuple[str, int]]:
+def root_reason(reason: str) -> tuple[str, bool]:
+    """('re-research hit model quota', True) for 'self_serve unknown: re-research hit model quota'."""
+    head, sep, tail = reason.partition(" unknown: ")
+    if sep and head in ("self_serve", "api_surface"):
+        return tail, True
+    return reason, False
+
+
+def tally(records: list[dict[str, Any]]) -> list[tuple[str, int, int]]:
+    """(root reason, cells, of which derived) sorted by cells."""
     counts: Counter = Counter()
+    derived: Counter = Counter()
     for r in records:
-        counts.update((r.get("unknown_reason") or {}).values())
-    return counts.most_common()
+        for reason in (r.get("unknown_reason") or {}).values():
+            root, is_derived = root_reason(reason)
+            counts[root] += 1
+            derived[root] += is_derived
+    return [(k, v, derived[k]) for k, v in counts.most_common()]
 
 
 def annotate(repo: Path, records: list[dict[str, Any]]) -> list[dict[str, Any]]:

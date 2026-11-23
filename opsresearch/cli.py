@@ -63,10 +63,40 @@ def build_parser() -> argparse.ArgumentParser:
     gold_parser.add_argument("--repo", default=".")
     gold_parser.set_defaults(func=cmd_import_gold)
 
+    p3_parser = sub.add_parser("pass3", help="Pass 3: policy fix, Composio metadata, probe re-research.")
+    p3_parser.add_argument("--repo", default=".")
+    p3_parser.add_argument("--resume", action="store_true")
+    p3_parser.add_argument("--concurrency", type=int, default=4)
+    p3_parser.add_argument("--only", default="")
+    p3_parser.add_argument("--no-research", action="store_true")
+    p3_parser.set_defaults(func=cmd_pass3)
+
     smoke_parser = sub.add_parser("smoke", help="Check each configured service on one app.")
     smoke_parser.add_argument("--app", default="HubSpot")
     smoke_parser.set_defaults(func=cmd_smoke)
     return parser
+
+
+def cmd_pass3(args: argparse.Namespace) -> int:
+    import json
+
+    from opsresearch.graph import write_pass
+    from opsresearch.pass3 import run_pass3, write_json
+    from opsresearch.schema import AppRecord
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    root = Path(args.repo)
+    out = run_pass3(
+        root, resume=args.resume, concurrency=args.concurrency, only=args.only, research=not args.no_research
+    )
+    if args.only:
+        print(json.dumps(out["records"], indent=1)[:4000])
+        return 0
+    records = [AppRecord.model_validate(r) for r in out["records"]]
+    write_pass(root / "data" / "results_pass3.json", records, 3)
+    write_json(root / "data" / "run_stats_pass3.json", out["stats"])
+    print(json.dumps(out["stats"], indent=1))
+    return 0
 
 
 def cmd_render(args: argparse.Namespace) -> int:

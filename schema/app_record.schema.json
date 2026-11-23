@@ -132,7 +132,8 @@
         "doc",
         "composio_oracle",
         "mcp_registry",
-        "derived_rule"
+        "derived_rule",
+        "composio_metadata"
       ],
       "title": "EvidenceSource",
       "type": "string"
@@ -420,6 +421,22 @@
       ],
       "default": null,
       "title": "Pass Id"
+    },
+    "field_confidence": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Per-field confidence tag: verifier-supported, quote-verified, composio_metadata, mcp_registry, derived_rule, or quote-not-rechecked.",
+      "title": "Field Confidence",
+      "type": "object"
+    },
+    "verifier_verdicts": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Per-field second-model verdict: supported, insufficient, contradicted, or not_run.",
+      "title": "Verifier Verdicts",
+      "type": "object"
     }
   },
   "required": [

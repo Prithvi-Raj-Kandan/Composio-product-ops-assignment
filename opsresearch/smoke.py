@@ -128,21 +128,30 @@ def live_probes(app: str) -> dict[str, Callable[[], str]]:
     """Real one-shot probes. Used by the CLI, not by unit tests."""
 
     def composio() -> str:
+        from opsresearch.discover import ComposioToolsSearch
         from opsresearch.verify import ComposioToolkitClient
 
         snapshot = ComposioToolkitClient().lookup(app)
-        if snapshot is None:
-            return f"lookup for {app} returned no toolkit"
-        return f"lookup returned slug {snapshot.slug}"
+        found = f"lookup returned slug {snapshot.slug}" if snapshot else f"lookup for {app} returned no toolkit"
+        try:
+            ComposioToolsSearch().search(f"{app} API documentation", max_results=1)
+            return found + "; TAVILY_SEARCH ok"
+        except Exception as exc:
+            return found + f"; TAVILY_SEARCH {type(exc).__name__} (run connect-tavily)"
 
     def gemini() -> str:
-        from opsresearch.llm import GEMINI_EXTRACT_MODEL, GeminiJsonClient
+        from opsresearch.llm import GeminiJsonClient, extraction_model_names
 
-        GeminiJsonClient(GEMINI_EXTRACT_MODEL).complete_json(
-            'Reply with JSON {"ok": true} and nothing else.',
-            {"type": "object"},
-        )
-        return f"{GEMINI_EXTRACT_MODEL} responded"
+        errors = []
+        for name in extraction_model_names():
+            try:
+                GeminiJsonClient(name).complete_json(
+                    'Reply with JSON {"ok": true} and nothing else.', {"type": "object"}
+                )
+                return f"{name} responded" + (f" (after {'; '.join(errors)})" if errors else "")
+            except Exception as exc:
+                errors.append(f"{name} {type(exc).__name__}")
+        raise RuntimeError("; ".join(errors))
 
     def groq() -> str:
         from opsresearch.llm import GroqJsonClient

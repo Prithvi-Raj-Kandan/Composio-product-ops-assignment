@@ -122,6 +122,23 @@ def _log(state: ResearchState, node: str, **detail: Any) -> list[dict[str, Any]]
     return state["run_log"] + [entry]
 
 
+def _fetch_all(urls: list[str], app: str, deps: ResearchDeps) -> tuple[list[dict[str, Any]], list[str]]:
+    """Fetch each page; a 403 or timeout drops that page and is logged, it does not kill the app."""
+    docs: list[dict[str, Any]] = []
+    failed: list[str] = []
+    for url in urls:
+        try:
+            doc = fetch_url(url, app, deps.cache_dir, deps.fetch)
+        except Exception:
+            failed.append(url)
+            continue
+        if doc.text.strip():
+            docs.append(_doc_row(doc))
+        else:
+            failed.append(url)
+    return docs, failed
+
+
 def build_graph(deps: ResearchDeps):
     def resolve(state: ResearchState) -> dict[str, Any]:
         return {
@@ -144,12 +161,12 @@ def build_graph(deps: ResearchDeps):
         }
 
     def fetch_node(state: ResearchState) -> dict[str, Any]:
-        docs = []
-        for hit in state["hits"]:
-            doc = fetch_url(hit["url"], state["app_name"], deps.cache_dir, deps.fetch)
-            docs.append(_doc_row(doc))
+        docs, failed = _fetch_all([hit["url"] for hit in state["hits"]], state["app_name"], deps)
         cache_hits = sum(1 for doc in docs if doc["cache_hit"])
-        return {"docs": docs, "run_log": _log(state, "fetch", pages=len(docs), cache_hits=cache_hits)}
+        return {
+            "docs": docs,
+            "run_log": _log(state, "fetch", pages=len(docs), cache_hits=cache_hits, failed=failed),
+        }
 
     def extract_node(state: ResearchState) -> dict[str, Any]:
         record = extract_record(
@@ -263,12 +280,7 @@ def build_graph(deps: ResearchDeps):
             fields=state["failing_fields"],
         )
         known = {doc["url"] for doc in state["docs"]}
-        fresh: list[dict[str, Any]] = []
-        for hit in hits:
-            if hit.url in known:
-                continue
-            doc = fetch_url(hit.url, state["app_name"], deps.cache_dir, deps.fetch)
-            fresh.append(_doc_row(doc))
+        fresh, failed = _fetch_all([hit.url for hit in hits if hit.url not in known], state["app_name"], deps)
         return {
             "loops": loops,
             "new_docs": fresh,
@@ -280,6 +292,7 @@ def build_graph(deps: ResearchDeps):
                 loop=loops,
                 fields=list(state["failing_fields"]),
                 urls=[hit.url for hit in hits],
+                failed=failed,
             ),
         }
 
@@ -403,6 +416,34 @@ def run_app(app: AppSeed, pass_num: int, deps: ResearchDeps) -> tuple[AppRecord,
     return record, log
 
 
+def _run_app_safely(
+    app: AppSeed, pass_num: int, deps_for_app: Callable[[], ResearchDeps]
+) -> tuple[AppRecord, dict[str, Any]]:
+    """One bad app must not sink the batch. A crash becomes an all-unknown, needs_human row."""
+    from opsresearch.schema import unknown_record
+
+    try:
+        return run_app(app, pass_num, deps_for_app())
+    except Exception as exc:
+        record = unknown_record(app.app, app.category)
+        data = record.model_dump(mode="json")
+        data["needs_human"] = True
+        data["needs_human_reasons"] = [f"pipeline error: {type(exc).__name__}"]
+        data["pass_id"] = pass_num
+        data["source_id"] = app.source_id or None
+        data["hint_url"] = app.hint
+        record = AppRecord.model_validate(data)
+        log = {
+            "app": app.app,
+            "pass": pass_num,
+            "needs_human": True,
+            "loops": 0,
+            "nodes": [],
+            "error": f"{type(exc).__name__}: {str(exc)[:300]}",
+        }
+        return record, log
+
+
 def select_apps(apps: list[AppSeed], only: str) -> list[AppSeed]:
     if not only.strip():
         return list(apps)
@@ -425,7 +466,7 @@ def run_many(
         raise ValueError("concurrency must be at least 1")
     results: list[tuple[AppRecord, dict[str, Any]]] = []
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
-        futures = {pool.submit(run_app, app, pass_num, deps_for_app()): app for app in apps}
+        futures = {pool.submit(_run_app_safely, app, pass_num, deps_for_app): app for app in apps}
         for future in as_completed(futures):
             results.append(future.result())
     results.sort(key=lambda item: item[0].app.lower())
@@ -510,4 +551,3 @@ def resolve_target(apps: list[AppSeed], target: str, overrides: dict[str, Domain
         names = ", ".join(app.app for app in partial[:8])
         raise ValueError(f"more than one app matches {target!r}: {names}")
     return AppSeed(source_id=0, category="unlisted", app=text, hint=text)
-

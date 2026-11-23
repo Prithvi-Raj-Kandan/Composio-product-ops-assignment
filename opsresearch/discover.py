@@ -84,9 +84,7 @@ def discover(
     fields: list[str] | None = None,
     max_pages: int = 6,
 ) -> list[SearchHit]:
-    hits: list[SearchHit] = [
-        SearchHit(url=url, title=app.app, snippet="human override") for url in resolved.seed_urls
-    ]
+    hits: list[SearchHit] = [SearchHit(url=url, title=app.app, snippet="human override") for url in resolved.seed_urls]
     for query in discovery_queries(app.app, fields):
         try:
             hits.extend(search.search(query, max_results=5))
@@ -181,6 +179,85 @@ class ComposioSessionSearch:
         raise RuntimeError("Composio search returned no hits (" + "; ".join(errors) + ")")
 
 
+COMPOSIO_SEARCH_USER = "opsresearch-product-ops"
+
+
+class ComposioToolsSearch:
+    """Run TAVILY_SEARCH through composio.tools.execute for a user with an active Tavily connection.
+
+    The connection is a one-time human setup step (`python -m opsresearch connect-tavily`).
+    """
+
+    name = "composio"
+
+    def __init__(self, composio: Any | None = None, user_id: str = COMPOSIO_SEARCH_USER) -> None:
+        if composio is None:
+            from composio import Composio
+
+            composio = Composio()
+        self._composio = composio
+        self._user_id = user_id
+
+    def search(self, query: str, *, max_results: int = 5) -> list[SearchHit]:
+        raw = self._composio.tools.execute(
+            "TAVILY_SEARCH",
+            user_id=self._user_id,
+            arguments={"query": query, "max_results": max_results},
+            dangerously_skip_version_check=True,
+        )
+        if isinstance(raw, dict) and raw.get("successful") is False:
+            raise RuntimeError("Composio TAVILY_SEARCH unsuccessful")
+        hits = parse_search_payload(raw)
+        if not hits:
+            raise RuntimeError("Composio TAVILY_SEARCH returned no hits")
+        return hits[:max_results]
+
+
+class FallbackSearch:
+    """Try each backend in order on every call, so a Composio hiccup falls through to direct Tavily."""
+
+    def __init__(self, backends: list[Any]) -> None:
+        self.backends = list(backends)
+        self.name = "+".join(backend.name for backend in self.backends)
+        self.used: dict[str, int] = {}
+        import threading
+
+        self._lock = threading.Lock()
+
+    def search(self, query: str, *, max_results: int = 5) -> list[SearchHit]:
+        errors: list[str] = []
+        for backend in self.backends:
+            try:
+                hits = backend.search(query, max_results=max_results)
+            except Exception as exc:
+                errors.append(f"{backend.name}: {type(exc).__name__}")
+                continue
+            with self._lock:
+                self.used[backend.name] = self.used.get(backend.name, 0) + 1
+            return hits
+        raise RuntimeError("all search backends failed (" + "; ".join(errors) + ")")
+
+
+def connect_composio_tavily(api_key: str, user_id: str = COMPOSIO_SEARCH_USER) -> str:
+    """One-time setup: custom API-key auth config plus a connected account. Returns the account id."""
+    from composio import Composio
+
+    composio = Composio()
+    existing = composio.connected_accounts.list(toolkit_slugs=["tavily"], user_ids=[user_id])
+    for item in getattr(existing, "items", []) or []:
+        if str(getattr(item, "status", "")).upper() == "ACTIVE":
+            return str(item.id)
+    config = composio.auth_configs.create(
+        "tavily", {"type": "use_custom_auth", "auth_scheme": "API_KEY", "credentials": {}}
+    )
+    request = composio.connected_accounts.initiate(
+        user_id=user_id,
+        auth_config_id=config.id,
+        config={"auth_scheme": "API_KEY", "val": {"status": "ACTIVE", "generic_api_key": api_key}},
+    )
+    return str(request.id)
+
+
 def open_composio_session(toolkits: list[str] | None = None) -> Any:
     from composio import Composio
     from composio_langchain import LangchainProvider
@@ -196,15 +273,16 @@ def select_search_backend(
 ) -> SearchClient:
     values = dict(os.environ if env is None else env)
     makers = dict(factories or {})
+    chain: list[Any] = []
     if values.get("COMPOSIO_API_KEY"):
         factory = makers.get("composio")
         if factory is None:
 
             def factory():
-                return ComposioSessionSearch(open_composio_session())
+                return ComposioToolsSearch()
 
         try:
-            return factory()
+            chain.append(factory())
         except Exception as exc:
             logger.warning("Composio search unavailable (%s); trying direct keys", type(exc).__name__)
     if values.get("TAVILY_API_KEY"):
@@ -219,7 +297,7 @@ def select_search_backend(
                     "body",
                 )
 
-        return factory()
+        chain.append(factory())
     if values.get("EXA_API_KEY"):
         factory = makers.get("exa")
         if factory is None:
@@ -232,6 +310,10 @@ def select_search_backend(
                     "header",
                 )
 
-        return factory()
+        chain.append(factory())
+    if len(chain) == 1:
+        return chain[0]
+    if chain:
+        return FallbackSearch(chain)
     logger.warning("no search key set; discovery will use the hint URL only")
     return HintOnlySearch()

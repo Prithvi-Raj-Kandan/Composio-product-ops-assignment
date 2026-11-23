@@ -136,9 +136,9 @@ def test_fallback_client_is_used_when_the_first_fails() -> None:
 
 def test_groq_verifier_fallback_message() -> None:
     assert verifier_fallback_message({}) is not None
-    assert "gemini-2.5-pro" in verifier_fallback_message({})
+    assert "gemini-3.5-flash" in verifier_fallback_message({})
     assert verifier_fallback_message({"GROQ_API_KEY": "present"}) is None
-    assert choose_verifier_backend({}) == ("gemini", "gemini-2.5-pro")
+    assert choose_verifier_backend({}) == ("gemini", "gemini-3.5-flash")
     assert choose_verifier_backend({"GROQ_API_KEY": "x", "GROQ_MODEL": "llama-test"}) == ("groq", "llama-test")
 
 

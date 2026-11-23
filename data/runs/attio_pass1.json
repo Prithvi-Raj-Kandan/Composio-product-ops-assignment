@@ -1,0 +1,42 @@
+{
+  "app": "Attio",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "attio.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://attio.com",
+        "https://docs.attio.com/rest-api/guides/authentication",
+        "https://docs.attio.com/sdk/server/attio-api-token",
+        "https://attio.com/pricing",
+        "https://docs.attio.com/mcp/overview",
+        "https://docs.attio.com/rest-api/endpoint-reference/openapi"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

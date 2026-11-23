@@ -1,22 +1,17 @@
 # Where a human has to act
 
-The agent answers `unknown` instead of guessing, and it flags `needs_human` when a verification loop ends without a supported claim. A person still has to do the things below. Hand-edited cells are never presented as agent output.
+The agent answers `unknown` rather than guessing. It flags `needs_human` when a verification loop ends without a supported claim. A person still has to do the steps below, and no hand-edited cell is ever presented as agent output.
 
-Time spent is for the owner to fill in. This file does not invent those numbers.
-
-| # | Who | When | What | Time spent |
-|---|---|---|---|---|
-| 1 | Owner, and anyone replicating | Before a live run | Set `COMPOSIO_API_KEY` and `GEMINI_API_KEY`. `TAVILY_API_KEY` is available and is the direct search fallback after Composio's Tavily toolkit. `GROQ_API_KEY` and `EXA_API_KEY` stay optional. | owner to record |
-| 2 | Owner, and anyone replicating | Before a full run | Resolve ambiguous entities in `data/domain_overrides.csv` (`app`, `homepage`, `docs_url`, `extra_source`, `note`). Those rows win over the hint. The shipped rows cover iPayX, fanbasis (rebranded to Commas), Paygent Connect, Waterfall.io, higgsfield, and YouTube Transcript. A replicator confirms or edits them before the run. Each affected record stores `provenance.source` = `human_override`. | owner to record |
-| 3 | Owner, once, at build time | Before accuracy is quoted | Label the 20 gold apps in `data/gold/gold_labels.csv`. This is a one-time build-time effort. The finished file ships in the repo. Anyone replicating the run uses that file and does not label again. Label again only if the schema changes or a new category needs an audit. | owner to record |
-| 4 | Owner | While reading pass 2 | Judge gated edge cases the rubric cannot see (a free trial that requires a card, a sandbox that still needs sales). | owner to record |
-| 5 | Owner | After pass 2 | Read `needs_human` on each record and the per-app log in `data/runs/`. Those are the rows the loops could not settle. | owner to record |
-| 6 | Owner | Before submit | Approve the merge and publish the case study. The agent does not publish on its own in this slice. | owner to record |
+| # | Who | When | What |
+|---|---|---|---|
+| 1 | Anyone replicating | Before a live run | Set `COMPOSIO_API_KEY`, `GEMINI_API_KEY`, `GROQ_API_KEY`, `TAVILY_API_KEY` in the shell. To use the GitHub Action, add the same four as repository secrets. |
+| 2 | Anyone replicating, once | Before the first run | Run `python -m opsresearch connect-tavily`. It creates a Composio auth config and connected account for the Tavily toolkit from your Tavily key, so search goes through Composio. Tavily's free plan is 1,000 credits a month. A full two-pass run can use most of it, and search results are cached in `cache/_search/` so a rerun is free. |
+| 3 | Owner (done) and replicators | Before pass 1 | Confirm the official site for ambiguous entities in `data/domain_overrides.csv`. The owner confirmed 6 (iPayX, fanbasis → Commas, Paygent → GoPaygent on NMI, Waterfall.io, Higgsfield, YouTube Transcript → TranscriptAPI). Each affected record shows `provenance.source = human_override`, and the page tags it "human override". |
+| 4 | Owner, once at build time (shipped) | Before accuracy is quoted | Hand-label the 20-app stratified gold sample from official docs (Google Sheet, then `python -m opsresearch import-gold`). The labels ship in `data/gold/gold_labels.csv`. Replicators reuse them and don't label again, unless the schema changes. |
+| 5 | Owner / reviewer | After pass 2 | Read the rows flagged `needs_human` and their run logs in `data/runs/`. These are the rows the loops could not settle. |
+| 6 | Owner | While reading results | Judge edge cases the rubric can't see, such as a trial that needs a card or a sandbox that still needs sales. |
+| 7 | Owner | Before submit | Approve the merges and the GitHub Pages publish. The agent does not publish on its own. |
 
 ## The gold set is not a replicator's job
 
-`data/gold/gold_sample.csv` is the frozen 20-app stratified sample (seed `20261123`): two apps in each category, one dev and one test, with archetype tags. The sampler reproduces that file. It does not draw a new sample.
-
-`data/gold/gold_labels.csv` is the sheet for the five-plus scored fields and the doc links. Until the owner fills it, `eval` reports the rows as unlabelled and does not invent an accuracy number. After it is filled and committed, a replicator runs `python -m opsresearch eval --split dev` and `--split test` against the same labels.
-
-Dev is the split used to adjust prompts and verifiers. Test is scored at the end and is not a tuning set.
+`data/gold/gold_sample.csv` is the frozen 20-app stratified sample (seed `20261123`): two apps per category, one dev and one test, with archetype tags. Dev was used to look at errors. Test was held out and scored once. `eval` reports null accuracy for unlabelled cells; it never invents a score.

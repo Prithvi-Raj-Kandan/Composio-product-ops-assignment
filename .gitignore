@@ -10,9 +10,5 @@ build/
 .env
 .env.*
 cache/
-data/results.json
-data/results.csv
-data/results_pass1.json
-data/results_pass2.json
-data/runs/
-data/eval/
+site/
+DECISIONS.md

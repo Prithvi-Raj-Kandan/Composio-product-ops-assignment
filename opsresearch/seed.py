@@ -326,9 +326,7 @@ def sample_gold(apps: list[AppSeed], gold_path: Path, *, seed: int = GOLD_SEED) 
     A different seed is refused so a replicator cannot silently draw a new set.
     """
     if seed != GOLD_SEED:
-        raise ValueError(
-            f"gold sample is frozen at seed {GOLD_SEED}; refusing to re-sample with seed {seed}"
-        )
+        raise ValueError(f"gold sample is frozen at seed {GOLD_SEED}; refusing to re-sample with seed {seed}")
     gold = load_gold(gold_path)
     validate_gold(apps, gold)
     return gold

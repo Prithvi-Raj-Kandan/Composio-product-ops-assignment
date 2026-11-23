@@ -29,8 +29,7 @@ def _record() -> dict:
             "buildability": "yes",
             "main_blocker": "none",
             "evidence": [
-                {"field": field, "url": "https://example.com/docs", "quote": quote, "source": "doc"}
-                for field in fields
+                {"field": field, "url": "https://example.com/docs", "quote": quote, "source": "doc"} for field in fields
             ],
         }
     ).model_dump(mode="json")

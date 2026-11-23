@@ -1,0 +1,41 @@
+{
+  "app": "Consensus",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "consensus.app",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://consensus.app",
+        "https://docs.consensus.app/api-get-started",
+        "https://help.consensus.app/en/articles/16516328-the-consensus-api",
+        "https://docs.consensus.app/api-plans-and-access",
+        "https://docs.consensus.app/consensus-mcp"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

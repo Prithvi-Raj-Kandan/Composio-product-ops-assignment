@@ -1,0 +1,41 @@
+{
+  "app": "Freshdesk",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "freshdesk.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://freshdesk.com",
+        "https://developers.freshdesk.com/api",
+        "https://support.freshdesk.com/support/solutions/articles/228991-where-do-i-find-the-documentation-for-api-",
+        "https://support.freshdesk.com/support/solutions/articles/50000012670-model-context-protocol-mcp-integration-in-freshdesk-eap-",
+        "https://support.freshdesk.com/support/solutions/articles/50000014411-freshworks-mcp-security"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

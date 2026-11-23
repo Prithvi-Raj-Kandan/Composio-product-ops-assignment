@@ -1,0 +1,42 @@
+{
+  "app": "Salesforce",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "salesforce.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://salesforce.com",
+        "https://developer.salesforce.com/docs/platform/api-rest/guide/quickstart-oauth.html",
+        "https://developer.salesforce.com/docs/marketing/pardot/guide/authentication.html",
+        "https://developer.salesforce.com/docs/platform/connect-rest-api/guide/intro_using_oauth.html",
+        "https://developer.salesforce.com/docs/platform/api-rest/guide/intro-rest.html",
+        "https://www.salesforce.com/sales/pricing"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "app": "Gorgias",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "gorgias.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://gorgias.com",
+        "https://docs.gorgias.com/en-US/rest-api-208286",
+        "https://docs.gorgias.com/en-US/articles/developer-resources-18370"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 2
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 2,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

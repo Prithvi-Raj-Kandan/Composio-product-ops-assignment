@@ -143,9 +143,7 @@ class ApiSurface(BaseModel):
 
     rest: YesNoUnknown = Field(description="yes, no, or unknown. no is a claim and needs evidence.")
     graphql: YesNoUnknown = Field(description="yes, no, or unknown.")
-    breadth: ApiBreadth = Field(
-        description="narrow is under 20 endpoints, medium is 20 to 99, broad is 100 or more."
-    )
+    breadth: ApiBreadth = Field(description="narrow is under 20 endpoints, medium is 20 to 99, broad is 100 or more.")
     styles: list[ApiStyle] = Field(
         default_factory=lambda: [ApiStyle.unknown],
         description="API styles actually offered. unknown if the docs do not say.",
@@ -254,9 +252,7 @@ class AppRecord(BaseModel):
         if rest != YesNoUnknown.unknown and not _has(covered, "api_surface", "api_surface.rest"):
             rest = YesNoUnknown.unknown
             reasons["api_surface.rest"] = "no evidence quote and url"
-        if graphql != YesNoUnknown.unknown and not _has(
-            covered, "api_surface", "api_surface.graphql"
-        ):
+        if graphql != YesNoUnknown.unknown and not _has(covered, "api_surface", "api_surface.graphql"):
             graphql = YesNoUnknown.unknown
             reasons["api_surface.graphql"] = "no evidence quote and url"
         if breadth != ApiBreadth.unknown and not _has(covered, "api_surface", "api_surface.breadth"):
@@ -291,9 +287,7 @@ class AppRecord(BaseModel):
         if self.composio_toolkit_type and not _has(covered, "composio_has_toolkit", "composio_toolkit_type"):
             self.composio_toolkit_type = None
             reasons["composio_toolkit_type"] = "no evidence quote and url"
-        if self.composio_tools_count is not None and not _has(
-            covered, "composio_has_toolkit", "composio_tools_count"
-        ):
+        if self.composio_tools_count is not None and not _has(covered, "composio_has_toolkit", "composio_tools_count"):
             self.composio_tools_count = None
             reasons["composio_tools_count"] = "no evidence quote and url"
 
@@ -347,8 +341,7 @@ def _text_or_unknown(value: str, covered: set[str], names: tuple[str, ...], reas
 def app_record_json_schema() -> dict[str, Any]:
     schema = AppRecord.model_json_schema()
     schema["$id"] = (
-        "https://github.com/Prithvi-Raj-Kandan/Composio-product-ops-assignment/"
-        "blob/main/schema/app_record.schema.json"
+        "https://github.com/Prithvi-Raj-Kandan/Composio-product-ops-assignment/blob/main/schema/app_record.schema.json"
     )
     schema["$comment"] = (
         f"schema_version {SCHEMA_VERSION}. unknown is a value. "

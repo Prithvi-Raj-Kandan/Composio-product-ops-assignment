@@ -19,6 +19,24 @@ OUTREACH_BLOCKERS = {"partner_program", "contact_sales", "enterprise_only", "pla
 BUILDABLE = {"yes", "yes_with_caveats"}
 
 
+FRAME_COLUMNS = [
+    "app",
+    "category",
+    "auth_methods",
+    "self_serve",
+    "gate_type",
+    "rest",
+    "graphql",
+    "breadth",
+    "existing_mcp",
+    "composio_has_toolkit",
+    "buildability",
+    "main_blocker",
+    "needs_human",
+    "human_override",
+]
+
+
 def records_frame(records: Iterable[dict[str, Any]]) -> pd.DataFrame:
     rows = []
     for r in records:
@@ -41,7 +59,7 @@ def records_frame(records: Iterable[dict[str, Any]]) -> pd.DataFrame:
                 "human_override": (r.get("provenance") or {}).get("source") == "human_override",
             }
         )
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=FRAME_COLUMNS)
 
 
 def _counts(series: pd.Series) -> dict[str, int]:

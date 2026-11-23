@@ -1,0 +1,38 @@
+{
+  "app": "SendGrid",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "sendgrid.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://sendgrid.com",
+        "https://ahoy.sendgrid.com/rs/294-TKB-300/images/SendGrid_API_Guide.pdf"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 1
+    },
+    {
+      "node": "fetch",
+      "pages": 2,
+      "cache_hits": 2,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

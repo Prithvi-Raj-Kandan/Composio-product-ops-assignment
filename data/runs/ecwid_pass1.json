@@ -1,0 +1,41 @@
+{
+  "app": "Ecwid",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "ecwid.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://api-docs.ecwid.com",
+        "https://docs.ecwid.com/get-started/make-your-first-api-request",
+        "https://docs.ecwid.com/get-started/api-glossary",
+        "https://docs.ecwid.com/get-started/set-up-your-dev-environment-in-ecwid",
+        "https://docs.ecwid.com/api-reference"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

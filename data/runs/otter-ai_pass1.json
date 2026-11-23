@@ -1,0 +1,40 @@
+{
+  "app": "Otter AI",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "otter.ai",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://help.otter.ai",
+        "https://otter.ai/privacy-security"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 1
+    },
+    {
+      "node": "fetch",
+      "pages": 1,
+      "cache_hits": 1,
+      "failed": [
+        "https://help.otter.ai"
+      ]
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

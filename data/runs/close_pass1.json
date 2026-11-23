@@ -1,0 +1,42 @@
+{
+  "app": "Close",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "close.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://close.com",
+        "https://developer.close.com/api/overview/api-key-authentication",
+        "https://developer.close.com/api/overview",
+        "https://help.close.com/integrations/close-mcp-server",
+        "https://close.com/integrations/close-mcp",
+        "https://developer.close.com"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

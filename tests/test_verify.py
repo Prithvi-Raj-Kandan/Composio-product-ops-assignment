@@ -18,9 +18,7 @@ def _record(**overrides) -> AppRecord:
         "category": "CRM and Sales",
         "one_liner": "unknown",
         "auth_methods": ["oauth2"],
-        "evidence": [
-            {"field": "auth_methods", "url": "https://example.com/docs", "quote": QUOTE, "source": "doc"}
-        ],
+        "evidence": [{"field": "auth_methods", "url": "https://example.com/docs", "quote": QUOTE, "source": "doc"}],
     }
     payload.update(overrides)
     return AppRecord.model_validate(payload)
@@ -135,9 +133,7 @@ def test_registry_contradicts_an_official_claim_when_the_hit_is_third_party() ->
             "app": "Example",
             "category": "CRM and Sales",
             "existing_mcp": "official",
-            "evidence": [
-                {"field": "existing_mcp", "url": "https://example.com/docs", "quote": QUOTE, "source": "doc"}
-            ],
+            "evidence": [{"field": "existing_mcp", "url": "https://example.com/docs", "quote": QUOTE, "source": "doc"}],
         }
     )
     findings = registry_findings(record, "community")

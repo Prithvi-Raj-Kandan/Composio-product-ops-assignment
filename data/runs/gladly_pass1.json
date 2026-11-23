@@ -1,0 +1,39 @@
+{
+  "app": "Gladly",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "gladly.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://gladly.com",
+        "https://developer.gladly.com/rest",
+        "https://help.gladly.com/docs/what-are-mcp-connections"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 2
+    },
+    {
+      "node": "fetch",
+      "pages": 3,
+      "cache_hits": 2,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

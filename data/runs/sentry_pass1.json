@@ -1,0 +1,40 @@
+{
+  "app": "Sentry",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "sentry.io",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://docs.sentry.io/api",
+        "https://docs.sentry.io/api/auth",
+        "https://sentry.io/pricing",
+        "https://blog.sentry.io/improved-graphql-support-in-sentry"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

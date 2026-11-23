@@ -1,0 +1,42 @@
+{
+  "app": "Shopify",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "shopify.dev",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://shopify.dev",
+        "https://shopify.dev/docs/api/usage/authentication",
+        "https://shopify.dev/docs/api/admin-rest",
+        "https://shopify.dev/docs/api",
+        "https://shopify.dev/docs/api/ai-toolkit",
+        "https://shopify.dev/docs/api/admin-graphql/latest"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

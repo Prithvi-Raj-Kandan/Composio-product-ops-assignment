@@ -1,0 +1,42 @@
+{
+  "app": "Vonage",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "vonage.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.vonage.com",
+        "https://developer.vonage.com/en/verify/concepts/authentication",
+        "https://developer.vonage.com/en/vonage-business-cloud/getting-started/create-an-access-token",
+        "https://developer.vonage.com/en/home",
+        "https://developer.vonage.com/en/verify/concepts/silent-authentication",
+        "https://www.vonage.com/communications-apis/pricing"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

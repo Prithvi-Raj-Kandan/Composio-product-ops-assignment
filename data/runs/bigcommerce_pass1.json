@@ -1,0 +1,42 @@
+{
+  "app": "BigCommerce",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "bigcommerce.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://developer.bigcommerce.com",
+        "https://docs.bigcommerce.com/developer/docs/overview/api-fundamentals/api-accounts",
+        "https://docs.bigcommerce.com/developer/docs/storefront/guides/customer-authentication/customer-login",
+        "https://docs.bigcommerce.com/developer/api-reference/about-our-apis",
+        "https://www.bigcommerce.com/blog/feature-updates-api-key-access-for-non-store-owners-now-available",
+        "https://docs.bigcommerce.com/developer/docs/b2b-edition/getting-started/overview"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

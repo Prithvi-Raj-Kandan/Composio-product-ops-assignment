@@ -1,0 +1,42 @@
+{
+  "app": "Waterfall.io",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "waterfall.io",
+      "source": "human_override",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://waterfall.io",
+        "https://docs.waterfall.io/v1/introduction",
+        "https://docs.waterfall.io/v1/api-keys-create",
+        "https://docs.waterfall.io/v1/faq",
+        "https://docs.waterfall.io/v1/skills-overview",
+        "https://www.waterfall.io/pricing"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 6,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.5-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

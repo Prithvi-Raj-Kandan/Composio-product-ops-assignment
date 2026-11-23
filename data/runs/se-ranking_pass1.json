@@ -1,0 +1,44 @@
+{
+  "app": "SE Ranking",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "seranking.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://seranking.com/api",
+        "https://seranking.com/api/data/getting-started",
+        "https://seranking.com/api-pricing.html",
+        "https://seranking.com/mcp.html",
+        "https://seranking.com/api/integrations/mcp",
+        "https://seranking.com/api.html"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 5,
+      "failed": [
+        "https://seranking.com/api"
+      ]
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "app": "Ramp",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "ramp.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://docs.ramp.com",
+        "https://docs.ramp.com/developer-api/v1/authorization",
+        "https://support.ramp.com/accessing-the-developer-api",
+        "https://builders.ramp.com/post/ramp-mcp"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 3
+    },
+    {
+      "node": "fetch",
+      "pages": 4,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "app": "Devin",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "devin.ai",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://docs.devin.ai",
+        "https://docs.devin.ai/api-reference/authentication",
+        "https://docs.devin.ai/desktop/accounts/api-reference/api-introduction",
+        "https://docs.devin.ai/api-reference/overview",
+        "https://docs.devin.ai/work-with-devin/devin-mcp"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 4
+    },
+    {
+      "node": "fetch",
+      "pages": 5,
+      "cache_hits": 4,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "app": "Bright Data",
+  "pass": 1,
+  "needs_human": false,
+  "loops": 0,
+  "nodes": [
+    {
+      "node": "resolve_domain",
+      "domain": "brightdata.com",
+      "source": "hint",
+      "needs_human": false
+    },
+    {
+      "node": "discover",
+      "urls": [
+        "https://brightdata.com",
+        "https://docs.brightdata.com/api-reference/authentication",
+        "https://docs.brightdata.com/api-reference/rest-api/serp/serp-api",
+        "https://docs.brightdata.com/introduction",
+        "https://docs.brightdata.com/api-reference/proxy-manager/generate_token_for_token_based_authentication",
+        "https://brightdata.com/blog/comparison/bright-data-vs-parallel"
+      ],
+      "backend": "composio+tavily+cache",
+      "page_cache": 5
+    },
+    {
+      "node": "fetch",
+      "pages": 6,
+      "cache_hits": 5,
+      "failed": []
+    },
+    {
+      "node": "extract",
+      "model": "gemini-3.1-flash-lite"
+    },
+    {
+      "node": "accept",
+      "needs_human": false,
+      "failing": []
+    }
+  ]
+}

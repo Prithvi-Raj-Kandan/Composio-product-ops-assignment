@@ -46,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
     eval_parser.add_argument("--repo", default=".")
     eval_parser.set_defaults(func=cmd_eval)
 
+    render_parser = sub.add_parser("render", help="Render the case-study page and agent files into site/.")
+    render_parser.add_argument("--repo", default=".")
+    render_parser.add_argument("--out", default="site")
+    render_parser.add_argument("--no-llm", action="store_true")
+    render_parser.set_defaults(func=cmd_render)
+
     connect_parser = sub.add_parser(
         "connect-tavily", help="One-time: connect Composio's Tavily toolkit with TAVILY_API_KEY."
     )
@@ -60,6 +66,14 @@ def build_parser() -> argparse.ArgumentParser:
     smoke_parser.add_argument("--app", default="HubSpot")
     smoke_parser.set_defaults(func=cmd_smoke)
     return parser
+
+
+def cmd_render(args: argparse.Namespace) -> int:
+    from opsresearch.render import render_site
+
+    out = render_site(Path(args.repo), Path(args.out), llm=not args.no_llm)
+    print(f"wrote {out / 'index.html'}")
+    return 0
 
 
 def cmd_connect_tavily(args: argparse.Namespace) -> int:

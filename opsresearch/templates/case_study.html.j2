@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which of 100 apps can become agent toolkits today? | Composio Product Ops take-home</title>
+<meta name="description" content="Docs-grounded agent research on 100 apps: auth, self-serve vs gated, API surface, MCP, buildability, with verification loops and an honest accuracy check.">
+<link rel="alternate" type="application/json" href="results.json" title="All records (JSON)">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<script type="application/ld+json">{{ json_ld | safe }}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+<style>
+:root{--bg:#f6f6f6;--card:#fff;--fg:#0f0f0f;--muted:#737373;--border:#ebebeb;--brand:#51a2ff;--brand-ink:#0007cd;--hl:#d4ff4a;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--radius:10px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Geist,ui-sans-serif,system-ui,sans-serif;font-size:15px;line-height:1.55}
+a{color:var(--brand-ink)}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em}
+nav{position:sticky;top:0;z-index:10;background:#0f0f0f;color:#fff;padding:10px 24px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+nav a{color:#fff;text-decoration:none;font-size:13px;opacity:.8}nav a:hover{opacity:1}
+nav .logo{font-weight:700;opacity:1;margin-right:12px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.hero{background:#0f0f0f;color:#fff;padding:56px 0 40px}
+.hero h1{font-size:40px;line-height:1.1;margin:0 0 12px;letter-spacing:-.02em;max-width:900px}
+.hero p{color:#bdbdbd;max-width:820px;margin:0}
+.tag{display:inline-block;background:var(--hl);color:#0f0f0f;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin-bottom:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px}
+.tile{background:#1e1e1e;border:1px solid #2c2c2c;border-radius:var(--radius);padding:14px}
+.tile b{display:block;font-size:28px;color:#fff}.tile span{color:#a3a3a3;font-size:12.5px}
+section{padding:40px 0;border-bottom:1px solid var(--border)}
+h2{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.headline li{margin:8px 0;font-size:16.5px}
+.pill{display:inline-block;border-radius:999px;padding:1px 8px;font-size:11.5px;font-weight:600;border:1px solid var(--border);white-space:nowrap}
+.pill.ok{background:#e9f9ef;color:#166534;border-color:#bbf7d0}.pill.warn{background:#fff7e6;color:#92400e;border-color:#fde68a}
+.pill.bad{background:#fdecec;color:#991b1b;border-color:#fecaca}.pill.unk{background:#f4f4f5;color:#52525b}
+.pill.human{background:var(--hl);color:#0f0f0f;border-color:#c9f53a}.pill.brand{background:#e8f1ff;color:var(--brand-ink);border-color:#cfe3ff}
+table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-weight:600;color:#404040}
+.small{font-size:12.5px;color:var(--muted)}
+.ev a{font-size:11.5px;margin-right:4px}
+details summary{cursor:pointer;font-weight:600}
+.mermaid{background:#fff}
+.note{border-left:3px solid var(--brand);padding:8px 12px;background:#f2f7ff;border-radius:0 8px 8px 0;margin:12px 0}
+.warnbox{border-left:3px solid var(--warn);padding:8px 12px;background:#fffaf0;border-radius:0 8px 8px 0;margin:12px 0}
+pre{background:#0f0f0f;color:#e5e5e5;border-radius:8px;padding:12px;overflow:auto;font-size:12.5px}
+footer{padding:30px 0;color:var(--muted);font-size:13px}
+#matrix-table td{font-size:12.5px}
+</style>
+</head>
+<body>
+<nav><span class="logo">Product Ops · 100 apps</span>
+<a href="#headline">Headline</a><a href="#patterns">Patterns</a><a href="#matrix">Matrix</a><a href="#agent">The agent</a><a href="#verification">Verification</a><a href="#try">Try it</a><a href="#honesty">Honesty</a><a href="#for-agents">For agents</a></nav>
+
+{% set t = patterns.totals %}
+<header class="hero"><div class="wrap">
+<span class="tag">Composio · AI Product Ops Intern take-home</span>
+<h1>Which of these 100 apps can become an agent toolkit today, and what stands in the way?</h1>
+<p>An agent researched every app from its official docs, quoted the page behind each answer, and was checked by verification loops (quote match, Composio's toolkit API, the MCP registry, a second model). Where it could not prove something, it says <b>unknown</b>.</p>
+<div class="tiles">
+<div class="tile"><b>{{ n }}</b><span>apps researched</span></div>
+<div class="tile"><b>{{ t.self_serve_open }}</b><span>self-serve (free or trial)</span></div>
+<div class="tile"><b>{{ t.gated }}</b><span>gated (paid, admin, partner, sales)</span></div>
+<div class="tile"><b>{{ t.buildable }}</b><span>buildable today (incl. caveats)</span></div>
+<div class="tile"><b>{{ t.easy_wins }}</b><span>easy wins not yet in Composio</span></div>
+<div class="tile"><b>{{ t.needs_human }}</b><span>rows flagged needs human</span></div>
+{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}</b><span>held-out test accuracy, pass 1 → pass 2</span></div>
+{% else %}<div class="tile"><b>pending</b><span>gold-label accuracy (see Verification)</span></div>{% endif %}
+</div>
+</div></header>
+
+<main class="wrap">
+<section id="headline">
+<h2>Headline</h2>
+<p class="sub">Every number below is computed by pandas from the 100 records; {% if patterns.headline.source in ['deterministic','deterministic_fallback'] %}the wording is a fixed template{% else %}the wording is by {{ patterns.headline.source }} and passed a numeric fact-check against those tables{% endif %}.</p>
+<div class="card"><ul class="headline">{% for b in patterns.headline.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+{% if patterns.headline.rejected_numbers %}<p class="small">The LLM headline was rejected because it used numbers not in the tables ({{ patterns.headline.rejected_numbers|join(', ') }}), so the template headline is shown.</p>{% endif %}
+</div>
+</section>
+
+<section id="patterns">
+<h2>Patterns</h2>
+<p class="sub">Counts exclude <code>unknown</code> unless stated. A row can have more than one auth method.</p>
+<div class="grid2">
+<div class="card"><h3>Which auth dominates</h3><canvas id="c-auth" height="220"></canvas></div>
+<div class="card"><h3>Self-serve vs gated</h3><canvas id="c-ss" height="220"></canvas></div>
+<div class="card" style="grid-column:1/-1"><h3>Self-serve vs gated, by category</h3><canvas id="c-cat" height="130"></canvas></div>
+<div class="card"><h3>Most common blockers</h3><canvas id="c-block" height="220"></canvas></div>
+<div class="card"><h3>MCP and Composio coverage</h3><canvas id="c-mcp" height="220"></canvas></div>
+</div>
+<div class="grid2" style="margin-top:16px">
+<div class="card"><h3>Easy wins ({{ patterns.easy_wins|length }})</h3><p class="small">Self-serve credentials, buildable, and not a Composio toolkit yet.</p>
+<table><tr><th>App</th><th>Category</th><th>Access</th></tr>{% for r in patterns.easy_wins %}<tr><td>{{ r.app }}</td><td>{{ r.category }}</td><td>{{ r.self_serve }}</td></tr>{% else %}<tr><td colspan="3">None found.</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Needs outreach ({{ patterns.needs_outreach|length }})</h3><p class="small">Partner, admin, or sales gate, or a partner/platform-review blocker.</p>
+<table><tr><th>App</th><th>Category</th><th>Gate / blocker</th></tr>{% for r in patterns.needs_outreach %}<tr><td>{{ r.app }}</td><td>{{ r.category }}</td><td>{{ r.self_serve }} · {{ r.main_blocker }}</td></tr>{% else %}<tr><td colspan="3">None found.</td></tr>{% endfor %}</table></div>
+</div>
+<details style="margin-top:16px" class="card"><summary>Category table</summary>
+<table><tr><th>Category</th><th>Apps</th><th>Self-serve</th><th>Gated</th><th>Unknown</th><th>Buildable</th><th>In Composio</th></tr>
+{% for c in patterns.by_category %}<tr><td>{{ c.category }}</td><td>{{ c.apps }}</td><td>{{ c.self_serve_open }}</td><td>{{ c.gated }}</td><td>{{ c.unknown }}</td><td>{{ c.buildable }}</td><td>{{ c.in_composio }}</td></tr>{% endfor %}</table></details>
+</section>
+
+<section id="matrix">
+<h2>The matrix: all {{ n }} apps</h2>
+<p class="sub">Search or sort any column. Links under a cell are the docs pages quoted for it. <span class="pill human">human override</span> = a human confirmed the official domain. <span class="pill warn">needs human</span> = loops could not settle a field.</p>
+<div class="card" style="overflow:auto">
+<table id="matrix-table" class="display compact">
+<thead><tr><th>App</th><th>Category</th><th>Auth</th><th>Access</th><th>REST / GraphQL</th><th>Breadth</th><th>MCP</th><th>In Composio</th><th>Buildable</th><th>Blocker</th><th>Flags</th></tr></thead>
+<tbody>
+{% macro evl(r, f) %}{% for e in r.ev.get(f, [])[:2] %}<a href="{{ e.url }}" title="{{ e.quote }}" target="_blank" rel="noopener">[{{ loop.index }}]</a>{% endfor %}{% endmacro %}
+{% macro vp(v) %}{% set cls = 'unk' if v in ['unknown', None] else ('ok' if v in ['yes','self_serve_free','self_serve_trial','official','none'] else ('bad' if v in ['no','partner_gated','contact_sales','no_public_api'] else 'brand')) %}<span class="pill {{ cls }}">{{ v }}</span>{% endmacro %}
+{% for r in records %}
+<tr>
+<td><b>{{ r.app }}</b><div class="small">{{ r.one_liner }}</div></td>
+<td>{{ r.category }}</td>
+<td>{% for a in r.auth_methods %}{{ vp(a) }} {% endfor %}<div class="ev">{{ evl(r,'auth_methods') }}</div></td>
+<td>{{ vp(r.self_serve) }}{% if r.gate_type not in ['none','unknown'] %}<div class="small">{{ r.gate_type }}</div>{% endif %}<div class="ev">{{ evl(r,'self_serve') }}{{ evl(r,'gate_type') }}</div></td>
+<td>{{ r.api_surface.rest }} / {{ r.api_surface.graphql }}<div class="ev">{{ evl(r,'api_surface') }}</div></td>
+<td>{{ r.api_surface.breadth }}</td>
+<td>{{ vp(r.existing_mcp) }}{% if r.mcp_url %}<div class="ev"><a href="{{ r.mcp_url }}" target="_blank" rel="noopener">link</a></div>{% endif %}</td>
+<td>{{ vp(r.composio_has_toolkit) }}{% if r.composio_slug %}<div class="small mono">{{ r.composio_slug }}</div>{% endif %}</td>
+<td>{{ vp(r.buildability) }}<div class="ev">{{ evl(r,'buildability') }}</div></td>
+<td>{{ r.main_blocker }}{% if r.blocker_detail and r.blocker_detail != 'unknown' %}<div class="small">{{ r.blocker_detail }}</div>{% endif %}</td>
+<td>{% if r.human_override %}<span class="pill human">human override</span> {% endif %}{% if r.needs_human %}<span class="pill warn" title="{{ r.needs_human_reasons|join('; ') }}">needs human</span>{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+</section>
+
+<section id="agent">
+<h2>The agent</h2>
+<p class="sub">A LangGraph pipeline per app. The orchestrator fans out over the 100 apps; each app runs the same subgraph.</p>
+<div class="grid2">
+<div class="card"><pre class="mermaid">
+flowchart TD
+  A[App name + hint] --> B{Domain override?}
+  B -- human confirmed --> C[Seed official URLs]
+  B -- no --> D[Search via Composio Tavily toolkit<br/>fallback: direct Tavily]
+  C --> E[Official-domain filter]
+  D --> E
+  E --> F[Fetch to markdown cache]
+  F --> G[Extract: Gemini, strict schema,<br/>URL + verbatim quote per field]
+  G --> H[Pass 1 result]
+  G --> V{Verify}
+  V --> V1[Quote appears on page?]
+  V --> V2[Composio toolkit API oracle]
+  V --> V3[MCP registry lookup]
+  V --> V4[Second model, other family]
+  V1 & V2 & V3 & V4 --> W{Field failing?}
+  W -- yes, loops < 2 --> R[Re-search only failing fields] --> G
+  W -- no --> P[Pass 2 result]
+  W -- still failing --> NH[needs_human flag]
+</pre></div>
+<div class="card">
+<h3>What each piece does</h3>
+<table>
+<tr><td><b>Search</b></td><td>Composio's Tavily toolkit through the Composio SDK (<code>tools.execute</code>), falling back per call to direct Tavily.</td></tr>
+<tr><td><b>Domain filter</b></td><td>Only pages on the app's official domain (or a human-confirmed one) are read. Third-party blogs are dropped.</td></tr>
+<tr><td><b>Extract</b></td><td>{{ (stats[1] or {}).get('usage', {}).get('models', {}).keys()|list|join(', ') or 'Gemini flash-lite' }}. Strict JSON schema; a value without a quote found on the page is reset to unknown.</td></tr>
+<tr><td><b>Oracle</b></td><td>Composio's own toolkit metadata (auth modes, managed auth) is ground truth for <i>composio_has_toolkit</i> and flags auth disagreements.</td></tr>
+<tr><td><b>MCP registry</b></td><td>registry.modelcontextprotocol.io search for existing servers.</td></tr>
+<tr><td><b>Second model</b></td><td>Groq <code>openai/gpt-oss-120b</code> judges each claim against the quoted pages: supported, contradicted, or insufficient.</td></tr>
+<tr><td><b>Loops</b></td><td>Only failing fields are re-searched and re-extracted, max 2 loops; anything still failing gets <i>needs_human</i>.</td></tr>
+</table>
+<h3>Run cost and time</h3>
+<table><tr><th>Pass</th><th>Apps</th><th>Wall clock</th><th>LLM calls</th><th>Est. LLM cost</th></tr>
+{% for p in [1,2] %}{% set s = stats[p] %}{% if s %}<tr><td>{{ p }}</td><td>{{ s.apps }}</td><td>{{ (s.wall_clock_s/60)|round(1) }} min</td><td>{{ s.usage.models.values()|map(attribute='calls')|sum }}</td><td>${{ '%.2f'|format(s.usage.cost_usd_known) }}</td></tr>{% endif %}{% else %}{% endfor %}
+</table>
+<p class="small">Cost is tokens × published list price per 1M tokens; on a free tier the bill may be $0. Search credits (Tavily) are not included.</p>
+</div></div>
+<div class="card" style="margin-top:16px"><h3>Where a human was needed</h3>
+<table><tr><th>Step</th><th>Who</th><th>When</th><th>What</th></tr>
+{% for h in human_points %}<tr><td><b>{{ h[0] }}</b></td><td>{{ h[1] }}</td><td>{{ h[2] }}</td><td>{{ h[3] }}</td></tr>{% endfor %}</table></div>
+</section>
+
+<section id="verification">
+<h2>Verification: how we know it's right (and where it isn't)</h2>
+{% if evals %}
+<p class="sub">20 apps were hand-labelled from official docs (stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities). Dev (10) was used to tune; test (10) was held out and scored once.</p>
+<div class="grid2">
+{% for split, rep in evals.items() %}
+<div class="card"><h3>{{ split }} split</h3>
+<table><tr><th></th><th>Pass 1 (extract only)</th><th>Pass 2 (with loops)</th></tr>
+<tr><td>Accuracy</td><td><b>{{ pct(rep.comparison.pass1_accuracy) }}</b></td><td><b>{{ pct(rep.comparison.pass2_accuracy) }}</b></td></tr>
+<tr><td>Cells correct</td><td>{{ rep.pass1.correct_cells }} / {{ rep.pass1.labelled_cells }}</td><td>{{ rep.pass2.correct_cells }} / {{ rep.pass2.labelled_cells }}</td></tr>
+{% for f, v in rep.comparison.fields.items() %}<tr><td class="small">{{ f }}</td><td class="small">{{ pct(v.pass1) }}</td><td class="small">{{ pct(v.pass2) }}</td></tr>{% endfor %}
+</table>
+<details><summary>Misses in pass 2 ({{ rep.pass2.errors|length }})</summary><table><tr><th>App</th><th>Field</th><th>Agent</th><th>Gold</th><th>Type</th></tr>
+{% for e in rep.pass2.errors %}<tr><td>{{ e.app }}</td><td>{{ e.field }}</td><td>{{ e.predicted }}</td><td>{{ e.gold }}</td><td>{{ e.taxonomy }}</td></tr>{% endfor %}</table></details>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="warnbox"><b>Gold labels not scored yet.</b> The 20-app gold sample (dev 10 / test 10) is in <code>data/gold/</code>; accuracy appears here only after the hand labels are filled. No accuracy number is shown until then.</div>
+{% endif %}
+<div class="grid2" style="margin-top:16px">
+<div class="card"><h3>What the loops did (all {{ verification.apps }} apps, pass 2)</h3>
+<table><tr><th>Verifier</th>{% for s in ['supported','contradicted','insufficient','flag'] %}<th>{{ s }}</th>{% endfor %}</tr>
+{% for v, c in verification.by_verifier.items() %}<tr><td>{{ v }}</td>{% for s in ['supported','contradicted','insufficient','flag'] %}<td>{{ c.get(s, 0) }}</td>{% endfor %}</tr>{% endfor %}</table>
+<p class="small">Apps by loops used: {% for k, v in verification.loops.items() %}{{ k }} loop{{ '' if k=='1' else 's' }}: {{ v }}{{ ', ' if not loop.last }}{% endfor %}. Fields settled by re-research: {{ verification.fields_settled_total }}.</p>
+{% if delta %}<p class="small">Unknown cells pass 1 → pass 2: {% for f, v in delta.unknown_pass1.items() %}{{ f }} {{ v }}→{{ delta.unknown_pass2[f] }}{{ ', ' if not loop.last }}{% endfor %}. Cells that changed value: {{ delta.cells_changed }}. (Coverage, not accuracy.)</p>{% endif %}
+</div>
+<div class="card"><h3>Rows that still need a human ({{ needs_human|length }})</h3>
+<div style="max-height:360px;overflow:auto"><table><tr><th>App</th><th>Why</th></tr>
+{% for r in needs_human %}<tr><td>{{ r.app }}</td><td class="small">{{ r.needs_human_reasons|join('; ') }}</td></tr>{% endfor %}</table></div></div>
+</div>
+</section>
+
+<section id="try">
+<h2>Try it: research a new company</h2>
+<p class="sub">The same graph runs for one app by name or URL and can append it to the dataset.</p>
+<div class="grid3">
+<div class="card"><h3>From the terminal</h3><pre>pip install -e .
+python -m opsresearch research-one "Notion" 
+python -m opsresearch research-one "https://acme.dev" --append</pre></div>
+<div class="card"><h3>From GitHub (no setup)</h3><p>Run the <a href="{{ repo_url }}/actions/workflows/research-one.yml">research-one workflow</a> with a name or URL. It researches the app, appends it to <code>results.json</code>, re-renders this page and redeploys.</p></div>
+<div class="card"><h3>From an agent (MCP)</h3><pre>{"mcpServers":{"composio-apps":{
+ "command":"python",
+ "args":["-m","opsresearch.mcp_server"]}}}</pre><p class="small">Tools: query_apps, get_app, patterns, research_one.</p></div>
+</div>
+</section>
+
+<section id="honesty">
+<h2>Honesty and limitations</h2>
+<div class="grid2">
+<div class="card"><ul>
+<li><b>Unknown is an answer.</b> A field without a verbatim quote from an official page is <code>unknown</code>, not a guess. Unknown counts are shown in every chart and table.</li>
+<li><b>Human-touched rows are marked.</b> {{ overrides|length }} rows used a human-confirmed domain ({% for r in overrides %}{{ r.app }}{{ ', ' if not loop.last }}{% endfor %}). No answer was hand-edited into the agent output.</li>
+<li><b>Accuracy only on the gold sample.</b> The other 80 apps get the automated checks (coverage and consistency), not an accuracy claim.</li>
+<li><b>Gated is a finding.</b> Partner-only or contact-sales APIs are reported as such when a page says so.</li>
+</ul></div>
+<div class="card"><ul>
+<li><b>Model availability changed the plan.</b> The planned Gemini 2.5 Flash was withdrawn for new keys on the day; extraction ran on Gemini 3.5 Flash-Lite, a smaller model.</li>
+<li><b>Docs behind JS or logins</b> are thin to a plain HTTP fetch, so those apps lean to unknown.</li>
+<li><b>Breadth</b> (endpoint count) is a rough bucket from what the docs show, not a crawl of every endpoint.</li>
+<li><b>The second model can be wrong too.</b> It flags disagreement; it is not ground truth. Composio's API is ground truth only for Composio coverage.</li>
+<li><b>Point in time.</b> Docs were cached on {{ generated[:10] }}; pages change.</li>
+</ul></div></div>
+</section>
+
+<section id="for-agents">
+<h2>For agents</h2>
+<p class="sub">Everything on this page is also machine-readable.</p>
+<div class="card"><table>
+<tr><td><a href="results.json">results.json</a></td><td>All {{ n }} records with evidence (validated against the schema)</td></tr>
+<tr><td><a href="results.csv">results.csv</a></td><td>Flat CSV</td></tr>
+<tr><td><a href="app_record.schema.json">app_record.schema.json</a></td><td>JSON Schema for one record</td></tr>
+<tr><td><a href="patterns.json">patterns.json</a></td><td>Computed pattern tables and headline</td></tr>
+<tr><td><a href="llms.txt">llms.txt</a></td><td>Summary and conventions for LLMs</td></tr>
+<tr><td>JSON-LD</td><td>schema.org Dataset in this page's head</td></tr>
+<tr><td><a href="{{ repo_url }}">Repo</a></td><td>Code, tests, run logs, MCP server</td></tr>
+</table></div>
+</section>
+</main>
+<footer class="wrap">Built by Prithvi Raj Kandan for the Composio AI Product Ops Intern take-home. Generated {{ generated }}.</footer>
+
+<script>window.PATTERNS = {{ patterns_json | safe }};</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+mermaid.initialize({startOnLoad:true,theme:"neutral",fontFamily:"Geist"});
+</script>
+<script>
+(function(){
+ const P = window.PATTERNS, C = ["#51a2ff","#0007cd","#d4ff4a","#0f0f0f","#16a34a","#d97706","#dc2626","#a3a3a3","#8b5cf6","#38bdf8","#f78166"];
+ if (window.Chart){
+  Chart.defaults.font.family = "Geist, system-ui, sans-serif";
+  const bar=(id,obj,horiz)=>{const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]);new Chart(document.getElementById(id),{type:"bar",data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),backgroundColor:"#51a2ff",borderRadius:4}]},options:{indexAxis:horiz?"y":"x",plugins:{legend:{display:false}}}})};
+  bar("c-auth",P.auth_counts,true);
+  bar("c-block",P.blocker_counts,true);
+  const ss=Object.entries(P.self_serve_counts);
+  new Chart(document.getElementById("c-ss"),{type:"doughnut",data:{labels:ss.map(x=>x[0]),datasets:[{data:ss.map(x=>x[1]),backgroundColor:C}]},options:{plugins:{legend:{position:"right"}}}});
+  const cats=P.by_category.map(c=>c.category);
+  new Chart(document.getElementById("c-cat"),{type:"bar",data:{labels:cats,datasets:[
+   {label:"self-serve",data:P.by_category.map(c=>c.self_serve_open),backgroundColor:"#16a34a"},
+   {label:"gated",data:P.by_category.map(c=>c.gated),backgroundColor:"#dc2626"},
+   {label:"unknown",data:P.by_category.map(c=>c.unknown),backgroundColor:"#a3a3a3"}]},options:{scales:{x:{stacked:true},y:{stacked:true}}}});
+  const keys=["official","community","none","unknown"];
+  new Chart(document.getElementById("c-mcp"),{type:"bar",data:{labels:["Existing MCP","In Composio"],datasets:
+   keys.map((k,i)=>({label:k,data:[P.mcp_counts[k]||0,0],backgroundColor:C[i]})).concat(
+   ["yes","no","unknown"].map((k,i)=>({label:"composio: "+k,data:[0,P.composio_counts[k]||0],backgroundColor:["#0007cd","#d4ff4a","#a3a3a3"][i]})))},
+   options:{scales:{x:{stacked:true},y:{stacked:true}}}});
+ }
+ if (window.jQuery && jQuery.fn.dataTable){ new DataTable("#matrix-table",{pageLength:25,order:[[0,"asc"]]}); }
+})();
+</script>
+</body>
+</html>

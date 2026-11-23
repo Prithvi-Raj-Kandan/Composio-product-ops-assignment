@@ -78,7 +78,7 @@ def test_per_field_evidence_columns_and_labeller_are_kept() -> None:
     )
     row.update(
         {
-            "labeller": "assistant-labelled (Grok Bot), not human-audited",
+            "labeller": "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human",
             "evidence_api_url": "https://acme.dev/api",
             "evidence_mcp_url": "https://acme.dev/mcp",
             "evidence_buildability_url": "https://acme.dev/pricing",
@@ -89,7 +89,9 @@ def test_per_field_evidence_columns_and_labeller_are_kept() -> None:
     assert out["doc_api"] == "https://acme.dev/api"
     assert out["doc_mcp"] == "https://acme.dev/mcp"
     assert out["doc_buildability"] == "https://acme.dev/pricing"
-    assert out["notes"].startswith("assistant-labelled (Grok Bot), not human-audited")
+    assert out["notes"].startswith(
+        "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human"
+    )
     assert "unsure on breadth" in out["notes"] and "2 min" in out["notes"]
     assert unmapped == []
 

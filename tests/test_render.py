@@ -88,8 +88,9 @@ def _repo(tmp_path, with_eval=False):
 def test_page_has_every_section_and_every_app(tmp_path) -> None:
     out = render_site(_repo(tmp_path), tmp_path / "site", llm=False)
     html = (out / "index.html").read_text()
-    for anchor in ["headline", "patterns", "matrix", "agent", "verification", "try", "honesty", "for-agents"]:
+    for anchor in ["headline", "patterns", "matrix", "agent", "try", "honesty", "for-agents"]:
         assert f'id="{anchor}"' in html
+    assert 'id="verification"' not in html
     for app in ["Acme", "Beta", "Gamma"]:
         assert app in html
     assert "human override" in html.lower()
@@ -110,12 +111,15 @@ def test_json_ld_parses(tmp_path) -> None:
 
 def test_no_accuracy_number_without_labels(tmp_path) -> None:
     html = (render_site(_repo(tmp_path), tmp_path / "site", llm=False) / "index.html").read_text()
-    assert "Gold labels not scored yet" in html
+    assert "Gold labels not scored yet" not in html
+    assert "<td>Accuracy</td>" not in html
 
 
 def test_accuracy_shown_when_eval_exists(tmp_path) -> None:
     html = (render_site(_repo(tmp_path, with_eval=True), tmp_path / "site", llm=False) / "index.html").read_text()
-    assert "50.0%" in html and "75.0%" in html
+    # Gold agreement lives in the README now, not on the page.
+    assert "50.0%" not in html and "75.0%" not in html
+    assert "README (Verification)" in html
 
 
 def test_rule_verdicts_are_tagged(tmp_path) -> None:
@@ -138,21 +142,20 @@ def _gold(repo, note):
 
 def test_ai_made_gold_labels_are_disclosed_next_to_accuracy(tmp_path) -> None:
     repo = _repo(tmp_path, with_eval=True)
-    _gold(repo, "assistant-labelled (Grok Bot), not human-audited; 2 min")
+    _gold(repo, "AI-drafted from official docs; human review pending; 2 min")
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
-    assert "made by an AI assistant" in html
-    assert "not ground truth" in html
-    assert "agreement between two AI processes" in html
-    assert "A human should audit" in html
+    assert "drafted by an AI model from official docs, independently of this pipeline" in html
+    assert "human review is pending" in html
     assert "hand-labelled" not in html
+    assert "Grok" not in html
+    assert '<div class="warnbox"><b>These gold labels' not in html
 
 
 def test_human_gold_labels_are_not_called_ai(tmp_path) -> None:
     repo = _repo(tmp_path, with_eval=True)
     _gold(repo, "checked the pricing page")
     html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
-    assert "These gold labels were made by an AI assistant" not in html
-    assert "agreement between two AI processes" not in html
+    assert "drafted by an AI model" not in html
 
 
 def test_pass3_before_after_and_confidence_tags(tmp_path) -> None:
@@ -207,3 +210,66 @@ def test_pass3_note_states_verification_facts(tmp_path) -> None:
     assert "1 of 2 re-research claims are quote-verified only" in html
     assert "1 apps crashed in pass 2" in html
     assert "and a second model checked them" not in html
+
+
+def test_human_section_describes_per_run_handoffs_with_counts(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    (data / "domain_overrides.csv").write_text(
+        "app,homepage,docs_url,extra_source,note\nGamma,https://gamma.io,https://docs.gamma.io,,rebrand\n"
+    )
+    payload = json.loads((data / "results.json").read_text())
+    payload["records"][0]["field_confidence"] = {"self_serve": "quote-verified", "auth_methods": "quote-verified"}
+    payload["records"][0]["verifier_verdicts"] = {"gate_type": "contradicted"}
+    payload["records"][1]["needs_human_reasons"] = ["verification loops exhausted: self_serve"]
+    (data / "results.json").write_text(json.dumps(payload))
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "Where the agent stops and a human decides" in html
+    assert "Where a human was needed" not in html
+    assert "data/domain_overrides.csv" in html and "--resume" in html
+    assert "MAX_LOOPS = 2" in html
+    assert 'data-count="domain_overrides">1<' in html
+    assert 'data-count="needs_human">1<' in html
+    assert 'data-count="loops_exhausted">1<' in html
+    assert 'data-count="contradicted">1<' in html
+    assert 'data-count="gated">1<' in html  # Beta is contact_sales
+    assert 'data-count="quote_only_high_stakes">2<' in html
+    assert "Gold-label audit" in html
+    assert "One-time setup" in html and "connect-tavily" in html
+
+
+def test_breadth_is_off_the_page_but_in_the_data(tmp_path) -> None:
+    repo = _repo(tmp_path, with_eval=True)
+    rep_path = repo / "data" / "eval" / "report_dev.json"
+    rep = json.loads(rep_path.read_text())
+    rep["comparison"]["fields"] = {
+        "api_breadth": {"pass1": 0.1, "pass2": 0.1},
+        "self_serve": {"pass1": 0.2, "pass2": 0.3},
+    }
+    rep_path.write_text(json.dumps(rep))
+    out = render_site(repo, tmp_path / "site", llm=False)
+    html = (out / "index.html").read_text()
+    assert "<th>Breadth</th>" not in html
+    assert ">self_serve<" in html
+    assert "API breadth is kept in the data but left off the page" in html
+    assert '"breadth"' in (out / "results.json").read_text()
+
+
+def test_readme_has_calm_verification_section() -> None:
+    from pathlib import Path
+
+    readme = Path("README.md").read_text(encoding="utf-8")
+    assert "## Verification" in readme
+    assert "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human" in readme
+    assert "review pending" not in readme.lower()
+    assert "review pending" not in Path("HUMAN_IN_THE_LOOP.md").read_text(encoding="utf-8").lower()
+    for name in ("README.md", "HUMAN_IN_THE_LOOP.md"):
+        assert "Grok" not in Path(name).read_text(encoding="utf-8")
+
+
+def test_reviewed_gold_labels_are_described_as_confirmed(tmp_path) -> None:
+    repo = _repo(tmp_path, with_eval=True)
+    _gold(repo, '"AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human"')
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "reviewed and confirmed by a human" in html
+    assert "review is pending" not in html and "review pending" not in html

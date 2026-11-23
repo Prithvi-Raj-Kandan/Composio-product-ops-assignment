@@ -35,15 +35,15 @@
     "api_surface.rest": 66
   },
   "unknown_pass3": {
-    "self_serve": 52,
-    "gate_type": 69,
-    "buildability": 59,
-    "main_blocker": 60,
-    "auth_methods": 11,
+    "self_serve": 32,
+    "gate_type": 48,
+    "buildability": 43,
+    "main_blocker": 44,
+    "auth_methods": 10,
     "existing_mcp": 0,
     "composio_has_toolkit": 0,
-    "one_liner": 81,
-    "api_surface.rest": 41
+    "one_liner": 56,
+    "api_surface.rest": 33
   },
   "confidence_tags": {
     "quote-verified": 242,
@@ -73,5 +73,75 @@
       "openai/gpt-oss-20b"
     ],
     "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
+  },
+  "targeted_rerun": {
+    "at": "2026-11-23 22:50 IST",
+    "wall_clock_s": 1701.6,
+    "cells_retried": 233,
+    "cells_filled": 82,
+    "filled_by_tag": {
+      "verifier-supported": 55,
+      "quote-verified": 27
+    },
+    "roots_retried": [
+      "pass-2 quota crash, no recheck",
+      "re-research hit model quota",
+      "re-research skipped (time)"
+    ],
+    "usage": {
+      "models": {
+        "gemini-3.5-flash-lite": {
+          "calls": 30,
+          "input_tokens": 184713,
+          "output_tokens": 9392,
+          "cost_usd": 0.078894
+        },
+        "openai/gpt-oss-120b": {
+          "calls": 57,
+          "input_tokens": 78956,
+          "output_tokens": 45584,
+          "cost_usd": 0.039194
+        },
+        "openai/gpt-oss-20b": {
+          "calls": 17,
+          "input_tokens": 30532,
+          "output_tokens": 24168,
+          "cost_usd": null
+        },
+        "gemini-3.5-flash": {
+          "calls": 14,
+          "input_tokens": 8700,
+          "output_tokens": 13285,
+          "cost_usd": 0.132615
+        }
+      },
+      "cost_usd_known": 0.250703,
+      "unpriced_models": [
+        "openai/gpt-oss-20b"
+      ],
+      "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
+    },
+    "unknown_before": {
+      "self_serve": 52,
+      "gate_type": 69,
+      "buildability": 59,
+      "main_blocker": 60,
+      "auth_methods": 11,
+      "existing_mcp": 0,
+      "composio_has_toolkit": 0,
+      "one_liner": 81,
+      "api_surface.rest": 41
+    },
+    "unknown_after": {
+      "self_serve": 32,
+      "gate_type": 48,
+      "buildability": 43,
+      "main_blocker": 44,
+      "auth_methods": 10,
+      "existing_mcp": 0,
+      "composio_has_toolkit": 0,
+      "one_liner": 56,
+      "api_surface.rest": 33
+    }
   }
 }

@@ -116,3 +116,15 @@ def test_no_accuracy_number_without_labels(tmp_path) -> None:
 def test_accuracy_shown_when_eval_exists(tmp_path) -> None:
     html = (render_site(_repo(tmp_path, with_eval=True), tmp_path / "site", llm=False) / "index.html").read_text()
     assert "50.0%" in html and "75.0%" in html
+
+
+def test_rule_verdicts_are_tagged(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    payload = json.loads((repo / "data" / "results.json").read_text())
+    payload["records"][0]["evidence"].append(
+        {"field": "buildability", "url": "https://acme.dev/auth", "quote": "Use OAuth 2.0", "source": "derived_rule"}
+    )
+    (repo / "data" / "results.json").write_text(json.dumps(payload))
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert ">rule</span>" in html
+    assert "1 buildability verdicts were derived" in html

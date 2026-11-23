@@ -161,10 +161,14 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
             evals[split] = rep
     rows = []
     for r in sorted(records, key=lambda x: str(x.get("app")).lower()):
+        derived = any(
+            e.get("field") == "buildability" and e.get("source") == "derived_rule" for e in r.get("evidence") or []
+        )
         rows.append(
             {
                 **r,
                 "ev": _evidence_by_field(r),
+                "derived": derived,
                 "human_override": (r.get("provenance") or {}).get("source") == "human_override",
             }
         )
@@ -179,6 +183,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "verification": verification_stats(data / "runs"),
         "delta": pass_delta(pass1, records) if pass1 else None,
         "needs_human": [r for r in rows if r.get("needs_human")],
+        "derived_count": sum(1 for r in rows if r["derived"]),
         "overrides": [r for r in rows if r["human_override"]],
         "stats": stats,
         "human_points": HUMAN_POINTS,

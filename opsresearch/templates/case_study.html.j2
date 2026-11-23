@@ -86,11 +86,11 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <h2>Patterns</h2>
 <p class="sub">Counts exclude <code>unknown</code> unless stated. A row can have more than one auth method.</p>
 <div class="grid2">
-<div class="card"><h3>Which auth dominates</h3><canvas id="c-auth" height="220"></canvas></div>
-<div class="card"><h3>Self-serve vs gated</h3><canvas id="c-ss" height="220"></canvas></div>
-<div class="card" style="grid-column:1/-1"><h3>Self-serve vs gated, by category</h3><canvas id="c-cat" height="130"></canvas></div>
-<div class="card"><h3>Most common blockers</h3><canvas id="c-block" height="220"></canvas></div>
-<div class="card"><h3>MCP and Composio coverage</h3><canvas id="c-mcp" height="220"></canvas></div>
+<div class="card"><h3>Which auth dominates</h3><div style="height:260px"><canvas id="c-auth"></canvas></div></div>
+<div class="card"><h3>Self-serve vs gated</h3><div style="height:260px"><canvas id="c-ss"></canvas></div></div>
+<div class="card" style="grid-column:1/-1"><h3>Self-serve vs gated, by category</h3><div style="height:300px"><canvas id="c-cat"></canvas></div></div>
+<div class="card"><h3>Most common blockers</h3><div style="height:260px"><canvas id="c-block"></canvas></div></div>
+<div class="card"><h3>MCP and Composio coverage</h3><div style="height:260px"><canvas id="c-mcp"></canvas></div></div>
 </div>
 <div class="grid2" style="margin-top:16px">
 <div class="card"><h3>Easy wins ({{ patterns.easy_wins|length }})</h3><p class="small">Self-serve credentials, buildable, and not a Composio toolkit yet.</p>
@@ -122,7 +122,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <td>{{ r.api_surface.breadth }}</td>
 <td>{{ vp(r.existing_mcp) }}{% if r.mcp_url %}<div class="ev"><a href="{{ r.mcp_url }}" target="_blank" rel="noopener">link</a></div>{% endif %}</td>
 <td>{{ vp(r.composio_has_toolkit) }}{% if r.composio_slug %}<div class="small mono">{{ r.composio_slug }}</div>{% endif %}</td>
-<td>{{ vp(r.buildability) }}<div class="ev">{{ evl(r,'buildability') }}</div></td>
+<td>{{ vp(r.buildability) }}{% if r.derived %} <span class="pill unk" title="Derived by the fixed rule from evidenced access and API fields">rule</span>{% endif %}<div class="ev">{{ evl(r,'buildability') }}</div></td>
 <td>{{ r.main_blocker }}{% if r.blocker_detail and r.blocker_detail != 'unknown' %}<div class="small">{{ r.blocker_detail }}</div>{% endif %}</td>
 <td>{% if r.human_override %}<span class="pill human">human override</span> {% endif %}{% if r.needs_human %}<span class="pill warn" title="{{ r.needs_human_reasons|join('; ') }}">needs human</span>{% endif %}</td>
 </tr>
@@ -233,7 +233,9 @@ python -m opsresearch research-one "https://acme.dev" --append</pre></div>
 <li><b>Gated is a finding.</b> Partner-only or contact-sales APIs are reported as such when a page says so.</li>
 </ul></div>
 <div class="card"><ul>
-<li><b>Model availability changed the plan.</b> The planned Gemini 2.5 Flash was withdrawn for new keys on the day; extraction ran on Gemini 3.5 Flash-Lite, a smaller model.</li>
+<li><b>Model availability changed the plan.</b> The planned Gemini 2.5 Flash was withdrawn for new keys on the day. Extraction ran on free-tier Gemini 3.5 Flash-Lite (15 requests a minute), with 3.1 Flash-Lite as fallback when it was overloaded. These are smaller models.</li>
+<li><b>Search credits ran out mid-build.</b> Tavily's free 1,000 monthly credits (shared by the Composio Tavily toolkit and the direct fallback) were used up by the early runs. The final runs reused the official pages already fetched and cached, and re-research could only probe common doc paths. Fresh credits would let the loops find more new pages.</li>
+<li><b>Verdicts by rule.</b> {{ derived_count }} buildability verdicts were derived by a fixed rule from evidenced access and API fields (tagged "rule"), not quoted from a page.</li>
 <li><b>Docs behind JS or logins</b> are thin to a plain HTTP fetch, so those apps lean to unknown.</li>
 <li><b>Breadth</b> (endpoint count) is a rough bucket from what the docs show, not a crawl of every endpoint.</li>
 <li><b>The second model can be wrong too.</b> It flags disagreement; it is not ground truth. Composio's API is ground truth only for Composio coverage.</li>
@@ -269,7 +271,7 @@ mermaid.initialize({startOnLoad:true,theme:"neutral",fontFamily:"Geist"});
 (function(){
  const P = window.PATTERNS, C = ["#51a2ff","#0007cd","#d4ff4a","#0f0f0f","#16a34a","#d97706","#dc2626","#a3a3a3","#8b5cf6","#38bdf8","#f78166"];
  if (window.Chart){
-  Chart.defaults.font.family = "Geist, system-ui, sans-serif";
+  Chart.defaults.font.family = "Geist, system-ui, sans-serif"; Chart.defaults.maintainAspectRatio = false;
   const bar=(id,obj,horiz)=>{const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]);new Chart(document.getElementById(id),{type:"bar",data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),backgroundColor:"#51a2ff",borderRadius:4}]},options:{indexAxis:horiz?"y":"x",plugins:{legend:{display:false}}}})};
   bar("c-auth",P.auth_counts,true);
   bar("c-block",P.blocker_counts,true);

@@ -17,6 +17,7 @@ dependencies = [
     "langgraph>=0.2",
     "pydantic>=2.6",
     "trafilatura>=2.0",
+    "pandas>=2.2",
 ]
 
 [project.optional-dependencies]

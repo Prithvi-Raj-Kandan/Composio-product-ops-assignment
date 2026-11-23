@@ -282,6 +282,7 @@ def pass3_summary(
         "rows": [{"field": f, "p1": a[f], "p2": b[f], "p3": c[f]} for f in COUNTED],
         "tags": dict(tags.most_common()),
         "steps": stats.get("fields_filled_by_step") or {},
+        "rerun": stats.get("targeted_rerun"),
     }
 
 

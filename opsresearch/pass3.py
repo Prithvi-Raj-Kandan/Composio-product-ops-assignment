@@ -635,7 +635,7 @@ class LiveResearcher:
 
     def __call__(self, record: dict[str, Any], todo: list[str]) -> tuple[dict[str, Any], list[str]]:
         from opsresearch.extract import extract_record
-        from opsresearch.llm import GroqJsonClient
+        from opsresearch.llm import GeminiJsonClient, GroqJsonClient
         from opsresearch.ratelimit import get_rate_limiter
         from opsresearch.seed import url_is_official
 
@@ -658,6 +658,8 @@ class LiveResearcher:
         limiter = get_rate_limiter()
         update = None
         attempts = [
+            (GeminiJsonClient("gemini-3.5-flash-lite"), ranked[:5], 8000),
+            (_JsonPrompt(GroqJsonClient("openai/gpt-oss-120b")), ranked[:2], 3500),
             (_JsonPrompt(GroqJsonClient("openai/gpt-oss-20b")), ranked[:2], 3500),
         ]
         for client, chosen, clip in attempts:
@@ -678,7 +680,7 @@ class LiveResearcher:
         return self._verify(merged, filled, ranked, entry)
 
     def _verify(self, record: dict[str, Any], filled: list[str], docs: list[CachedDoc], entry: dict) -> tuple:
-        from opsresearch.llm import GroqJsonClient
+        from opsresearch.llm import GeminiJsonClient, GroqJsonClient
         from opsresearch.verify import CROSS_SCHEMA, cross_model_prompt, parse_cross_model
 
         temp = copy.deepcopy(record)
@@ -686,8 +688,12 @@ class LiveResearcher:
         pages = {d.url: d.text for d in docs}
         prompt = cross_model_prompt(AppRecord.model_validate(temp), pages)
         extractor = entry.get("model")
-        # Gemini 3.x and gemma were quota-spent or overloaded tonight; each failed call cost ~20 s of pacing.
-        chain = [GroqJsonClient("openai/gpt-oss-120b"), GroqJsonClient("openai/gpt-oss-20b")]
+        # A different model from the extractor checks the new claims.
+        chain = [
+            GroqJsonClient("openai/gpt-oss-120b"),
+            GeminiJsonClient("gemini-3.5-flash"),
+            GroqJsonClient("openai/gpt-oss-20b"),
+        ]
         chain = [c for c in chain if c.model_name != extractor]
         verdicts: dict[str, str] = {}
         for client in chain:
@@ -844,3 +850,98 @@ def _tag_counts(records: list[dict[str, Any]]) -> dict[str, int]:
         for tag in (r.get("field_confidence") or {}).values():
             out[tag] = out.get(tag, 0) + 1
     return dict(sorted(out.items(), key=lambda kv: -kv[1]))
+
+
+RETRY_ROOTS = {"re-research hit model quota", "re-research skipped (time)", "pass-2 quota crash, no recheck"}
+
+
+def retry_targets(record: dict[str, Any]) -> list[str]:
+    """Research fields whose unknown root reason was a quota or time limit, not missing evidence."""
+    reasons = record.get("unknown_reason") or {}
+    return [f for f in RESEARCH_FIELDS if is_unknown(get_field(record, f)) and reasons.get(f) in RETRY_ROOTS]
+
+
+def retry_record(
+    record: dict[str, Any],
+    researcher: Callable[[dict[str, Any], list[str]], tuple[dict[str, Any], list[str]]],
+) -> tuple[dict[str, Any], list[str]]:
+    todo = retry_targets(record)
+    if not todo:
+        return record, []
+    updated, filled = researcher(copy.deepcopy(record), todo)
+    updated, _ = rederive(updated)
+    return AppRecord.model_validate(updated).model_dump(mode="json"), filled
+
+
+def run_retry(repo: Path, *, resume: bool = True, concurrency: int = 2, deadline: float | None = None) -> dict:
+    """Targeted rerun: re-research only cells whose unknown reason was a quota or time limit."""
+    from concurrent.futures import ThreadPoolExecutor
+    from datetime import datetime, timedelta, timezone
+
+    from opsresearch.llm import LEDGER
+    from opsresearch.seed import load_apps, load_overrides, resolve_domain, url_is_official
+
+    data = repo / "data"
+    cache = repo / "cache"
+    ckpt = cache / "checkpoints"
+    records = json.loads((data / "results_pass3.json").read_text())["records"]
+    seeds = {s.app.lower(): s for s in load_apps(data / "apps.csv")}
+    overrides = load_overrides(data / "domain_overrides.csv")
+    LEDGER.reset()
+    started = time.time()
+    ist = timezone(timedelta(hours=5, minutes=30))
+
+    def one(rec: dict[str, Any]) -> tuple[dict[str, Any], list[str], list[str], dict | None]:
+        slug = app_slug(rec["app"])
+        path = ckpt / f"{slug}_pass3r.json"
+        todo = retry_targets(rec)
+        if not todo:
+            return rec, [], [], None
+        if resume and path.exists():
+            saved = json.loads(path.read_text())
+            return saved["record"], saved["todo"], saved["filled"], saved["node"]
+        if deadline is not None and time.time() > deadline:
+            return rec, todo, [], {"node": "reresearch3", "retry": True, "skipped": "time budget for the rerun"}
+        seed = seeds.get(rec["app"].lower())
+        resolved = resolve_domain(seed, overrides)
+        extra = []
+        override = overrides.get(rec["app"].lower())
+        if override:
+            extra += override.urls()
+        extra = [u for u in extra if url_is_official(u, resolved)]
+        nodes: list[dict[str, Any]] = []
+        out, filled = retry_record(rec, LiveResearcher(cache, seed, resolved, extra, nodes))
+        node = dict(nodes[-1]) if nodes else {"node": "reresearch3", "fields": todo}
+        node["retry"] = True
+        node["at"] = datetime.now(ist).strftime("%Y-%m-%d %H:%M IST")
+        write_json(path, {"record": out, "todo": todo, "filled": filled, "node": node})
+        return out, todo, filled, node
+
+    with ThreadPoolExecutor(max_workers=concurrency) as pool:
+        results = list(pool.map(one, records))
+    new_records = []
+    tried = filled_n = 0
+    tags: dict[str, int] = {}
+    for (out, todo, filled, node), old in zip(results, records, strict=True):
+        new_records.append(out)
+        tried += len(todo)
+        filled_n += len(filled)
+        for f in filled:
+            tag = (out.get("field_confidence") or {}).get(f, "?")
+            tags[tag] = tags.get(tag, 0) + 1
+        if node is not None:
+            log_path = data / "runs" / f"{app_slug(old['app'])}_pass3.json"
+            log = json.loads(log_path.read_text()) if log_path.exists() else {"app": old["app"], "nodes": []}
+            log["nodes"] = [n for n in log.get("nodes") or [] if not n.get("retry")] + [node]
+            log.setdefault("steps", {})["reresearch_retry"] = len(filled)
+            write_json(log_path, log)
+    summary = {
+        "at": datetime.now(ist).strftime("%Y-%m-%d %H:%M IST"),
+        "wall_clock_s": round(time.time() - started, 1),
+        "cells_retried": tried,
+        "cells_filled": filled_n,
+        "filled_by_tag": tags,
+        "roots_retried": sorted(RETRY_ROOTS),
+        "usage": LEDGER.summary(),
+    }
+    return {"records": new_records, "summary": summary}

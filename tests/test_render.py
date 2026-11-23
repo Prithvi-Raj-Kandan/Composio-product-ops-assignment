@@ -304,3 +304,33 @@ def test_unknown_one_liner_shows_nothing(tmp_path) -> None:
     assert '<b>Acme</b><div class="small">unknown</div>' not in html
     assert "only in one liner" not in html
     assert "<td>no pricing page</td>" in html
+
+
+def test_pass3_notes_targeted_rerun(tmp_path) -> None:
+    repo = _repo(tmp_path)
+    data = repo / "data"
+    payload = json.loads((data / "results.json").read_text())
+    payload["records"][0]["field_confidence"] = {"self_serve": "quote-verified"}
+    (data / "results.json").write_text(json.dumps(payload))
+    (data / "results_pass2.json").write_text(json.dumps(payload))
+    (data / "run_stats_pass3.json").write_text(
+        json.dumps(
+            {
+                "pass": 3,
+                "apps": 3,
+                "wall_clock_s": 1,
+                "usage": {"models": {}, "cost_usd_known": 0.0},
+                "targeted_rerun": {
+                    "at": "2026-11-23 22:21 IST",
+                    "wall_clock_s": 1800,
+                    "cells_retried": 233,
+                    "cells_filled": 40,
+                    "filled_by_tag": {"verifier-supported": 30, "quote-verified": 10},
+                },
+            }
+        )
+    )
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "Targeted rerun" in html
+    assert "2026-11-23 22:21 IST" in html and "30 min" in html
+    assert "233 cells" in html and "40 filled" in html

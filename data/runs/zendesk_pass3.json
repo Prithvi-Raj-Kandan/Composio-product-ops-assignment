@@ -7,7 +7,27 @@
     "composio_metadata": 1,
     "mcp_registry": 1,
     "reresearch": 0,
-    "derived_rule": 2
+    "derived_rule": 2,
+    "reresearch_retry": 2
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "api_surface.rest",
+        "one_liner"
+      ],
+      "probed": 10,
+      "fetched": 0,
+      "docs": 15,
+      "model": "gemini-3.5-flash-lite",
+      "verifier": "openai/gpt-oss-120b",
+      "kept": [
+        "api_surface.rest",
+        "one_liner"
+      ],
+      "retry": true,
+      "at": "2026-11-23 22:49 IST"
+    }
+  ]
 }

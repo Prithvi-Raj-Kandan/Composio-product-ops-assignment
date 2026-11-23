@@ -93,3 +93,13 @@ def test_api_dependency_chains_to_rest_reason():
 
 def test_tally_skips_one_liner():
     assert tally([{"unknown_reason": {"one_liner": "x", "self_serve": "y"}}]) == [("y", 1, 0)]
+
+
+def test_latest_reresearch_node_wins():
+    log3 = {
+        "nodes": [
+            {"node": "reresearch3", "fields": ["auth_methods"], "docs": 3, "errors": ["m: RuntimeError"]},
+            {"node": "reresearch3", "retry": True, "fields": ["auth_methods"], "docs": 3, "model": "m"},
+        ]
+    }
+    assert derive_unknown_reasons(_rec(), None, log3, pages=[])["auth_methods"] == "no quote found in docs"

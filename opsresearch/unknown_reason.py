@@ -33,7 +33,7 @@ def _had_quoted_value(prior: dict[str, Any] | None, field: str) -> bool:
 
 
 def _research_node(log3: dict[str, Any] | None, field: str) -> dict[str, Any] | None:
-    for node in (log3 or {}).get("nodes") or []:
+    for node in reversed((log3 or {}).get("nodes") or []):  # the latest attempt decides
         if node.get("node") == "reresearch3" and (field in (node.get("fields") or []) or node.get("skipped")):
             return node
     return None

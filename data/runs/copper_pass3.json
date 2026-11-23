@@ -7,7 +7,25 @@
     "composio_metadata": 1,
     "mcp_registry": 0,
     "reresearch": 0,
-    "derived_rule": 2
+    "derived_rule": 2,
+    "reresearch_retry": 0
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 10,
+      "fetched": 1,
+      "docs": 7,
+      "errors": [
+        "gemini-3.5-flash-lite: RuntimeError"
+      ],
+      "model": "openai/gpt-oss-120b",
+      "retry": true,
+      "at": "2026-11-23 22:25 IST"
+    }
+  ]
 }

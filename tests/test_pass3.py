@@ -242,3 +242,44 @@ def test_human_override_provenance_survives_a_pass2_crash(tmp_path):
     p2 = AppRecord(app="Acme", category="CRM").model_dump(mode="json")
     out, _ = restore_from_prior(p2, p1, {}, tmp_path)
     assert out["provenance"]["source"] == "human_override"
+
+
+def test_retry_targets_only_quota_and_time_roots():
+    from opsresearch.pass3 import retry_targets
+
+    rec = AppRecord(app="Acme", category="CRM").model_dump(mode="json")
+    rec["unknown_reason"] = {
+        "self_serve": "re-research hit model quota",
+        "auth_methods": "no quote found in docs",
+        "gate_type": "re-research skipped (time)",
+        "api_surface.rest": "pass-2 quota crash, no recheck",
+        "one_liner": "no docs page found",
+        "buildability": "self_serve unknown: re-research hit model quota",
+    }
+    assert retry_targets(rec) == ["self_serve", "gate_type", "api_surface.rest"]
+
+
+def test_retry_record_leaves_other_cells_untouched(tmp_path):
+    from opsresearch.pass3 import retry_record
+
+    rec = _p1()
+    rec["self_serve"] = "unknown"
+    rec["evidence"] = [e for e in rec["evidence"] if e["field"] != "self_serve"]
+    rec["unknown_reason"] = {"self_serve": "re-research hit model quota", "gate_type": "no quote found in docs"}
+    seen = []
+
+    def researcher(record, todo):
+        seen.append(list(todo))
+        out = dict(record)
+        out["self_serve"] = "self_serve_free"
+        out["evidence"] = record["evidence"] + [
+            {"field": "self_serve", "url": PRICING, "quote": PRICING_QUOTE, "source": "doc"}
+        ]
+        out["field_confidence"] = {**record.get("field_confidence", {}), "self_serve": "quote-verified"}
+        return out, ["self_serve"]
+
+    out, filled = retry_record(rec, researcher)
+    assert seen == [["self_serve"]]
+    assert filled == ["self_serve"]
+    assert out["auth_methods"] == ["api_key"]
+    assert out["buildability"] == "yes"  # re-derived from the newly evidenced self_serve

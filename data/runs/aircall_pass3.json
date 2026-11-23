@@ -7,12 +7,35 @@
     "composio_metadata": 0,
     "mcp_registry": 0,
     "reresearch": 0,
-    "derived_rule": 0
+    "derived_rule": 0,
+    "reresearch_retry": 2
   },
   "nodes": [
     {
       "node": "reresearch3",
       "skipped": "time budget for this run was spent"
+    },
+    {
+      "node": "reresearch3",
+      "fields": [
+        "self_serve",
+        "api_surface.graphql",
+        "one_liner"
+      ],
+      "probed": 10,
+      "fetched": 0,
+      "docs": 7,
+      "errors": [
+        "gemini-3.5-flash-lite: RuntimeError"
+      ],
+      "model": "openai/gpt-oss-120b",
+      "verifier": "gemini-3.5-flash",
+      "kept": [
+        "self_serve",
+        "one_liner"
+      ],
+      "retry": true,
+      "at": "2026-11-23 22:23 IST"
     }
   ]
 }

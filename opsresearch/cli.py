@@ -72,6 +72,7 @@ def build_parser() -> argparse.ArgumentParser:
     p3_parser.add_argument(
         "--research-minutes", type=float, default=None, help="Stop starting re-research after N min."
     )
+    p3_parser.add_argument("--retry-quota", action="store_true", help="Re-research only quota/time-limited cells.")
     p3_parser.set_defaults(func=cmd_pass3)
 
     smoke_parser = sub.add_parser("smoke", help="Check each configured service on one app.")
@@ -90,6 +91,8 @@ def cmd_pass3(args: argparse.Namespace) -> int:
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     root = Path(args.repo)
+    if args.retry_quota:
+        return _retry_quota(root, args)
     out = run_pass3(
         root,
         resume=args.resume,
@@ -107,6 +110,32 @@ def cmd_pass3(args: argparse.Namespace) -> int:
     write_pass(root / "data" / "results_pass3.json", records, 3)
     write_json(root / "data" / "run_stats_pass3.json", out["stats"])
     print(json.dumps(out["stats"], indent=1))
+    return 0
+
+
+def _retry_quota(root: Path, args: argparse.Namespace) -> int:
+    import json
+    import time
+
+    from opsresearch.graph import write_pass
+    from opsresearch.pass3 import count_unknowns, run_retry, write_json
+    from opsresearch.schema import AppRecord
+    from opsresearch.unknown_reason import annotate
+
+    before = json.loads((root / "data" / "results_pass3.json").read_text())["records"]
+    deadline = (time.time() + args.research_minutes * 60) if args.research_minutes else None
+    out = run_retry(root, resume=args.resume, concurrency=args.concurrency, deadline=deadline)
+    records = [AppRecord.model_validate(r) for r in annotate(root, out["records"])]
+    write_pass(root / "data" / "results_pass3.json", records, 3)
+    stats_path = root / "data" / "run_stats_pass3.json"
+    stats = json.loads(stats_path.read_text())
+    summary = out["summary"]
+    summary["unknown_before"] = count_unknowns(before)
+    summary["unknown_after"] = count_unknowns([r.model_dump(mode="json") for r in records])
+    stats["targeted_rerun"] = summary
+    stats["unknown_pass3"] = summary["unknown_after"]
+    write_json(stats_path, stats)
+    print(json.dumps(summary, indent=1))
     return 0
 
 

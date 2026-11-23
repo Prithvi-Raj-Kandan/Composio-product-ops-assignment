@@ -112,6 +112,7 @@ class EvidenceSource(StrEnum):
     doc = "doc"
     composio_oracle = "composio_oracle"
     mcp_registry = "mcp_registry"
+    derived_rule = "derived_rule"
 
 
 class Provenance(BaseModel):

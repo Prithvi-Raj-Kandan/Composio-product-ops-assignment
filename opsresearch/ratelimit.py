@@ -38,8 +38,8 @@ class RateLimiter:
             self._sleep(seconds)
 
 
-def with_retries(fn: Callable[[], T], limiter: RateLimiter, *, attempts: int = 4) -> T:
-    delay = 0.5
+def with_retries(fn: Callable[[], T], limiter: RateLimiter, *, attempts: int = 4, first_delay: float = 2.0) -> T:
+    delay = first_delay
     last: Exception | None = None
     for attempt in range(attempts):
         limiter.wait()

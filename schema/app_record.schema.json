@@ -131,7 +131,8 @@
       "enum": [
         "doc",
         "composio_oracle",
-        "mcp_registry"
+        "mcp_registry",
+        "derived_rule"
       ],
       "title": "EvidenceSource",
       "type": "string"

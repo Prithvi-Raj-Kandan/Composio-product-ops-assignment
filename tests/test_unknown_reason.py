@@ -19,9 +19,12 @@ def test_contradicted_wins():
 
 
 def test_rule_fields_name_the_unknown_input():
-    out = derive_unknown_reasons(_rec(), None, None, pages=[])
-    assert out["buildability"] == "depends on unknown self_serve"
-    assert out["main_blocker"] == "depends on unknown self_serve"
+    log3 = {"nodes": [{"node": "reresearch3", "fields": ["self_serve"], "docs": 3, "errors": ["m: RuntimeError"]}]}
+    out = derive_unknown_reasons(_rec(), None, log3, pages=[])
+    assert out["self_serve"] == "re-research hit model quota"
+    assert out["buildability"] == "self_serve unknown: re-research hit model quota"
+    assert out["main_blocker"] == "self_serve unknown: re-research hit model quota"
+    assert len(out["buildability"].split()) <= 8
 
 
 def test_no_docs_page_found_from_reresearch_log():
@@ -74,4 +77,15 @@ def test_known_fields_get_no_reason_and_tally():
     )
     out = derive_unknown_reasons(rec, None, None, pages=[])
     assert "self_serve" not in out
-    assert tally([{"unknown_reason": {"a": "x", "b": "x", "c": "y"}}])[0] == ("x", 2)
+    rows = tally([{"unknown_reason": {"a": "x", "buildability": "self_serve unknown: x", "c": "y"}}])
+    assert rows[0] == ("x", 2, 1)
+
+
+def test_api_dependency_chains_to_rest_reason():
+    rec = _rec(
+        self_serve="self_serve_free",
+        evidence=[{"field": "self_serve", "url": "https://acme.com/p", "quote": "Free forever plan", "source": "doc"}],
+    )
+    log3 = {"nodes": [{"node": "reresearch3", "fields": ["api_surface.rest"], "docs": 0}]}
+    out = derive_unknown_reasons(rec, None, log3, pages=[])
+    assert out["buildability"] == "api_surface unknown: no docs page found"

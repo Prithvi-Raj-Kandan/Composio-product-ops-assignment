@@ -50,6 +50,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     connect_parser.set_defaults(func=cmd_connect_tavily)
 
+    gold_parser = sub.add_parser("import-gold", help="Map an export of the labelling sheet onto gold_labels.csv.")
+    gold_parser.add_argument("sheet_csv")
+    gold_parser.add_argument("--repo", default=".")
+    gold_parser.set_defaults(func=cmd_import_gold)
+
     smoke_parser = sub.add_parser("smoke", help="Check each configured service on one app.")
     smoke_parser.add_argument("--app", default="HubSpot")
     smoke_parser.set_defaults(func=cmd_smoke)
@@ -162,6 +167,16 @@ def cmd_eval(args: argparse.Namespace) -> int:
             f"{split}: pass1={comparison['pass1_accuracy']} pass2={comparison['pass2_accuracy']} "
             f"delta={comparison['delta']} labelled_pass2={report['pass2']['labelled_cells']}"
         )
+    return 0
+
+
+def cmd_import_gold(args: argparse.Namespace) -> int:
+    from opsresearch.gold_import import import_sheet
+
+    report = import_sheet(Path(args.sheet_csv), Path(args.repo) / "data" / "gold" / "gold_labels.csv")
+    print(f"{report['rows']} rows, {report['labelled_rows']} labelled")
+    for app, field, raw in report["unmapped"]:
+        print(f"unmapped (left blank): {app} {field} = {raw!r}")
     return 0
 
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 from collections.abc import Mapping
+from pathlib import Path
 from typing import Any, Protocol
 
 from pydantic import BaseModel
@@ -180,6 +181,69 @@ class ComposioSessionSearch:
 
 
 COMPOSIO_SEARCH_USER = "opsresearch-product-ops"
+
+
+class CachedSearch:
+    """Store each query's hits under cache/_search/ so a rerun spends no search credits."""
+
+    def __init__(self, inner: Any, cache_dir: Path) -> None:
+        self.inner = inner
+        self.name = f"{inner.name}+cache"
+        self.dir = Path(cache_dir) / "_search"
+
+    def search(self, query: str, *, max_results: int = 5) -> list[SearchHit]:
+        import hashlib
+        import json
+
+        key = hashlib.sha256(f"{query}|{max_results}".encode()).hexdigest()[:16]
+        path = self.dir / f"{key}.json"
+        if path.exists():
+            rows = json.loads(path.read_text(encoding="utf-8"))["hits"]
+            return [SearchHit(**row) for row in rows]
+        hits = self.inner.search(query, max_results=max_results)
+        self.dir.mkdir(parents=True, exist_ok=True)
+        payload = {"query": query, "hits": [h.model_dump() for h in hits]}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return hits
+
+
+PROBE_PATHS = {
+    "self_serve": ["pricing", "developers", "docs/getting-started"],
+    "gate_type": ["pricing", "partners", "developers"],
+    "auth_methods": ["docs/authentication", "docs/api/authentication", "developers"],
+    "api_surface": ["docs/api", "api", "developers/docs"],
+    "existing_mcp": ["mcp", "docs/mcp"],
+}
+
+
+def probe_urls(host: str, fields: list[str]) -> list[str]:
+    """Common doc paths on the official host, used only when search is unavailable."""
+    host = host.replace("https://", "").replace("http://", "").strip("/").split("/")[0]
+    if not host:
+        return []
+    out: list[str] = []
+    for field in fields:
+        for path in PROBE_PATHS.get(field.split(".")[0], []):
+            url = f"https://{host}/{path}"
+            if url not in out:
+                out.append(url)
+    return out[:6]
+
+
+def cached_page_urls(cache_dir: Path, app: str) -> list[str]:
+    """URLs already fetched for this app in earlier runs, oldest first."""
+    from opsresearch.fetch import app_slug, read_cache
+
+    folder = Path(cache_dir) / app_slug(app)
+    if not folder.exists():
+        return []
+    files = sorted(folder.glob("*.md"), key=lambda p: (p.stat().st_mtime, p.name))
+    urls = []
+    for path in files:
+        url, body = read_cache(path)
+        if url and body.strip() and url not in urls:
+            urls.append(url)
+    return urls
 
 
 class ComposioToolsSearch:

@@ -12,7 +12,15 @@ from urllib.parse import quote
 
 from langgraph.graph import END, StateGraph
 
-from opsresearch.discover import SearchClient, discover, select_search_backend
+from opsresearch.discover import (
+    CachedSearch,
+    SearchClient,
+    SearchHit,
+    cached_page_urls,
+    discover,
+    probe_urls,
+    select_search_backend,
+)
 from opsresearch.extract import extract_record, merge_fields
 from opsresearch.fetch import CachedDoc, FetchClient, HttpxFetchClient, app_slug, fetch_url
 from opsresearch.llm import LlmClient, build_verifier_client, extraction_clients
@@ -153,11 +161,29 @@ def build_graph(deps: ResearchDeps):
 
     def discover_node(state: ResearchState) -> dict[str, Any]:
         app = AppSeed(state["source_id"], state["category"], state["app_name"], state["hint"])
-        hits = discover(app, _resolved_from_state(state), deps.search)
+        resolved = _resolved_from_state(state)
+        hits = discover(app, resolved, deps.search)
+        from_cache = 0
+        searched = [h for h in hits if h.snippet not in {"hint url", "human override"}]
+        if not searched:
+            # Search returned nothing (e.g. credits exhausted): reuse official pages fetched in earlier runs.
+            known = {h.url for h in hits}
+            for url in cached_page_urls(deps.cache_dir, state["app_name"]):
+                if len(hits) >= 6:
+                    break
+                if url not in known and url_is_official(url, resolved):
+                    hits.append(SearchHit(url=url, title=state["app_name"], snippet="page cache"))
+                    from_cache += 1
         return {
             "hits": [hit.model_dump() for hit in hits],
             "search_backend": deps.search.name,
-            "run_log": _log(state, "discover", urls=[hit.url for hit in hits], backend=deps.search.name),
+            "run_log": _log(
+                state,
+                "discover",
+                urls=[hit.url for hit in hits],
+                backend=deps.search.name,
+                page_cache=from_cache,
+            ),
         }
 
     def fetch_node(state: ResearchState) -> dict[str, Any]:
@@ -281,6 +307,14 @@ def build_graph(deps: ResearchDeps):
             fields=state["failing_fields"],
         )
         known = {doc["url"] for doc in state["docs"]}
+        new_urls = [hit.url for hit in hits if hit.url not in known]
+        fallback = []
+        if not new_urls:
+            resolved = _resolved_from_state(state)
+            cached = [u for u in cached_page_urls(deps.cache_dir, state["app_name"]) if u not in known]
+            probes = [u for u in probe_urls(state["display_domain"], state["failing_fields"]) if u not in known]
+            fallback = [u for u in cached + probes if url_is_official(u, resolved)][:6]
+            hits = hits + [SearchHit(url=u, title=state["app_name"], snippet="fallback") for u in fallback]
         fresh, failed = _fetch_all([hit.url for hit in hits if hit.url not in known], state["app_name"], deps)
         return {
             "loops": loops,
@@ -519,7 +553,7 @@ def append_record(path: Path, record: AppRecord) -> None:
 
 def build_deps(cache_dir: Path, overrides_path: Path, env: dict[str, str] | None = None) -> ResearchDeps:
     return ResearchDeps(
-        search=select_search_backend(env),
+        search=CachedSearch(select_search_backend(env), cache_dir),
         fetch=HttpxFetchClient(),
         llm_clients=extraction_clients(env),
         limiter=get_rate_limiter(),

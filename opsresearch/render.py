@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 import shutil
 from collections import Counter
@@ -37,10 +38,11 @@ HUMAN_POINTS = [
         "and marked 'human override' on every affected row.",
     ),
     (
-        "Gold labels",
-        "Owner, once (shipped)",
-        "Before accuracy is quoted",
-        "Hand-label the 20-app stratified gold sample from official docs. Replicators reuse it; they do not label.",
+        "Gold labels (audit)",
+        "Owner / reviewer (not done yet)",
+        "Before accuracy is trusted",
+        "The 20 gold labels were made by an AI assistant from official docs, not by a human. A human should audit "
+        "them (evidence URL per field in data/gold/gold_labels.csv), fix any wrong cell, and re-run eval.",
     ),
     (
         "needs_human rows",
@@ -61,6 +63,14 @@ HUMAN_POINTS = [
         "Approve merges and the GitHub Pages publish. The agent does not publish itself.",
     ),
 ]
+
+
+def _gold_labelled_by_ai(path: Path) -> bool:
+    """True when the gold labels say an AI assistant made them (labeller note on any row)."""
+    if not path.exists():
+        return False
+    with path.open(newline="", encoding="utf-8") as handle:
+        return any("assistant-labelled" in (row.get("notes") or "").lower() for row in csv.DictReader(handle))
 
 
 def _load(path: Path, default: Any = None) -> Any:
@@ -159,6 +169,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         rep = _load(data / "eval" / f"report_{split}.json")
         if rep and rep.get("pass2", {}).get("accuracy") is not None:
             evals[split] = rep
+    gold_by_ai = _gold_labelled_by_ai(data / "gold" / "gold_labels.csv")
     rows = []
     for r in sorted(records, key=lambda x: str(x.get("app")).lower()):
         derived = any(
@@ -180,6 +191,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "patterns": patterns,
         "patterns_json": json.dumps(patterns, default=str),
         "evals": evals,
+        "gold_by_ai": gold_by_ai,
         "verification": verification_stats(data / "runs"),
         "delta": pass_delta(pass1, records) if pass1 else None,
         "needs_human": [r for r in rows if r.get("needs_human")],

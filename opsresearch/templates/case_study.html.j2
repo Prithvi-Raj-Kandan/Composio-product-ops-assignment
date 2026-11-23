@@ -68,7 +68,7 @@ footer{padding:30px 0;color:var(--muted);font-size:13px}
 <div class="tile"><b>{{ t.buildable }}</b><span>buildable today (incl. caveats)</span></div>
 <div class="tile"><b>{{ t.easy_wins }}</b><span>easy wins not yet in Composio</span></div>
 <div class="tile"><b>{{ t.needs_human }}</b><span>rows flagged needs human</span></div>
-{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}</b><span>held-out test accuracy, pass 1 → pass 2</span></div>
+{% if evals.test %}<div class="tile"><b>{{ pct(evals.test.comparison.pass1_accuracy) }} → {{ pct(evals.test.comparison.pass2_accuracy) }}</b><span>held-out test accuracy, pass 1 → pass 2{% if gold_by_ai %} (agreement with AI-made labels, not ground truth){% endif %}</span></div>
 {% else %}<div class="tile"><b>pending</b><span>gold-label accuracy (see Verification)</span></div>{% endif %}
 </div>
 </div></header>
@@ -179,7 +179,9 @@ flowchart TD
 <section id="verification">
 <h2>Verification: how we know it's right (and where it isn't)</h2>
 {% if evals %}
-<p class="sub">20 apps were hand-labelled from official docs (stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities). Dev (10) was used to tune; test (10) was held out and scored once.</p>
+{% if gold_by_ai %}<div class="warnbox"><b>These gold labels were made by an AI assistant, not a human.</b> An AI assistant (Grok Bot) labelled the 20 apps independently from official docs, without looking at this pipeline's output. So the numbers below measure agreement between two AI processes; they are not ground truth. A human should audit the labels (<code>data/gold/gold_labels.csv</code>, every row has an evidence URL per field) before these numbers are trusted.</div>
+<p class="sub">20 apps, stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities. Dev (10) is for reading errors; test (10) is held out. A miss of type <i>underclaim</i> means the agent said <code>unknown</code> where the label has a value.</p>
+{% else %}<p class="sub">20 apps were hand-labelled from official docs (stratified: 2 per category, covering clean docs, GraphQL-first, gated, login-walled, no-API, MCP-native and ambiguous entities). Dev (10) was used to tune; test (10) was held out and scored once.</p>{% endif %}
 <div class="grid2">
 {% for split, rep in evals.items() %}
 <div class="card"><h3>{{ split }} split</h3>
@@ -188,6 +190,7 @@ flowchart TD
 <tr><td>Cells correct</td><td>{{ rep.pass1.correct_cells }} / {{ rep.pass1.labelled_cells }}</td><td>{{ rep.pass2.correct_cells }} / {{ rep.pass2.labelled_cells }}</td></tr>
 {% for f, v in rep.comparison.fields.items() %}<tr><td class="small">{{ f }}</td><td class="small">{{ pct(v.pass1) }}</td><td class="small">{{ pct(v.pass2) }}</td></tr>{% endfor %}
 </table>
+<p class="small">Pass 2 misses by type: {% for k, v in rep.pass2.get('taxonomy', {}).items() %}{{ k }} {{ v }}{{ ", " if not loop.last }}{% endfor %}.</p>
 <details><summary>Misses in pass 2 ({{ rep.pass2.errors|length }})</summary><table><tr><th>App</th><th>Field</th><th>Agent</th><th>Gold</th><th>Type</th></tr>
 {% for e in rep.pass2.errors %}<tr><td>{{ e.app }}</td><td>{{ e.field }}</td><td>{{ e.predicted }}</td><td>{{ e.gold }}</td><td>{{ e.taxonomy }}</td></tr>{% endfor %}</table></details>
 </div>
@@ -229,6 +232,7 @@ python -m opsresearch research-one "https://acme.dev" --append</pre></div>
 <div class="card"><ul>
 <li><b>Unknown is an answer.</b> A field without a verbatim quote from an official page is <code>unknown</code>, not a guess. Unknown counts are shown in every chart and table.</li>
 <li><b>Human-touched rows are marked.</b> {{ overrides|length }} rows used a human-confirmed domain ({% for r in overrides %}{{ r.app }}{{ ', ' if not loop.last }}{% endfor %}). No answer was hand-edited into the agent output.</li>
+{% if gold_by_ai %}<li><b>The gold labels are AI-made.</b> They were made by an AI assistant working independently from official docs, not by a human, so the accuracy figures are agreement between two AI processes, not ground truth. A human should audit the labels.</li>{% endif %}
 <li><b>Accuracy only on the gold sample.</b> The other 80 apps get the automated checks (coverage and consistency), not an accuracy claim.</li>
 <li><b>Gated is a finding.</b> Partner-only or contact-sales APIs are reported as such when a page says so.</li>
 </ul></div>

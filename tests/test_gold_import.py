@@ -65,3 +65,37 @@ def test_import_writes_the_gold_file(tmp_path) -> None:
     rows = list(csv.DictReader(out.open()))
     assert rows[0]["self_serve"] == "self_serve_trial"
     assert report["rows"] == 1
+
+
+def test_per_field_evidence_columns_and_labeller_are_kept() -> None:
+    row = _row(
+        auth_methods="API key",
+        self_serve="Free",
+        evidence_url="https://acme.dev/auth",
+        docs_url_found="https://acme.dev",
+        labeller_notes="unsure on breadth",
+        minutes_spent="2",
+    )
+    row.update(
+        {
+            "labeller": "assistant-labelled (Grok Bot), not human-audited",
+            "evidence_api_url": "https://acme.dev/api",
+            "evidence_mcp_url": "https://acme.dev/mcp",
+            "evidence_buildability_url": "https://acme.dev/pricing",
+        }
+    )
+    out, unmapped = map_row(row)
+    assert out["doc_auth"] == "https://acme.dev/auth"
+    assert out["doc_api"] == "https://acme.dev/api"
+    assert out["doc_mcp"] == "https://acme.dev/mcp"
+    assert out["doc_buildability"] == "https://acme.dev/pricing"
+    assert out["notes"].startswith("assistant-labelled (Grok Bot), not human-audited")
+    assert "unsure on breadth" in out["notes"] and "2 min" in out["notes"]
+    assert unmapped == []
+
+
+def test_evidence_columns_fall_back_to_docs_url_when_absent() -> None:
+    out, _ = map_row(_row(self_serve="Free", docs_url_found="https://acme.dev", evidence_url="https://acme.dev/auth"))
+    assert out["doc_api"] == "https://acme.dev"
+    assert out["doc_mcp"] == "https://acme.dev"
+    assert out["doc_buildability"] == "https://acme.dev/auth"

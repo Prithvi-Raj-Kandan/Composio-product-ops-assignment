@@ -31,6 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--only", default="")
     run_parser.add_argument("--concurrency", type=int, default=4)
     run_parser.add_argument("--repo", default=".")
+    run_parser.add_argument("--fresh", action="store_true", help="Pass 2 re-extracts instead of starting from pass 1.")
     run_parser.set_defaults(func=cmd_run)
 
     one_parser = sub.add_parser("research-one", help="Research a single app by name or URL.")
@@ -94,8 +95,16 @@ def cmd_run(args: argparse.Namespace) -> int:
     overrides = root / "data" / "domain_overrides.csv"
     cache = root / "cache"
 
+    prior = None
+    pass1_path = root / "data" / "results_pass1.json"
+    if args.pass_num == 2 and not args.fresh and pass1_path.exists():
+        import json as _json
+
+        rows = _json.loads(pass1_path.read_text(encoding="utf-8"))["records"]
+        prior = {str(r["app"]).lower(): r for r in rows}
+
     def factory():
-        return build_deps(cache, overrides)
+        return build_deps(cache, overrides, prior=prior)
 
     import json
     import time

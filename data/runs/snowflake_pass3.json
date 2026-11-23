@@ -9,5 +9,10 @@
     "reresearch": 0,
     "derived_rule": 0
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "skipped": "time budget for this run was spent"
+    }
+  ]
 }

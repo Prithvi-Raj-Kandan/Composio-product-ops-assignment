@@ -1,16 +1,16 @@
 {
   "pass": 3,
   "apps": 100,
-  "wall_clock_s": 4.0,
-  "concurrency": 8,
+  "wall_clock_s": 856.8,
+  "concurrency": 2,
   "needs_human": 47,
   "fields_filled_by_step": {
     "demoted_contradicted": 0,
     "policy_restore": 119,
     "composio_metadata": 61,
     "mcp_registry": 10,
-    "reresearch": 0,
-    "derived_rule": 27
+    "reresearch": 14,
+    "derived_rule": 37
   },
   "unknown_pass1": {
     "self_serve": 61,
@@ -35,28 +35,43 @@
     "api_surface.rest": 66
   },
   "unknown_pass3": {
-    "self_serve": 58,
-    "gate_type": 71,
-    "buildability": 64,
-    "main_blocker": 65,
-    "auth_methods": 12,
+    "self_serve": 52,
+    "gate_type": 69,
+    "buildability": 59,
+    "main_blocker": 60,
+    "auth_methods": 11,
     "existing_mcp": 0,
     "composio_has_toolkit": 0,
-    "one_liner": 85,
-    "api_surface.rest": 42
+    "one_liner": 81,
+    "api_surface.rest": 41
   },
   "confidence_tags": {
-    "quote-verified": 235,
+    "quote-verified": 242,
     "composio_metadata": 124,
+    "derived_rule": 71,
     "mcp_registry": 63,
-    "derived_rule": 61,
-    "verifier-supported": 50,
+    "verifier-supported": 57,
     "quote-not-rechecked": 26
   },
   "usage": {
-    "models": {},
-    "cost_usd_known": 0.0,
-    "unpriced_models": [],
+    "models": {
+      "openai/gpt-oss-20b": {
+        "calls": 27,
+        "input_tokens": 48875,
+        "output_tokens": 40802,
+        "cost_usd": null
+      },
+      "openai/gpt-oss-120b": {
+        "calls": 5,
+        "input_tokens": 3723,
+        "output_tokens": 3312,
+        "cost_usd": 0.002546
+      }
+    },
+    "cost_usd_known": 0.002546,
+    "unpriced_models": [
+      "openai/gpt-oss-20b"
+    ],
     "price_note": "estimate at published list price per 1M tokens; free-tier calls may bill $0"
   }
 }

@@ -23,8 +23,7 @@
       "fetched": 0,
       "docs": 1,
       "errors": [
-        "openai/gpt-oss-20b: RuntimeError",
-        "gemini-3.1-flash-lite: RuntimeError"
+        "openai/gpt-oss-20b: RuntimeError"
       ]
     }
   ]

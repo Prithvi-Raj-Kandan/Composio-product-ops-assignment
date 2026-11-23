@@ -6,8 +6,29 @@
     "policy_restore": 0,
     "composio_metadata": 0,
     "mcp_registry": 0,
-    "reresearch": 0,
+    "reresearch": 3,
     "derived_rule": 0
   },
-  "nodes": []
+  "nodes": [
+    {
+      "node": "reresearch3",
+      "fields": [
+        "self_serve",
+        "gate_type",
+        "one_liner"
+      ],
+      "probed": 0,
+      "fetched": 0,
+      "docs": 1,
+      "model": "openai/gpt-oss-20b",
+      "errors": [
+        "verify openai/gpt-oss-120b: RateLimitError"
+      ],
+      "kept": [
+        "self_serve",
+        "gate_type",
+        "one_liner"
+      ]
+    }
+  ]
 }

@@ -1238,9 +1238,9 @@
     "pass": 3,
     "missing_results": false,
     "labelled_cells": 80,
-    "correct_cells": 15,
+    "correct_cells": 17,
     "unlabelled_cells": 0,
-    "accuracy": 0.1875,
+    "accuracy": 0.2125,
     "per_field": {
       "auth_methods": {
         "labelled": 10,
@@ -1249,13 +1249,13 @@
       },
       "self_serve": {
         "labelled": 10,
-        "correct": 1,
-        "accuracy": 0.1
+        "correct": 2,
+        "accuracy": 0.2
       },
       "api_rest": {
         "labelled": 10,
-        "correct": 2,
-        "accuracy": 0.2
+        "correct": 3,
+        "accuracy": 0.3
       },
       "api_graphql": {
         "labelled": 10,
@@ -1285,7 +1285,7 @@
     },
     "taxonomy": {
       "partial": 3,
-      "underclaim": 54,
+      "underclaim": 52,
       "exact_miss": 7,
       "overclaim": 1
     },
@@ -1395,14 +1395,6 @@
         "pass": 3
       },
       {
-        "app": "Sherlock",
-        "field": "self_serve",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
-        "gold": "self_serve_free",
-        "pass": 3
-      },
-      {
         "app": "GitHub",
         "field": "self_serve",
         "taxonomy": "underclaim",
@@ -1452,14 +1444,6 @@
       },
       {
         "app": "fanbasis",
-        "field": "api_rest",
-        "taxonomy": "underclaim",
-        "predicted": "unknown",
-        "gold": "yes",
-        "pass": 3
-      },
-      {
-        "app": "GitHub",
         "field": "api_rest",
         "taxonomy": "underclaim",
         "predicted": "unknown",
@@ -1816,7 +1800,7 @@
     "split": "dev",
     "pass1_accuracy": 0.1375,
     "pass2_accuracy": 0.1375,
-    "pass3_accuracy": 0.1875,
+    "pass3_accuracy": 0.2125,
     "delta": 0.0,
     "fields": {
       "auth_methods": {
@@ -1829,13 +1813,13 @@
         "pass1": 0.1,
         "pass2": 0.0,
         "delta": -0.1,
-        "pass3": 0.1
+        "pass3": 0.2
       },
       "api_rest": {
         "pass1": 0.2,
         "pass2": 0.2,
         "delta": 0.0,
-        "pass3": 0.2
+        "pass3": 0.3
       },
       "api_graphql": {
         "pass1": 0.1,

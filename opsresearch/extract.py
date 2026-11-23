@@ -52,11 +52,7 @@ def extraction_prompt(
         pages.append(f"## Page {index}{note}\nURL: {doc.url}\n{text}")
     focus = ""
     if only_fields:
-        focus = (
-            "Re-answer only these fields: "
-            + ", ".join(only_fields)
-            + ". Leave every other field unknown.\n"
-        )
+        focus = "Re-answer only these fields: " + ", ".join(only_fields) + ". Leave every other field unknown.\n"
     return (
         f"App: {app}\nGiven category: {category}\n"
         "The category is provided by the task list. Do not invent a different one.\n"
@@ -112,7 +108,7 @@ def extract_record(
         try:
             merged = _overlay(app, category, data)
             merged["extraction_model"] = model_name
-            return drop_unsupported_quotes(AppRecord.model_validate(merged), docs)
+            return derive_verdict(drop_unsupported_quotes(AppRecord.model_validate(merged), docs))
         except Exception as exc:
             errors.append(f"{model_name}: {type(exc).__name__}")
     raise RuntimeError("extraction failed: " + "; ".join(errors))
@@ -142,8 +138,68 @@ def merge_fields(base: AppRecord, update: AppRecord, fields: list[str]) -> AppRe
     data["unknown_reasons"] = reasons
     if new.get("extraction_model"):
         data["extraction_model"] = new["extraction_model"]
-    return AppRecord.model_validate(data)
+    merged = AppRecord.model_validate(data)
+    if expanded & {"self_serve", "api_surface", "buildability", "main_blocker"}:
+        # Re-derive the rule verdict from the refreshed inputs instead of keeping a stale one.
+        stale = merged.model_dump(mode="json")
+        for field in ("buildability", "main_blocker"):
+            if any(e["field"] == field and e["source"] == "derived_rule" for e in stale["evidence"]):
+                stale[field] = "unknown"
+        stale["evidence"] = [e for e in stale["evidence"] if e["source"] != "derived_rule"]
+        merged = derive_verdict(AppRecord.model_validate(stale))
+    return merged
 
 
 def docs_as_json(docs: list[CachedDoc]) -> str:
     return json.dumps([{"url": doc.url, "text": doc.text[:500]} for doc in docs])
+
+
+OPEN_ACCESS = {"self_serve_free", "self_serve_trial"}
+SOFT_GATES = {"paid_plan_required", "admin_approval"}
+HARD_GATES = {"partner_gated": "partner_program", "contact_sales": "contact_sales"}
+
+
+def derive_verdict(record: AppRecord) -> AppRecord:
+    """Fill buildability and main_blocker by a fixed rule when the model left them unknown.
+
+    The rule only uses fields that already carry doc evidence, and it cites that evidence with
+    source=derived_rule so a reader can tell a rule verdict from a quoted one.
+      api (rest or graphql = yes) + open access         -> yes, blocker none
+      api + paid plan or admin approval                  -> yes_with_caveats, blocker enterprise_only/platform_review
+      partner_gated / contact_sales                      -> no, blocker partner_program / contact_sales
+      rest = no and graphql = no                         -> no, blocker no_public_api
+      anything else                                      -> unknown
+    """
+    data = record.model_dump(mode="json")
+    api = data["api_surface"]
+    has_api = "yes" in (api.get("rest"), api.get("graphql"))
+    no_api = api.get("rest") == "no" and api.get("graphql") == "no"
+    access = data["self_serve"]
+    verdict, blocker, inputs = "unknown", "unknown", []
+    if access in HARD_GATES:
+        verdict, blocker, inputs = "no", HARD_GATES[access], ["self_serve"]
+    elif no_api:
+        verdict, blocker, inputs = "no", "no_public_api", ["api_surface"]
+    elif has_api and access in OPEN_ACCESS:
+        verdict, blocker, inputs = "yes", "none", ["api_surface", "self_serve"]
+    elif has_api and access in SOFT_GATES:
+        verdict = "yes_with_caveats"
+        blocker = "enterprise_only" if access == "paid_plan_required" else "platform_review"
+        inputs = ["api_surface", "self_serve"]
+    if verdict == "unknown":
+        return record
+    support = [
+        e for e in data["evidence"] if e["source"] == "doc" and any(e["field"].split(".")[0] == f for f in inputs)
+    ]
+    if not support:
+        return record
+    changed = False
+    for field, value in (("buildability", verdict), ("main_blocker", blocker)):
+        if data[field] != "unknown":
+            continue
+        data[field] = value
+        data["unknown_reasons"].pop(field, None)
+        for e in support[:2]:
+            data["evidence"].append({"field": field, "url": e["url"], "quote": e["quote"], "source": "derived_rule"})
+        changed = True
+    return AppRecord.model_validate(data) if changed else record

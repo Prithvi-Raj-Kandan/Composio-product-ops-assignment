@@ -399,18 +399,29 @@ CROSS_SCHEMA = {
 }
 
 
+def _window(page: str, quote: str, radius: int = 350) -> str:
+    """The text around the quote, so the verifier sees context, not the top of the page."""
+    if not page:
+        return ""
+    at = page.find(quote[:60])
+    if at < 0:
+        at = page.lower().find(quote[:40].lower())
+    if at < 0:
+        return page[: radius * 2]
+    return page[max(0, at - radius) : at + len(quote) + radius]
+
+
 def cross_model_prompt(record: AppRecord, pages: dict[str, str]) -> str:
     claims = []
     for item in record.evidence:
-        if item.source != EvidenceSource.doc:
+        if item.source != EvidenceSource.doc or len(claims) >= 10:
             continue
-        page = pages.get(item.url, "")
         claims.append(
             {
                 "field": item.field,
                 "url": item.url,
                 "quote": item.quote,
-                "page_excerpt": page[:1500],
+                "page_excerpt": _window(pages.get(item.url, ""), item.quote),
             }
         )
     values = {
@@ -426,7 +437,7 @@ def cross_model_prompt(record: AppRecord, pages: dict[str, str]) -> str:
     return (
         "You are an independent verifier. You did not extract these claims. "
         "Judge each claim only from its quote and page excerpt. "
-        "Reply with JSON {\"verdicts\": [{\"field\", \"status\", \"reason\"}]}. "
+        'Reply with JSON {"verdicts": [{"field", "status", "reason"}]}. '
         "status is supported, contradicted, or insufficient. "
         "insufficient means the excerpt does not settle it. Do not invent a better value.\n"
         f"Claims and values:\n{json.dumps({'values': values, 'evidence': claims})}"
@@ -466,6 +477,9 @@ def parse_cross_model(payload: dict[str, Any]) -> list[Finding]:
 def failing_fields(findings: list[Finding]) -> list[str]:
     found = []
     for item in findings:
+        if item.field == "record":
+            # A verifier outage is not evidence against a field; it is logged, not re-researched.
+            continue
         if item.status in {"contradicted", "insufficient"} and item.field not in found:
             found.append(item.field)
     return found

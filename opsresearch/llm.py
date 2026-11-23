@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import threading
 from collections.abc import Mapping
 from typing import Any, Protocol
 
@@ -16,7 +17,7 @@ logger = logging.getLogger("opsresearch")
 # On 2026-11-23 gemini-3.8/3.7 returned 429 (quota) and 3.5/3.6 returned 503/504 for this key, so the
 # working model leads. Override with OPSRESEARCH_EXTRACT_MODELS="a,b".
 GEMINI_EXTRACT_MODEL = "gemini-3.5-flash-lite"
-GEMINI_EXTRACT_FALLBACK = "gemini-3.8-flash"
+GEMINI_EXTRACT_FALLBACK = "gemini-3.1-flash-lite"
 GEMINI_VERIFIER_MODEL = "gemini-3.5-flash"
 # A different model family from the extractor, so the cross-check is not the model grading itself.
 DEFAULT_GROQ_MODEL = "openai/gpt-oss-120b"
@@ -76,6 +77,49 @@ class UsageLedger:
 
 LEDGER = UsageLedger()
 
+GEMINI_VERIFIER_FALLBACK = "gemini-3.1-flash-lite"
+_MODEL_LIMITERS: dict[str, RateLimiter] = {}
+_LIMITER_LOCK = threading.Lock()
+
+
+def model_limiter(model: str, env: Mapping[str, str] | None = None) -> RateLimiter:
+    """Free-tier Gemini quotas are per model per minute (15 RPM for flash-lite), so pace each model."""
+    with _LIMITER_LOCK:
+        if model not in _MODEL_LIMITERS:
+            values = os.environ if env is None else env
+            rpm = float(values.get("OPSRESEARCH_GEMINI_RPM", "14"))
+            _MODEL_LIMITERS[model] = RateLimiter(min_interval_s=60.0 / rpm)
+        return _MODEL_LIMITERS[model]
+
+
+class FallbackClient:
+    """Try each client in order; model_name reports the one that answered last."""
+
+    def __init__(self, clients: list[LlmClient]) -> None:
+        self.clients = list(clients)
+        self.model_name = self.clients[0].model_name if self.clients else "none"
+
+    def complete_json(self, prompt: str, schema: dict[str, Any]) -> dict[str, Any]:
+        errors = []
+        for client in self.clients:
+            try:
+                out = client.complete_json(prompt, schema)
+            except Exception as exc:
+                errors.append(f"{client.model_name}: {type(exc).__name__}")
+                continue
+            self.model_name = client.model_name
+            return out
+        raise RuntimeError("all verifier models failed: " + "; ".join(errors))
+
+
+def verifier_clients(env: Mapping[str, str] | None = None) -> list[LlmClient]:
+    values = os.environ if env is None else env
+    chain: list[LlmClient] = []
+    if values.get("GROQ_API_KEY"):
+        chain.append(GroqJsonClient(values.get("GROQ_MODEL") or DEFAULT_GROQ_MODEL, api_key=values.get("GROQ_API_KEY")))
+    chain.append(GeminiJsonClient(GEMINI_VERIFIER_FALLBACK, api_key=values.get("GEMINI_API_KEY")))
+    return chain
+
 
 def extraction_model_names(env: Mapping[str, str] | None = None) -> list[str]:
     values = os.environ if env is None else env
@@ -111,6 +155,7 @@ class GeminiJsonClient:
         from google.genai import types
 
         key = self._api_key or os.environ["GEMINI_API_KEY"]
+        model_limiter(self.model_name).wait()
         client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=120_000))
         response = client.models.generate_content(
             model=self.model_name,
@@ -138,7 +183,7 @@ class GroqJsonClient:
         from groq import Groq
 
         key = self._api_key or os.environ["GROQ_API_KEY"]
-        client = Groq(api_key=key, timeout=120)
+        client = Groq(api_key=key, timeout=120, max_retries=0)
         # The schema is described in the prompt. Groq json_object mode does not take a JSON Schema.
         del schema
         response = client.chat.completions.create(
@@ -184,10 +229,7 @@ def build_verifier_client(env: Mapping[str, str] | None = None) -> LlmClient:
     message = verifier_fallback_message(env)
     if message:
         logger.warning("%s", message)
-        values = os.environ if env is None else env
-        return GeminiJsonClient(GEMINI_VERIFIER_MODEL, api_key=values.get("GEMINI_API_KEY"))
-    values = os.environ if env is None else env
-    return GroqJsonClient(values.get("GROQ_MODEL") or DEFAULT_GROQ_MODEL, api_key=values.get("GROQ_API_KEY"))
+    return FallbackClient(verifier_clients(env))
 
 
 def complete_with_fallback(

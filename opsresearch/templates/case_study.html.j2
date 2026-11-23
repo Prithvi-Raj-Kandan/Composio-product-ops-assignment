@@ -220,7 +220,7 @@ python -m opsresearch research-one "https://acme.dev" --append</pre></div>
 <div class="card"><ul>
 <li><b>Unknown is an answer.</b> A field without a verbatim quote from an official page is <code>unknown</code>, not a guess. Unknown counts are shown in every chart and table.</li>
 <li><b>Human-touched rows are marked.</b> {{ overrides|length }} rows used a human-confirmed domain ({% for r in overrides %}{{ r.app }}{{ ', ' if not loop.last }}{% endfor %}). No answer was hand-edited into the agent output.</li>
-<li><b>Accuracy is not claimed on this page.</b> Agreement with a 20-app gold sample is reported in the README (Verification).{% if gold_by_ai %} Those labels were drafted by an AI model from official docs, independently of this pipeline, and human review is pending.{% endif %}</li>
+<li><b>Accuracy is not claimed on this page.</b> Agreement with a 20-app gold sample is reported in the README (Verification).{% if gold_by_ai %} Those labels were drafted by an AI model from official docs, independently of this pipeline{% if gold_reviewed %}, and reviewed and confirmed by a human.{% else %}, and human review is pending.{% endif %}{% endif %}</li>
 <li><b>Gated is a finding.</b> Partner-only or contact-sales APIs are reported as such when a page says so.</li>
 </ul></div>
 <div class="card"><ul>

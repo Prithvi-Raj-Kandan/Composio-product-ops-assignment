@@ -260,7 +260,16 @@ def test_readme_has_calm_verification_section() -> None:
 
     readme = Path("README.md").read_text(encoding="utf-8")
     assert "## Verification" in readme
-    assert "drafted by an AI model from official docs, independently of this pipeline" in readme
-    assert "Human review is pending" in readme
+    assert "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human" in readme
+    assert "review pending" not in readme.lower()
+    assert "review pending" not in Path("HUMAN_IN_THE_LOOP.md").read_text(encoding="utf-8").lower()
     for name in ("README.md", "HUMAN_IN_THE_LOOP.md"):
         assert "Grok" not in Path(name).read_text(encoding="utf-8")
+
+
+def test_reviewed_gold_labels_are_described_as_confirmed(tmp_path) -> None:
+    repo = _repo(tmp_path, with_eval=True)
+    _gold(repo, "AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human")
+    html = (render_site(repo, tmp_path / "site", llm=False) / "index.html").read_text()
+    assert "reviewed and confirmed by a human" in html
+    assert "review is pending" not in html and "review pending" not in html

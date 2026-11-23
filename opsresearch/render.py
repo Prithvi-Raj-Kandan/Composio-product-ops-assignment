@@ -62,6 +62,7 @@ def human_handoffs(repo: Path, records: list[dict[str, Any]], verification: dict
         if any(tag == "quote-verified" and f in HIGH_STAKES for f, tag in (r.get("field_confidence") or {}).items())
     )
     gold_rows = _csv_rows(data / "gold" / "gold_sample.csv")
+    reviewed = _gold_reviewed(data / "gold" / "gold_labels.csv")
     return [
         {
             "name": "Which company is this?",
@@ -135,14 +136,25 @@ def human_handoffs(repo: Path, records: list[dict[str, Any]], verification: dict
             "name": "Gold-label audit (evaluation time)",
             "key": "gold_audit",
             "count": gold_rows,
-            "count_label": "apps in the gold sample, AI-drafted, human review pending",
-            "trigger": "Before an accuracy number is trusted. The labels' notes say they were AI-drafted.",
+            "count_label": "apps, AI-drafted, reviewed and confirmed by a human (done)"
+            if reviewed
+            else "apps in the gold sample, AI-drafted, human review pending",
+            "trigger": "Before an agreement number is trusted, and again whenever the labels change.",
             "decides": "Whether each gold cell is right, using the evidence URL per field.",
             "edits": "The labelling Google Sheet, then <code>import-gold</code> into "
             "<code>data/gold/gold_labels.csv</code>.",
             "flows_back": "<code>python -m opsresearch eval</code>, then re-render the page.",
         },
     ]
+
+
+def _gold_reviewed(path: Path) -> bool:
+    """True when the labels' notes say a human reviewed and confirmed them."""
+    if not path.exists():
+        return False
+    with path.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    return bool(rows) and all("confirmed by a human" in (row.get("notes") or "").lower() for row in rows)
 
 
 def _gold_labelled_by_ai(path: Path) -> bool:
@@ -318,6 +330,7 @@ def build_context(repo: Path, *, llm: bool = True) -> dict[str, Any]:
         "patterns_json": json.dumps(patterns, default=str),
         "evals": evals,
         "gold_by_ai": gold_by_ai,
+        "gold_reviewed": _gold_reviewed(data / "gold" / "gold_labels.csv"),
         "verification": verification,
         "handoffs": human_handoffs(repo, records, verification),
         "delta": pass_delta(pass1, records) if pass1 else None,

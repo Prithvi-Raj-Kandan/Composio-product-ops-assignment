@@ -69,7 +69,7 @@ The workflow stops for human judgement at fixed points on every run. [HUMAN_IN_T
 
 ## Verification
 
-Gold labels were drafted by an AI model from official docs, independently of this pipeline (each row has an evidence URL per field). Human review is pending, so treat these as agreement scores until it is done. The sample is 20 apps, stratified 2 per category, with dev 10 and test 10 (`data/gold/gold_sample.csv`). Reports are in `data/eval/report_dev.json` and `report_test.json`. Re-run with `python -m opsresearch eval`.
+Gold labels: AI-drafted from official docs, independently of the pipeline; reviewed and confirmed by a human. Each row has an evidence URL per field. The sample is 20 apps, stratified 2 per category, with dev 10 and test 10 (`data/gold/gold_sample.csv`). Reports are in `data/eval/report_dev.json` and `report_test.json`. Re-run with `python -m opsresearch eval`.
 
 | Split | Pass 1 | Pass 2 | Pass 3 |
 |---|---|---|---|

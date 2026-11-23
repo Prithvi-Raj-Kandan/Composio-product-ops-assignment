@@ -1,0 +1,13 @@
+{
+  "app": "Devin",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 2,
+    "composio_metadata": 1,
+    "mcp_registry": 0,
+    "reresearch": 0,
+    "derived_rule": 0
+  },
+  "nodes": []
+}

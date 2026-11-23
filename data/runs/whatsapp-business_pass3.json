@@ -1,0 +1,13 @@
+{
+  "app": "WhatsApp Business",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 1,
+    "composio_metadata": 0,
+    "mcp_registry": 0,
+    "reresearch": 0,
+    "derived_rule": 0
+  },
+  "nodes": []
+}

@@ -1,0 +1,13 @@
+{
+  "app": "Twilio",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 5,
+    "composio_metadata": 2,
+    "mcp_registry": 1,
+    "reresearch": 0,
+    "derived_rule": 2
+  },
+  "nodes": []
+}

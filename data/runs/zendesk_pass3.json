@@ -1,0 +1,13 @@
+{
+  "app": "Zendesk",
+  "pass": 3,
+  "steps": {
+    "demoted_contradicted": 0,
+    "policy_restore": 4,
+    "composio_metadata": 1,
+    "mcp_registry": 1,
+    "reresearch": 0,
+    "derived_rule": 2
+  },
+  "nodes": []
+}

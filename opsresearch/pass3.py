@@ -619,7 +619,6 @@ class LiveResearcher:
         limiter = get_rate_limiter()
         update = None
         attempts = [
-            (GeminiJsonClient("gemini-3.5-flash-lite"), ranked[:5], 8000),
             (GeminiJsonClient("gemini-3.5-flash"), ranked[:5], 8000),
             (GroqJsonClient("openai/gpt-oss-20b"), ranked[:2], 3500),
         ]
@@ -649,11 +648,7 @@ class LiveResearcher:
         pages = {d.url: d.text for d in docs}
         prompt = cross_model_prompt(AppRecord.model_validate(temp), pages)
         extractor = entry.get("model")
-        chain = [
-            GeminiJsonClient("gemini-3.5-flash"),
-            GroqJsonClient("openai/gpt-oss-20b"),
-            GeminiJsonClient("gemini-3.5-flash-lite"),
-        ]
+        chain = [GroqJsonClient("openai/gpt-oss-20b"), GeminiJsonClient("gemini-3.5-flash")]
         chain = [c for c in chain if c.model_name != extractor]
         verdicts: dict[str, str] = {}
         for client in chain:
